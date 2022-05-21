@@ -33,21 +33,27 @@ int main(int argc, char* argv[])
 	// Game Related Objects
 	GameObject* myGameObject = new GameObject();
 	// TODO: IMG_Load is not working for some reason.
-	SDL_Surface* surface = IMG_Load("89244799_p0.png");
+	const char* fileName = "image.png";
+	const char* dir = SDL_GetBasePath();
+	std::string fileDir = dir;
+	fileDir += fileName;
+	SDL_Surface* surface = IMG_Load(fileDir.c_str());
 	if (surface == NULL)
 	{
-		std::cout << "CreateRGBSurface failed: " << SDL_GetError() << "\n";
+		std::cout << "IMG_Load failed: " << SDL_GetError() << "\n";
+		return 0;
 	}
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 	if (texture == NULL)
 	{
-		std::cout << "CreateTextureFromSurface failed: " << SDL_GetError() << "\n";
+		std::cout << "SDL_CreateTextureFromSurface failed: " << SDL_GetError() << "\n";
+		return 0;
 	}
 	myGameObject->texture = texture;
 	SDL_FreeSurface(surface);
 	surface = NULL;
-	myGameObject->rect.w = 50;
-	myGameObject->rect.h = 50;
+	myGameObject->rect.w = 500;
+	myGameObject->rect.h = 500;
 	gameObjects.push_back(myGameObject);
 
 
