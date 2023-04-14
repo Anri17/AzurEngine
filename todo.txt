@@ -1,0 +1,11 @@
+window
+
+sprites
+components
+
+
+
+
+write text
+
+update text
