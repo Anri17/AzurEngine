@@ -60,7 +60,7 @@ struct Text
 		SDL_RenderCopy(renderer, texture, NULL, &rect);
 	}
 
-	void Set(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color)
+	void Set(SDL_Renderer* renderer, std::string fontpath, int fontsize, SDL_Color color)
 	{
 		this->font = font;
 		this->color = color;
