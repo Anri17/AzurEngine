@@ -7,13 +7,14 @@
 #include <map>
 #include <cstring>
 
+// Engine
 #include "GameObject.h"
 #include "Mouse.h"
-#include "ECS.h"
-#include "Components.h"
-#include "ECSEntities.h"
 #include "InputHandler.h"
-#include "PlayField.h"
+
+// Game
+#include "ECSEntities.h"
+
 
 #define WINDOW_WIDTH  640
 #define WINDOW_HEIGHT 480
@@ -35,7 +36,6 @@ std::vector<SpriteComponent*>	Render_SpriteComponents;
 
 
 // PlayScreen
-
 
 struct TextMessage
 {
