@@ -117,7 +117,6 @@ int main(int argc, char* argv[])
 		msg_mouse_y.message = "MouseY: " + std::to_string(mouse.yPos);
 		msg_mouse_y.rect.y = msg_mouse_x.rect.y + msg_mouse_x.rect.h;
 		SetText(&msg_mouse_y, renderer, font, message_color);
-
 		msg_player_x.message = "PlayerX: " + std::to_string(player->position->x);
 		msg_player_x.rect.y = msg_mouse_y.rect.y + msg_mouse_y.rect.h;
 		SetText(&msg_player_x, renderer, font, message_color);
