@@ -4,6 +4,7 @@
 
 #include "InputHandler.h"
 
+#include "PlayField.h"
 
 Player::Player(SDL_Renderer* renderer)
 {
@@ -59,8 +60,8 @@ void Player::Logic()
 
 
 	// Limit Player Play Field
-	if (position->x < screen_boundaries_left) position->x = screen_boundaries_left;
-	if (position->x + player_w > screen_boundaries_right) position->x = screen_boundaries_right - player_w;
-	if (position->y < screen_boundaries_top) position->y = screen_boundaries_top;
-	if (position->y + player_h > screen_boundaries_bottom) position->y = screen_boundaries_bottom - player_h;
+	if (position->x < PlayField::screen_boundaries_left) position->x = PlayField::screen_boundaries_left;
+	if (position->x + player_w > PlayField::screen_boundaries_right) position->x = PlayField::screen_boundaries_right - player_w;
+	if (position->y < PlayField::screen_boundaries_top) position->y = PlayField::screen_boundaries_top;
+	if (position->y + player_h > PlayField::screen_boundaries_bottom) position->y = PlayField::screen_boundaries_bottom - player_h;
 }

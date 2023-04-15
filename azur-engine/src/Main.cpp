@@ -13,6 +13,7 @@
 #include "Components.h"
 #include "ECSEntities.h"
 #include "InputHandler.h"
+#include "PlayField.h"
 
 #define WINDOW_WIDTH  640
 #define WINDOW_HEIGHT 480
@@ -31,6 +32,9 @@ std::vector<Entity*>	 entities;
 // Hold the references of the components needed for rendering
 std::vector<PositionComponent*> Render_PositionComponents;
 std::vector<SpriteComponent*>	Render_SpriteComponents;
+
+
+// PlayScreen
 
 
 struct TextMessage
@@ -203,6 +207,15 @@ int main(int argc, char* argv[])
 		// Drawing to Screen
 		SDL_RenderClear(renderer);
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 1);
+		// Draw Play Field
+		SDL_Rect playfield_rect;
+		playfield_rect.x = PlayField::screen_boundaries_left;
+		playfield_rect.y = PlayField::screen_boundaries_top;
+		playfield_rect.w = PlayField::screen_boundaries_right - PlayField::screen_boundaries_left;
+		playfield_rect.h = PlayField::screen_boundaries_bottom - PlayField::screen_boundaries_top;
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 1); // while color for playfield
+		SDL_RenderDrawRect(renderer, &playfield_rect);
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 1); // black color for background
 		// Render GameObject Textures
 		for (GameObject* gm : gameObjects)
 		{
