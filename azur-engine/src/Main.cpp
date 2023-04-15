@@ -79,9 +79,11 @@ void SetText(Text* text, SDL_Renderer* renderer)
 	SDL_FreeSurface(surface);
 }
 
-void SetText(Text* text, SDL_Renderer* renderer, std::string message)
+void SetText(Text* text, SDL_Renderer* renderer, std::string message, int x, int y)
 {
 	text->message = message;
+	text->rect.x = x;
+	text->rect.y = y;
 
 	SDL_DestroyTexture(text->texture);
 	SDL_Surface* surface = TTF_RenderText_Solid(text->font, text->message.c_str(), text->color);
@@ -147,16 +149,41 @@ int main(int argc, char* argv[])
 	while (application_is_running)
 	{
 		// DEBUG TEXT
-		msg_current_frame.rect.y = 0;
-		SetText(&msg_current_frame, renderer, std::string("CurrentFrame: " + std::to_string(current_frame)));
-		msg_mouse_x.rect.y = msg_current_frame.rect.h;
-		SetText(&msg_mouse_x, renderer, std::string("MouseX: " + std::to_string(mouse.xPos)));
-		msg_mouse_y.rect.y = msg_mouse_x.rect.y + msg_mouse_x.rect.h;
-		SetText(&msg_mouse_y, renderer, std::string("MouseY: " + std::to_string(mouse.yPos)));
-		msg_player_x.rect.y = msg_mouse_y.rect.y + msg_mouse_y.rect.h;
-		SetText(&msg_player_x, renderer, std::string("PlayerX: " + std::to_string(player->position->x)));
-		msg_player_y.rect.y = msg_player_x.rect.y + msg_player_x.rect.h;
-		SetText(&msg_player_y, renderer, std::string("PlayerY: " + std::to_string(player->position->y)));
+		SetText(
+			&msg_current_frame,
+			renderer,
+			std::string("CurrentFrame: " + std::to_string(current_frame)),
+			0,
+			0
+		);
+		SetText(
+			&msg_mouse_x,
+			renderer,
+			std::string("MouseX: " + std::to_string(mouse.xPos)),
+			0,
+			msg_current_frame.rect.h
+		);
+		SetText(
+			&msg_mouse_y,
+			renderer,
+			std::string("MouseY: " + std::to_string(mouse.yPos)),
+			0,
+			msg_mouse_x.rect.y + msg_mouse_x.rect.h
+		);
+		SetText(
+			& msg_player_x,
+			renderer,
+			std::string("PlayerX: " + std::to_string(player->position->x)),
+			0,
+			msg_mouse_y.rect.y + msg_mouse_y.rect.h
+		);
+		SetText(
+			&msg_player_y,
+			renderer,
+			std::string("PlayerY: " + std::to_string(player->position->y)),
+			0,
+			msg_player_x.rect.y + msg_player_x.rect.h
+		);
 
 		// Abstract SDL events into engine components and systems
 		// Reset First Tap Event
