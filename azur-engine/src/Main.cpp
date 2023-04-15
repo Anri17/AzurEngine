@@ -39,14 +39,20 @@ std::vector<SpriteComponent*>	Render_SpriteComponents;
 
 struct Text
 {
-	Text(TTF_Font* font, SDL_Color color) : message(""), texture(nullptr), rect({ 0,0,0,0 })
+	Text(std::string fontpath, int fontsize, SDL_Color color) : message(""), texture(nullptr), rect({ 0,0,0,0 })
 	{
-		this->font = font;
 		this->color = color;
+		this->size = fontsize;
+		this->font = TTF_OpenFont(fontpath.c_str(), fontsize);
+		if (font == 0)
+		{
+			std::cout << "Could Not Load Font: " << TTF_GetError() << "\n";
+		}
 	};
 	~Text()
 	{
 		SDL_DestroyTexture(texture);
+		TTF_CloseFont(font);
 	}
 
 	void Render(SDL_Renderer* renderer)
@@ -92,7 +98,7 @@ struct Text
 	std::string message;
 	SDL_Texture* texture;
 	SDL_Rect rect;
-
+	int size;
 	TTF_Font* font;
 	SDL_Color color;
 };
@@ -118,17 +124,12 @@ int main(int argc, char* argv[])
 	std::string fontname = "SpaceMono-Regular.ttf";
 	std::string fontpath = basepath + fontname;
 	int fontsize = 12;
-	TTF_Font* font = TTF_OpenFont(fontpath.c_str(), fontsize);
-	if (font == 0)
-	{
-		std::cout << "Could Not Load Font: " << TTF_GetError() << "\n";
-	}
 	SDL_Color message_color = { 255, 255, 255 };
-	Text msg_current_frame(font, message_color);
-	Text msg_mouse_x(font, message_color);
-	Text msg_mouse_y(font, message_color);
-	Text msg_player_x(font, message_color);
-	Text msg_player_y(font, message_color);
+	Text msg_current_frame(fontpath, fontsize, message_color);
+	Text msg_mouse_x(fontpath, fontsize, message_color);
+	Text msg_mouse_y(fontpath, fontsize, message_color);
+	Text msg_player_x(fontpath, fontsize, message_color);
+	Text msg_player_y(fontpath, fontsize, message_color);
 
 	// Mouse
 	Mouse mouse;
