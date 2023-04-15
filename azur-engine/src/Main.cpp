@@ -11,6 +11,7 @@
 #include "GameObject.h"
 #include "Mouse.h"
 #include "InputHandler.h"
+#include "Text.h"
 
 // Game
 #include "ECSEntities.h"
@@ -34,80 +35,6 @@ std::vector<Entity*>	 entities;
 std::vector<PositionComponent*> Render_PositionComponents;
 std::vector<SpriteComponent*>	Render_SpriteComponents;
 
-
-// PlayScreen
-
-struct Text
-{
-	Text(std::string fontpath, int fontsize, SDL_Color color) : message(""), texture(nullptr), rect({ 0,0,0,0 })
-	{
-		this->color = color;
-		this->size = fontsize;
-		this->font = TTF_OpenFont(fontpath.c_str(), fontsize);
-		if (font == 0)
-		{
-			std::cout << "Could Not Load Font: " << TTF_GetError() << "\n";
-		}
-	};
-	~Text()
-	{
-		SDL_DestroyTexture(texture);
-		//TTF_CloseFont(font);
-	}
-
-	void Render(SDL_Renderer* renderer)
-	{
-		SDL_RenderCopy(renderer, texture, NULL, &rect);
-	}
-
-	void Set(SDL_Renderer* renderer, std::string fontpath, int fontsize, SDL_Color color)
-	{
-		TTF_CloseFont(font);
-		this->color = color;
-		this->size = fontsize;
-		this->font = TTF_OpenFont(fontpath.c_str(), fontsize);
-		if (font == 0)
-		{
-			std::cout << "Could Not Load Font: " << TTF_GetError() << "\n";
-		}
-
-		SDL_DestroyTexture(texture);
-		SDL_Surface* surface = TTF_RenderText_Solid(font, message.c_str(), color);
-		texture = SDL_CreateTextureFromSurface(renderer, surface);
-		rect.w = surface->w;
-		rect.h = surface->h;
-		SDL_FreeSurface(surface);
-	}
-	void Set(SDL_Renderer* renderer)
-	{
-		SDL_DestroyTexture(texture);
-		SDL_Surface* surface = TTF_RenderText_Solid(font, message.c_str(), color);
-		texture = SDL_CreateTextureFromSurface(renderer, surface);
-		rect.w = surface->w;
-		rect.h = surface->h;
-		SDL_FreeSurface(surface);
-	}
-	void Set(SDL_Renderer* renderer, std::string message, int x, int y)
-	{
-		this->message = message;
-		this->rect.x = x;
-		this->rect.y = y;
-
-		SDL_DestroyTexture(texture);
-		SDL_Surface* surface = TTF_RenderText_Solid(font, message.c_str(), color);
-		texture = SDL_CreateTextureFromSurface(renderer, surface);
-		rect.w = surface->w;
-		rect.h = surface->h;
-		SDL_FreeSurface(surface);
-	}
-
-	std::string message;
-	SDL_Texture* texture;
-	SDL_Rect rect;
-	int size;
-	TTF_Font* font;
-	SDL_Color color;
-};
 
 int main(int argc, char* argv[])
 {
