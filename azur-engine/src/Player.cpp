@@ -53,7 +53,7 @@ void Player::Logic()
 	if (yVelocity != 0 && xVelocity != 0)
 	{
 		xVelocity = cos((M_PI / 4.0)) * xVelocity;
-		yVelocity = cos((M_PI / 4.0)) * yVelocity;
+		yVelocity = sin((M_PI / 4.0)) * yVelocity;
 	}
 
 	position->y += yVelocity;
