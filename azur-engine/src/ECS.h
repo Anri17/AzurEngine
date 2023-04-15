@@ -1,7 +1,6 @@
 #ifndef _ECS_H
 #define _ECS_H
 
-#include <iostream>
 #include <vector>
 #include <memory>
 #include <algorithm>

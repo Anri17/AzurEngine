@@ -1,7 +1,6 @@
 #include "Text.h"
 
-
-#include <iostream>
+#include "Debug.h"
 
 Text::Text(std::string fontpath, int fontsize, SDL_Color color) : message(""), texture(nullptr), rect({ 0,0,0,0 })
 {
@@ -10,7 +9,7 @@ Text::Text(std::string fontpath, int fontsize, SDL_Color color) : message(""), t
 	this->font = TTF_OpenFont(fontpath.c_str(), fontsize);
 	if (font == 0)
 	{
-		std::cout << "Could Not Load Font: " << TTF_GetError() << "\n";
+		DEBUG_CONSOLE_LOG("Could Not Load Font: " << TTF_GetError());
 	}
 };
 Text::~Text()

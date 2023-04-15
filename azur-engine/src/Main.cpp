@@ -2,12 +2,12 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
-#include <iostream>
 #include <vector>
 #include <map>
 #include <cstring>
 
 // Engine
+#include "Debug.h"
 #include "GameObject.h"
 #include "Mouse.h"
 #include "InputHandler.h"
@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
 	SDL_Init(SDL_INIT_EVERYTHING);
 	if (TTF_Init() == -1)
 	{
-		std::cout << "TTF_Init: " << TTF_GetError() << "\n";
+		DEBUG_CONSOLE_LOG("TTF_Init: " << TTF_GetError());
 		exit(-1);
 	}
 	IMG_Init(IMG_INIT_PNG);
@@ -82,7 +82,7 @@ int main(int argc, char* argv[])
 	Uint32 currentTime = SDL_GetTicks();
 
 
-	std::cout << "Text on Screen is temporary. TODO: Make it a debug feature." << "\n";
+	DEBUG_CONSOLE_LOG("Text on Screen is temporary. TODO: Make it a debug feature.");
 
 	while (application_is_running)
 	{

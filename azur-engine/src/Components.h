@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+#include "Debug.h"
 #include "ECS.h"
 
 class PositionComponent : public Component
@@ -34,13 +35,13 @@ public:
 		SDL_Surface* surface = IMG_Load(fileDir.c_str());
 		if (surface == NULL)
 		{
-			std::cout << "IMG_Load failed: " << SDL_GetError() << "\n";
+			DEBUG_CONSOLE_LOG("IMG_Load failed: " << SDL_GetError());
 			return 1;
 		}
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 		if (texture == NULL)
 		{
-			std::cout << "SDL_CreateTextureFromSurface failed: " << SDL_GetError() << "\n";
+			DEBUG_CONSOLE_LOG("SDL_CreateTextureFromSurface failed: " << SDL_GetError());
 			return 1;
 		}
 		this->texture = texture;
