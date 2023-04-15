@@ -62,8 +62,14 @@ struct Text
 
 	void Set(SDL_Renderer* renderer, std::string fontpath, int fontsize, SDL_Color color)
 	{
-		this->font = font;
+		TTF_CloseFont(font);
 		this->color = color;
+		this->size = fontsize;
+		this->font = TTF_OpenFont(fontpath.c_str(), fontsize);
+		if (font == 0)
+		{
+			std::cout << "Could Not Load Font: " << TTF_GetError() << "\n";
+		}
 
 		SDL_DestroyTexture(texture);
 		SDL_Surface* surface = TTF_RenderText_Solid(font, message.c_str(), color);
