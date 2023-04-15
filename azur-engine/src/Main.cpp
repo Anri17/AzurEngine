@@ -40,6 +40,10 @@ std::vector<SpriteComponent*>	Render_SpriteComponents;
 struct Text
 {
 	Text() : message(""), texture(nullptr), rect({ 0,0,0,0 }) {};
+	~Text()
+	{
+		SDL_DestroyTexture(texture);
+	}
 	std::string message;
 	SDL_Texture* texture;
 	SDL_Rect rect;
@@ -271,12 +275,6 @@ int main(int argc, char* argv[])
 	{
 		delete e;
 	}
-	// Clear Text
-	SDL_DestroyTexture(msg_current_frame.texture);
-	SDL_DestroyTexture(msg_mouse_x.texture);
-	SDL_DestroyTexture(msg_mouse_y.texture);
-	SDL_DestroyTexture(msg_player_x.texture);
-	SDL_DestroyTexture(msg_player_y.texture);
 
 	// Quit Functions
 	SDL_DestroyRenderer(renderer);
