@@ -195,7 +195,7 @@ int main(int argc, char* argv[])
 
 
 		// Object Input Handling
-		player->InputLogic();
+		player->Logic();
 		// End Application
 		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false;
 

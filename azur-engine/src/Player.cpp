@@ -13,7 +13,7 @@ Player::Player(SDL_Renderer* renderer)
 	addComponent<SpriteComponent>()->setTexture(renderer, "player.png", 0, 0, 32, 48);
 }
 
-void Player::InputLogic()
+void Player::Logic()
 {
 	float xVelocity = 0;
 	float yVelocity = 0;

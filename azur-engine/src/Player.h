@@ -8,7 +8,7 @@ class Player : public Entity
 {
 public:
 	Player(SDL_Renderer* renderer);
-	void InputLogic();
+	void Logic();
 
 
 	PositionComponent* position;
