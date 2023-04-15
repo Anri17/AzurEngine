@@ -37,15 +37,15 @@ std::vector<SpriteComponent*>	Render_SpriteComponents;
 
 // PlayScreen
 
-struct TextMessage
+struct Text
 {
-	TextMessage() : message(""), texture(nullptr), rect({ 0,0,0,0 }) {};
+	Text() : message(""), texture(nullptr), rect({ 0,0,0,0 }) {};
 	std::string message;
 	SDL_Texture* texture;
 	SDL_Rect rect;
 };
 
-void SetText(TextMessage* message, SDL_Renderer* renderer, TTF_Font* font, SDL_Color color)
+void SetText(Text* message, SDL_Renderer* renderer, TTF_Font* font, SDL_Color color)
 {
 	SDL_DestroyTexture(message->texture);
 	SDL_Surface* surface = TTF_RenderText_Solid(font, message->message.c_str(), color);
@@ -83,11 +83,11 @@ int main(int argc, char* argv[])
 		std::cout << "Could Not Load Font: " << TTF_GetError() << "\n";
 	}
 	SDL_Color message_color = { 255, 255, 255 };
-	TextMessage msg_current_frame;
-	TextMessage msg_mouse_x;
-	TextMessage msg_mouse_y;
-	TextMessage msg_player_x;
-	TextMessage msg_player_y;
+	Text msg_current_frame;
+	Text msg_mouse_x;
+	Text msg_mouse_y;
+	Text msg_player_x;
+	Text msg_player_y;
 
 	// Mouse
 	Mouse mouse;
