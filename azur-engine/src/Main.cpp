@@ -66,7 +66,7 @@ struct Text
 		rect.h = surface->h;
 		SDL_FreeSurface(surface);
 	}
-	void SetText(SDL_Renderer* renderer)
+	void Set(SDL_Renderer* renderer)
 	{
 		SDL_DestroyTexture(texture);
 		SDL_Surface* surface = TTF_RenderText_Solid(font, message.c_str(), color);
