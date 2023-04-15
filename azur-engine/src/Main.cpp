@@ -53,6 +53,42 @@ struct Text
 	{
 		SDL_RenderCopy(renderer, texture, NULL, &rect);
 	}
+
+	void Set(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color)
+	{
+		this->font = font;
+		this->color = color;
+
+		SDL_DestroyTexture(texture);
+		SDL_Surface* surface = TTF_RenderText_Solid(font, message.c_str(), color);
+		texture = SDL_CreateTextureFromSurface(renderer, surface);
+		rect.w = surface->w;
+		rect.h = surface->h;
+		SDL_FreeSurface(surface);
+	}
+	void SetText(SDL_Renderer* renderer)
+	{
+		SDL_DestroyTexture(texture);
+		SDL_Surface* surface = TTF_RenderText_Solid(font, message.c_str(), color);
+		texture = SDL_CreateTextureFromSurface(renderer, surface);
+		rect.w = surface->w;
+		rect.h = surface->h;
+		SDL_FreeSurface(surface);
+	}
+	void Set(SDL_Renderer* renderer, std::string message, int x, int y)
+	{
+		this->message = message;
+		this->rect.x = x;
+		this->rect.y = y;
+
+		SDL_DestroyTexture(texture);
+		SDL_Surface* surface = TTF_RenderText_Solid(font, message.c_str(), color);
+		texture = SDL_CreateTextureFromSurface(renderer, surface);
+		rect.w = surface->w;
+		rect.h = surface->h;
+		SDL_FreeSurface(surface);
+	}
+
 	std::string message;
 	SDL_Texture* texture;
 	SDL_Rect rect;
@@ -60,43 +96,6 @@ struct Text
 	TTF_Font* font;
 	SDL_Color color;
 };
-
-void SetText(Text* text, SDL_Renderer* renderer, TTF_Font* font, SDL_Color color)
-{
-	SDL_DestroyTexture(text->texture);
-	SDL_Surface* surface = TTF_RenderText_Solid(font, text->message.c_str(), color);
-	text->texture = SDL_CreateTextureFromSurface(renderer, surface);
-	text->rect.w = surface->w;
-	text->rect.h = surface->h;
-	SDL_FreeSurface(surface);
-
-	text->font = font;
-	text->color = color;
-}
-
-void SetText(Text* text, SDL_Renderer* renderer)
-{
-	SDL_DestroyTexture(text->texture);
-	SDL_Surface* surface = TTF_RenderText_Solid(text->font, text->message.c_str(), text->color);
-	text->texture = SDL_CreateTextureFromSurface(renderer, surface);
-	text->rect.w = surface->w;
-	text->rect.h = surface->h;
-	SDL_FreeSurface(surface);
-}
-
-void SetText(Text* text, SDL_Renderer* renderer, std::string message, int x, int y)
-{
-	text->message = message;
-	text->rect.x = x;
-	text->rect.y = y;
-
-	SDL_DestroyTexture(text->texture);
-	SDL_Surface* surface = TTF_RenderText_Solid(text->font, text->message.c_str(), text->color);
-	text->texture = SDL_CreateTextureFromSurface(renderer, surface);
-	text->rect.w = surface->w;
-	text->rect.h = surface->h;
-	SDL_FreeSurface(surface);
-}
 
 int main(int argc, char* argv[])
 {
@@ -154,36 +153,31 @@ int main(int argc, char* argv[])
 	while (application_is_running)
 	{
 		// DEBUG TEXT
-		SetText(
-			&msg_current_frame,
+		msg_current_frame.Set(
 			renderer,
 			std::string("CurrentFrame: " + std::to_string(current_frame)),
 			0,
 			0
 		);
-		SetText(
-			&msg_mouse_x,
+		msg_mouse_x.Set(
 			renderer,
 			std::string("MouseX: " + std::to_string(mouse.xPos)),
 			0,
 			msg_current_frame.rect.h
 		);
-		SetText(
-			&msg_mouse_y,
+		msg_mouse_y.Set(
 			renderer,
 			std::string("MouseY: " + std::to_string(mouse.yPos)),
 			0,
 			msg_mouse_x.rect.y + msg_mouse_x.rect.h
 		);
-		SetText(
-			& msg_player_x,
+		msg_player_x.Set(
 			renderer,
 			std::string("PlayerX: " + std::to_string(player->position->x)),
 			0,
 			msg_mouse_y.rect.y + msg_mouse_y.rect.h
 		);
-		SetText(
-			&msg_player_y,
+		msg_player_y.Set(
 			renderer,
 			std::string("PlayerY: " + std::to_string(player->position->y)),
 			0,
