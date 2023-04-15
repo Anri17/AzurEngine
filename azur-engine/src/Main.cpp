@@ -52,7 +52,7 @@ struct Text
 	~Text()
 	{
 		SDL_DestroyTexture(texture);
-		TTF_CloseFont(font);
+		//TTF_CloseFont(font);
 	}
 
 	void Render(SDL_Renderer* renderer)
