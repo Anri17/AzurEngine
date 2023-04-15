@@ -56,23 +56,23 @@ struct Text
 	SDL_Color color;
 };
 
-void SetText(Text* message, SDL_Renderer* renderer, TTF_Font* font, SDL_Color color)
+void SetText(Text* text, SDL_Renderer* renderer, TTF_Font* font, SDL_Color color)
 {
-	SDL_DestroyTexture(message->texture);
-	SDL_Surface* surface = TTF_RenderText_Solid(font, message->message.c_str(), color);
-	message->texture = SDL_CreateTextureFromSurface(renderer, surface);
-	message->rect.w = surface->w;
-	message->rect.h = surface->h;
+	SDL_DestroyTexture(text->texture);
+	SDL_Surface* surface = TTF_RenderText_Solid(font, text->message.c_str(), color);
+	text->texture = SDL_CreateTextureFromSurface(renderer, surface);
+	text->rect.w = surface->w;
+	text->rect.h = surface->h;
 	SDL_FreeSurface(surface);
 }
 
-void SetText(Text* message, SDL_Renderer* renderer)
+void SetText(Text* text, SDL_Renderer* renderer)
 {
-	SDL_DestroyTexture(message->texture);
-	SDL_Surface* surface = TTF_RenderText_Solid(message->font, message->message.c_str(), message->color);
-	message->texture = SDL_CreateTextureFromSurface(renderer, surface);
-	message->rect.w = surface->w;
-	message->rect.h = surface->h;
+	SDL_DestroyTexture(text->texture);
+	SDL_Surface* surface = TTF_RenderText_Solid(text->font, text->message.c_str(), text->color);
+	text->texture = SDL_CreateTextureFromSurface(renderer, surface);
+	text->rect.w = surface->w;
+	text->rect.h = surface->h;
 	SDL_FreeSurface(surface);
 }
 
