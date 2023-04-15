@@ -4,7 +4,7 @@
 #include <SDL_ttf.h>
 #include <iostream>
 #include <vector>
-
+#include <map>
 #include <cstring>
 
 #include "GameObject.h"
@@ -35,6 +35,24 @@ std::vector<PositionComponent*> Render_PositionComponents;
 std::vector<SpriteComponent*>	Render_SpriteComponents;
 
 
+struct TextMessage
+{
+	TextMessage() : message(""), texture(nullptr), rect({ 0,0,0,0 }) {};
+	std::string message;
+	SDL_Texture* texture;
+	SDL_Rect rect;
+};
+
+void SetText(TextMessage* message, SDL_Renderer* renderer, TTF_Font* font, SDL_Color color)
+{
+	SDL_DestroyTexture(message->texture);
+	SDL_Surface* surface = TTF_RenderText_Solid(font, message->message.c_str(), color);
+	message->texture = SDL_CreateTextureFromSurface(renderer, surface);
+	message->rect.w = surface->w;
+	message->rect.h = surface->h;
+}
+
+
 int main(int argc, char* argv[])
 {
 	// Init graphics, create window
@@ -62,9 +80,11 @@ int main(int argc, char* argv[])
 		std::cout << "Could Not Load Font: " << TTF_GetError() << "\n";
 	}
 	SDL_Color message_color = { 255, 255, 255 };
-	SDL_Texture* message1_texture = nullptr;
-	SDL_Texture* message2_texture = nullptr;
-	SDL_Texture* message3_texture = nullptr;
+	TextMessage msg_current_frame;
+	TextMessage msg_mouse_x;
+	TextMessage msg_mouse_y;
+	TextMessage msg_player_x;
+	TextMessage msg_player_y;
 
 	// Mouse
 	Mouse mouse;
@@ -89,39 +109,21 @@ int main(int argc, char* argv[])
 	while (application_is_running)
 	{
 		// DEBUG TEXT
-		std::string message_text1 = "CurrentFrame: " + std::to_string(current_frame);
-		SDL_DestroyTexture(message1_texture);
-		SDL_Surface* message1_surface = TTF_RenderText_Solid(font, message_text1.c_str(), message_color);
-		message1_texture = SDL_CreateTextureFromSurface(renderer, message1_surface);
-		SDL_Rect message1_rect;
-		message1_rect.x = 0;
-		message1_rect.y = 0;
-		message1_rect.w = message1_surface->w;
-		message1_rect.h = message1_surface->h;
-		
-		std::string message_text2 = "MouseX: " + std::to_string(mouse.xPos);
-		SDL_DestroyTexture(message2_texture);
-		SDL_Surface* message2_surface = TTF_RenderText_Solid(font, message_text2.c_str(), message_color);
-		message2_texture = SDL_CreateTextureFromSurface(renderer, message2_surface);
-		SDL_Rect message2_rect;
-		message2_rect.x = 0;
-		message2_rect.y = 0 + message1_rect.h;
-		message2_rect.w = message2_surface->w;
-		message2_rect.h = message2_surface->h;
-		SDL_FreeSurface(message2_surface);
+		msg_current_frame.message = "CurrentFrame: " + std::to_string(current_frame);
+		SetText(&msg_current_frame, renderer, font, message_color);
+		msg_mouse_x.message = "MouseX: " + std::to_string(mouse.xPos);
+		msg_mouse_x.rect.y = msg_current_frame.rect.h;
+		SetText(&msg_mouse_x, renderer, font, message_color);
+		msg_mouse_y.message = "MouseY: " + std::to_string(mouse.yPos);
+		msg_mouse_y.rect.y = msg_mouse_x.rect.y + msg_mouse_x.rect.h;
+		SetText(&msg_mouse_y, renderer, font, message_color);
 
-
-		std::string message_text3 = "MouseY: " + std::to_string(mouse.yPos);
-		SDL_DestroyTexture(message3_texture);
-		SDL_Surface* message3_surface = TTF_RenderText_Solid(font, message_text3.c_str(), message_color);
-		message3_texture = SDL_CreateTextureFromSurface(renderer, message3_surface);
-		SDL_Rect message3_rect;
-		message3_rect.x = 0;
-		message3_rect.y = message2_rect.y + message2_rect.h;
-		message3_rect.w = message3_surface->w;
-		message3_rect.h = message3_surface->h;
-		SDL_FreeSurface(message3_surface);
-
+		msg_player_x.message = "PlayerX: " + std::to_string(player->position->x);
+		msg_player_x.rect.y = msg_mouse_y.rect.y + msg_mouse_y.rect.h;
+		SetText(&msg_player_x, renderer, font, message_color);
+		msg_player_y.message = "PlayerY: " + std::to_string(player->position->y);
+		msg_player_y.rect.y = msg_player_x.rect.y + msg_player_x.rect.h;
+		SetText(&msg_player_y, renderer, font, message_color);
 
 		// Abstract SDL events into engine components and systems
 		// Reset First Tap Event
@@ -228,9 +230,11 @@ int main(int argc, char* argv[])
 			SDL_RenderCopy(renderer, sc->texture, NULL, &rect);
 		}
 		// Render Text
-		SDL_RenderCopy(renderer, message1_texture, NULL, &message1_rect);
-		SDL_RenderCopy(renderer, message2_texture, NULL, &message2_rect);
-		SDL_RenderCopy(renderer, message3_texture, NULL, &message3_rect);
+		SDL_RenderCopy(renderer, msg_current_frame.texture, NULL, &msg_current_frame.rect);
+		SDL_RenderCopy(renderer, msg_mouse_x.texture, NULL, &msg_mouse_x.rect);
+		SDL_RenderCopy(renderer, msg_mouse_y.texture, NULL, &msg_mouse_y.rect);
+		SDL_RenderCopy(renderer, msg_player_x.texture, NULL, &msg_player_x.rect);
+		SDL_RenderCopy(renderer, msg_player_y.texture, NULL, &msg_player_y.rect);
 		SDL_RenderPresent(renderer);
 
 
@@ -256,10 +260,12 @@ int main(int argc, char* argv[])
 	{
 		delete e;
 	}
-	// Clear Text Surface
-	SDL_DestroyTexture(message1_texture);
-	SDL_DestroyTexture(message2_texture);
-	SDL_DestroyTexture(message3_texture);
+	// Clear Text
+	SDL_DestroyTexture(msg_current_frame.texture);
+	SDL_DestroyTexture(msg_mouse_x.texture);
+	SDL_DestroyTexture(msg_mouse_y.texture);
+	SDL_DestroyTexture(msg_player_x.texture);
+	SDL_DestroyTexture(msg_player_y.texture);
 
 	// Quit Functions
 	SDL_DestroyRenderer(renderer);
