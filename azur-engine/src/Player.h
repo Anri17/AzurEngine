@@ -10,7 +10,7 @@ public:
 	Player(SDL_Renderer* renderer);
 	void InputLogic();
 
-private:
+
 	PositionComponent* position;
 
 	float spawnX = 320.0f;
