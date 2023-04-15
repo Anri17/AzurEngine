@@ -31,7 +31,7 @@ void Text::Set(SDL_Renderer* renderer, std::string fontpath, int fontsize, SDL_C
 	this->font = TTF_OpenFont(fontpath.c_str(), fontsize);
 	if (font == 0)
 	{
-		std::cout << "Could Not Load Font: " << TTF_GetError() << "\n";
+		DEBUG_CONSOLE_LOG("Could Not Load Font: " << TTF_GetError());
 	}
 
 	SDL_DestroyTexture(texture);
