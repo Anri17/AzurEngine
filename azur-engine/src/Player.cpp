@@ -15,8 +15,6 @@ Player::Player(SDL_Renderer* renderer)
 
 void Player::Logic()
 {
-	int player_w = 32; // TODO: Get the sprite w through the SDL_Rect.
-	int player_h = 48; // TODO: Get the sprite h through the SDL_Rect.
 	float xVelocity = 0;
 	float yVelocity = 0;
 	float speed = 0;
