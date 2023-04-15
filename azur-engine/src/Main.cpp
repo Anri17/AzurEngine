@@ -39,7 +39,11 @@ std::vector<SpriteComponent*>	Render_SpriteComponents;
 
 struct Text
 {
-	Text() : message(""), texture(nullptr), rect({ 0,0,0,0 }) {};
+	Text(TTF_Font* font, SDL_Color color) : message(""), texture(nullptr), rect({ 0,0,0,0 })
+	{
+		this->font = font;
+		this->color = color;
+	};
 	~Text()
 	{
 		SDL_DestroyTexture(texture);
@@ -47,6 +51,9 @@ struct Text
 	std::string message;
 	SDL_Texture* texture;
 	SDL_Rect rect;
+
+	TTF_Font* font;
+	SDL_Color color;
 };
 
 void SetText(Text* message, SDL_Renderer* renderer, TTF_Font* font, SDL_Color color)
@@ -59,6 +66,15 @@ void SetText(Text* message, SDL_Renderer* renderer, TTF_Font* font, SDL_Color co
 	SDL_FreeSurface(surface);
 }
 
+void SetText(Text* message, SDL_Renderer* renderer)
+{
+	SDL_DestroyTexture(message->texture);
+	SDL_Surface* surface = TTF_RenderText_Solid(message->font, message->message.c_str(), message->color);
+	message->texture = SDL_CreateTextureFromSurface(renderer, surface);
+	message->rect.w = surface->w;
+	message->rect.h = surface->h;
+	SDL_FreeSurface(surface);
+}
 
 int main(int argc, char* argv[])
 {
@@ -87,11 +103,11 @@ int main(int argc, char* argv[])
 		std::cout << "Could Not Load Font: " << TTF_GetError() << "\n";
 	}
 	SDL_Color message_color = { 255, 255, 255 };
-	Text msg_current_frame;
-	Text msg_mouse_x;
-	Text msg_mouse_y;
-	Text msg_player_x;
-	Text msg_player_y;
+	Text msg_current_frame(font, message_color);
+	Text msg_mouse_x(font, message_color);
+	Text msg_mouse_y(font, message_color);
+	Text msg_player_x(font, message_color);
+	Text msg_player_y(font, message_color);
 
 	// Mouse
 	Mouse mouse;
@@ -117,19 +133,19 @@ int main(int argc, char* argv[])
 	{
 		// DEBUG TEXT
 		msg_current_frame.message = "CurrentFrame: " + std::to_string(current_frame);
-		SetText(&msg_current_frame, renderer, font, message_color);
+		SetText(&msg_current_frame, renderer);
 		msg_mouse_x.message = "MouseX: " + std::to_string(mouse.xPos);
 		msg_mouse_x.rect.y = msg_current_frame.rect.h;
-		SetText(&msg_mouse_x, renderer, font, message_color);
+		SetText(&msg_mouse_x, renderer);
 		msg_mouse_y.message = "MouseY: " + std::to_string(mouse.yPos);
 		msg_mouse_y.rect.y = msg_mouse_x.rect.y + msg_mouse_x.rect.h;
-		SetText(&msg_mouse_y, renderer, font, message_color);
+		SetText(&msg_mouse_y, renderer);
 		msg_player_x.message = "PlayerX: " + std::to_string(player->position->x);
 		msg_player_x.rect.y = msg_mouse_y.rect.y + msg_mouse_y.rect.h;
-		SetText(&msg_player_x, renderer, font, message_color);
+		SetText(&msg_player_x, renderer);
 		msg_player_y.message = "PlayerY: " + std::to_string(player->position->y);
 		msg_player_y.rect.y = msg_player_x.rect.y + msg_player_x.rect.h;
-		SetText(&msg_player_y, renderer, font, message_color);
+		SetText(&msg_player_y, renderer);
 
 		// Abstract SDL events into engine components and systems
 		// Reset First Tap Event
