@@ -48,6 +48,11 @@ struct Text
 	{
 		SDL_DestroyTexture(texture);
 	}
+
+	void Render(SDL_Renderer* renderer)
+	{
+		SDL_RenderCopy(renderer, texture, NULL, &rect);
+	}
 	std::string message;
 	SDL_Texture* texture;
 	SDL_Rect rect;
@@ -299,11 +304,11 @@ int main(int argc, char* argv[])
 			SDL_RenderCopy(renderer, sc->texture, NULL, &rect);
 		}
 		// Render Text
-		SDL_RenderCopy(renderer, msg_current_frame.texture, NULL, &msg_current_frame.rect);
-		SDL_RenderCopy(renderer, msg_mouse_x.texture, NULL, &msg_mouse_x.rect);
-		SDL_RenderCopy(renderer, msg_mouse_y.texture, NULL, &msg_mouse_y.rect);
-		SDL_RenderCopy(renderer, msg_player_x.texture, NULL, &msg_player_x.rect);
-		SDL_RenderCopy(renderer, msg_player_y.texture, NULL, &msg_player_y.rect);
+		msg_current_frame.Render(renderer);
+		msg_mouse_x.Render(renderer);
+		msg_mouse_y.Render(renderer);
+		msg_player_x.Render(renderer);
+		msg_player_y.Render(renderer);
 		SDL_RenderPresent(renderer);
 
 
