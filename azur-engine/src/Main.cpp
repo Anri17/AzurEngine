@@ -9,11 +9,9 @@
 
 #include "GameObject.h"
 #include "Mouse.h"
-
 #include "ECS.h"
 #include "Components.h"
 #include "ECSEntities.h"
-
 #include "InputHandler.h"
 
 #define WINDOW_WIDTH  640
