@@ -52,6 +52,7 @@ void SetText(TextMessage* message, SDL_Renderer* renderer, TTF_Font* font, SDL_C
 	message->texture = SDL_CreateTextureFromSurface(renderer, surface);
 	message->rect.w = surface->w;
 	message->rect.h = surface->h;
+	SDL_FreeSurface(surface);
 }
 
 
