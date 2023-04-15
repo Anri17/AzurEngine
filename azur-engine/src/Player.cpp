@@ -56,4 +56,13 @@ void Player::Logic()
 
 	position->y += yVelocity;
 	position->x += xVelocity;
+
+
+	// Limit Player Play Field
+	int w = 32; // TODO: Get the sprite w through the SDL_Rect.
+	int h = 48; // TODO: Get the sprite h through the SDL_Rect.
+	if (position->x < screen_boundaries_left) position->x = screen_boundaries_left;
+	if (position->x + w > screen_boundaries_right) position->x = screen_boundaries_right - w;
+	if (position->y < screen_boundaries_top) position->y = screen_boundaries_top;
+	if (position->y + h > screen_boundaries_bottom) position->y = screen_boundaries_bottom - h;
 }
