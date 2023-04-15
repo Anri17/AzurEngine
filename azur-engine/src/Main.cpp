@@ -64,6 +64,9 @@ void SetText(Text* text, SDL_Renderer* renderer, TTF_Font* font, SDL_Color color
 	text->rect.w = surface->w;
 	text->rect.h = surface->h;
 	SDL_FreeSurface(surface);
+
+	text->font = font;
+	text->color = color;
 }
 
 void SetText(Text* text, SDL_Renderer* renderer)
