@@ -264,14 +264,6 @@ int main(int argc, char* argv[])
 	}
 
 
-	// Delete Objects
-	delete player;
-	for (auto bullet : bullets)
-	{
-		delete bullet;
-	}
-
-
 	// Quit Functions
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
