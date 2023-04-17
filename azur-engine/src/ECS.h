@@ -7,6 +7,8 @@
 #include <bitset>
 #include <array>
 
+#include <SDL.h>
+
 class Component;
 class Entity;
 
@@ -36,7 +38,7 @@ public:
 
 	virtual void init() {}
 	virtual void update() {}
-	virtual void draw() {}
+	virtual void draw(SDL_Renderer* renderer) {}
 
 	virtual ~Component() {}
 private:
@@ -57,11 +59,11 @@ public:
 		}
 	}
 
-	void draw()
+	void draw(SDL_Renderer* renderer)
 	{
 		for (auto& c : components)
 		{
-			c->draw();
+			c->draw(renderer);
 		}
 	}
 

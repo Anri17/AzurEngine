@@ -11,7 +11,7 @@ Player::Player(SDL_Renderer* renderer)
 	position = addComponent<PositionComponent>();
 	position->x = spawnX;
 	position->y = spawnY;
-	addComponent<SpriteComponent>()->setTexture(renderer, "player.png", 0, 0, 32, 48);
+	addComponent<SpriteComponent>()->setTexture(position, renderer, "player.png", 0, 0, 32, 48);
 }
 
 void Player::Logic()

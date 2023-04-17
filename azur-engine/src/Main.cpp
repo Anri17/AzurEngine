@@ -28,11 +28,7 @@
 std::vector<Entity*>	 entities;
 
 
-// Rendering System Data Lists
-// Hold the references of the components needed for rendering
-std::vector<PositionComponent*> Render_PositionComponents;
-std::vector<SpriteComponent*>	Render_SpriteComponents;
-
+// All the bullets
 std::vector<Bullet*> bullets;
 
 int main(int argc, char* argv[])
@@ -77,8 +73,6 @@ int main(int argc, char* argv[])
 	Player* player = new Player(renderer);
 	// Save the ESC components
 	entities.push_back(player);
-	Render_PositionComponents.push_back(player->getComponent<PositionComponent>());
-	Render_SpriteComponents.push_back(player->getComponent<SpriteComponent>());
 
 
 	// FPS Calculation Variables
@@ -176,8 +170,6 @@ int main(int argc, char* argv[])
 			Bullet* bullet = new Bullet(renderer, player->position->x, player->position->y);
 			// Save the ESC components
 			entities.push_back(bullet);
-			Render_PositionComponents.push_back(bullet->getComponent<PositionComponent>());
-			Render_SpriteComponents.push_back(bullet->getComponent<SpriteComponent>());
 			bullets.push_back(bullet);
 		}
 
@@ -228,16 +220,9 @@ int main(int argc, char* argv[])
 		SDL_RenderDrawRect(renderer, &playfield_rect);
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 1); // black color for background
 		// Render ECS Components
-		for (int i = 0; i < Render_PositionComponents.size(); i++)
+		for (int i = 0; i < entities.size(); i++)
 		{
-			PositionComponent* pc = Render_PositionComponents[i];
-			SpriteComponent* sc = Render_SpriteComponents[i];
-			SDL_Rect rect;
-			rect.x = pc->x + sc->rect.x;
-			rect.y = pc->y + sc->rect.y;
-			rect.w = sc->rect.w;
-			rect.h = sc->rect.h;
-			SDL_RenderCopy(renderer, sc->texture, NULL, &rect);
+			entities[i]->draw(renderer);
 		}
 		// Render Text
 		msg_current_frame.Render(renderer);

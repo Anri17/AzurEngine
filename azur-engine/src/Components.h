@@ -26,8 +26,10 @@ class SpriteComponent : public Component
 public:
 
 	// return 0 if sucessful
-	int setTexture(SDL_Renderer* renderer, const char* imageFileName, int x, int y, int w, int h)
+	int setTexture(PositionComponent* position, SDL_Renderer* renderer, const char* imageFileName, int x, int y, int w, int h)
 	{
+		this->position = position;
+
 		const char* baseDir = SDL_GetBasePath();
 		std::string fileDir = baseDir;
 		fileDir += imageFileName;
@@ -54,9 +56,20 @@ public:
 		return 0;
 	}
 
+	void draw(SDL_Renderer* renderer) override
+	{
+		SDL_Rect dstrect;
+		dstrect.x = position->x + rect.x;
+		dstrect.y = position->y + rect.y;
+		dstrect.w = rect.w;
+		dstrect.h = rect.h;
+		SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+	}
+
 public:
 	SDL_Texture* texture;
 	SDL_Rect rect;
+	PositionComponent* position;
 };
 
 #endif // _COMPONENTS_H
