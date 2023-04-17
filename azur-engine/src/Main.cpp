@@ -36,7 +36,7 @@ std::vector<SpriteComponent*>	Render_SpriteComponents;
 
 int main(int argc, char* argv[])
 {
-	// Init graphics, create window
+	// Initialise SDL, TTF, IMG
 	SDL_Init(SDL_INIT_EVERYTHING);
 	if (TTF_Init() == -1)
 	{
@@ -44,13 +44,18 @@ int main(int argc, char* argv[])
 		exit(-1);
 	}
 	IMG_Init(IMG_INIT_PNG);
+
+
+	// Create Window, Renderer & Event
 	SDL_Window* window = SDL_CreateWindow("Azur Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
 	SDL_Event e; // used for input events
-	Uint64 current_frame = 0; // FPS limiting and counting
-	bool application_is_running = true; // Controls the applications life cycle
 	
-	// Init Text For Debuging
+	// The running state of the applications
+	bool application_is_running = true;
+	
+
+	// Initialise Text For Debuging
 	std::string basepath = SDL_GetBasePath();
 	std::string fontname = "SpaceMono-Regular.ttf";
 	std::string fontpath = basepath + fontname;
@@ -62,60 +67,28 @@ int main(int argc, char* argv[])
 	Text msg_player_x(fontpath, fontsize, message_color);
 	Text msg_player_y(fontpath, fontsize, message_color);
 
-	// Mouse
+
+	// Initialise Mouse
 	Mouse mouse;
 
 
-	// Entities from ECS
-	// Create Player
+	// Initialise Player with ECS
 	Player* player = new Player(renderer);
-	// Save the components for the ECS
+	// Save the ESC components
 	entities.push_back(player);
 	Render_PositionComponents.push_back(player->getComponent<PositionComponent>());
 	Render_SpriteComponents.push_back(player->getComponent<SpriteComponent>());
 
 
 	// FPS Calculation Variables
+	Uint64 current_frame = 0;
 	Uint32 previousTime = SDL_GetTicks();
 	Uint32 currentTime = SDL_GetTicks();
 
 
-	DEBUG_CONSOLE_LOG("Text on Screen is temporary. TODO: Make it a debug feature.");
-
+	// The Application Loop
 	while (application_is_running)
 	{
-		// DEBUG TEXT
-		msg_current_frame.Set(
-			renderer,
-			std::string("CurrentFrame: " + std::to_string(current_frame)),
-			0,
-			0
-		);
-		msg_mouse_x.Set(
-			renderer,
-			std::string("MouseX: " + std::to_string(mouse.xPos)),
-			0,
-			msg_current_frame.rect.h
-		);
-		msg_mouse_y.Set(
-			renderer,
-			std::string("MouseY: " + std::to_string(mouse.yPos)),
-			0,
-			msg_mouse_x.rect.y + msg_mouse_x.rect.h
-		);
-		msg_player_x.Set(
-			renderer,
-			std::string("PlayerX: " + std::to_string(player->position->x)),
-			0,
-			msg_mouse_y.rect.y + msg_mouse_y.rect.h
-		);
-		msg_player_y.Set(
-			renderer,
-			std::string("PlayerY: " + std::to_string(player->position->y)),
-			0,
-			msg_player_x.rect.y + msg_player_x.rect.h
-		);
-
 		// Abstract SDL events into engine components and systems
 		// Reset First Tap Event
 		// First Tap variables of the InputHandler are only true on the first frame when the keys are pressed.
@@ -133,7 +106,7 @@ int main(int argc, char* argv[])
 		InputHandler::firstTap_DOWN  = false;
 		InputHandler::firstTap_LEFT  = false;
 		InputHandler::firstTap_RIGHT = false;
-		// SDL Event Processing
+		// Process SDL Events
 		while (SDL_PollEvent(&e))
 		{
 			switch (e.type)
@@ -184,21 +157,51 @@ int main(int argc, char* argv[])
 		}
 
 
-		// Object State Processing
+		// Update Game and Application States
 		// Mouse Update
 		mouse.Update();
-
-
-		// Object Input Handling
 		player->Logic();
-		// End Application
-		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false;
+		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false; // End Application
+		
+		
+		// Update UI
+		// Text Update
+		msg_current_frame.Set(
+			renderer,
+			std::string("CurrentFrame: " + std::to_string(current_frame)),
+			0,
+			0
+		);
+		msg_mouse_x.Set(
+			renderer,
+			std::string("MouseX: " + std::to_string(mouse.xPos)),
+			0,
+			msg_current_frame.rect.h
+		);
+		msg_mouse_y.Set(
+			renderer,
+			std::string("MouseY: " + std::to_string(mouse.yPos)),
+			0,
+			msg_mouse_x.rect.y + msg_mouse_x.rect.h
+		);
+		msg_player_x.Set(
+			renderer,
+			std::string("PlayerX: " + std::to_string(player->position->x)),
+			0,
+			msg_mouse_y.rect.y + msg_mouse_y.rect.h
+		);
+		msg_player_y.Set(
+			renderer,
+			std::string("PlayerY: " + std::to_string(player->position->y)),
+			0,
+			msg_player_x.rect.y + msg_player_x.rect.h
+		);
 
 
-		// Drawing to Screen
+		// Rendering
 		SDL_RenderClear(renderer);
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 1);
-		// Draw Play Field
+		// Render Play Field
 		SDL_Rect playfield_rect;
 		playfield_rect.x = PlayField::screen_boundaries_left;
 		playfield_rect.y = PlayField::screen_boundaries_top;
@@ -207,8 +210,7 @@ int main(int argc, char* argv[])
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 1); // while color for playfield
 		SDL_RenderDrawRect(renderer, &playfield_rect);
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 1); // black color for background
-		// ECS Rendering System using Components
-		// Render ECS Entities
+		// Render ECS Components
 		for (int i = 0; i < Render_PositionComponents.size(); i++)
 		{
 			PositionComponent* pc = Render_PositionComponents[i];
@@ -226,10 +228,11 @@ int main(int argc, char* argv[])
 		msg_mouse_y.Render(renderer);
 		msg_player_x.Render(renderer);
 		msg_player_y.Render(renderer);
+		// Present buffer
 		SDL_RenderPresent(renderer);
 
 
-		// FPS Calculations
+		// Calculate FPS
 		currentTime = SDL_GetTicks();
 		if (currentTime - previousTime < 1000.0f / FPS_TARGET)
 		{
