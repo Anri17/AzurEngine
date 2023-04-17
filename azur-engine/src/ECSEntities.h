@@ -2,6 +2,7 @@
 #define _ECS_ENTITIES_H
 
 #include "Player.h"
+#include "Bullet.h"
 #include "PlayField.h"
 
 #endif // _ECS_ENTITIES_H

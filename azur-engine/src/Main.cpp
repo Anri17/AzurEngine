@@ -33,6 +33,7 @@ std::vector<Entity*>	 entities;
 std::vector<PositionComponent*> Render_PositionComponents;
 std::vector<SpriteComponent*>	Render_SpriteComponents;
 
+std::vector<Bullet*> bullets;
 
 int main(int argc, char* argv[])
 {
@@ -78,6 +79,15 @@ int main(int argc, char* argv[])
 	entities.push_back(player);
 	Render_PositionComponents.push_back(player->getComponent<PositionComponent>());
 	Render_SpriteComponents.push_back(player->getComponent<SpriteComponent>());
+
+
+	// Initialise Bullet with ECS
+	Bullet* bullet = new Bullet(renderer, 320, 400);
+	// Save the ESC components
+	entities.push_back(bullet);
+	Render_PositionComponents.push_back(bullet->getComponent<PositionComponent>());
+	Render_SpriteComponents.push_back(bullet->getComponent<SpriteComponent>());
+	bullets.push_back(bullet);
 
 
 	// FPS Calculation Variables
@@ -162,7 +172,10 @@ int main(int argc, char* argv[])
 		mouse.Update();
 		player->Logic();
 		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false; // End Application
-		
+		for (auto bullet : bullets)
+		{
+			bullet->Logic();
+		}
 		
 		// Update UI
 		// Text Update
@@ -249,6 +262,15 @@ int main(int argc, char* argv[])
 	{
 		delete e;
 	}
+
+
+	// Delete Objects
+	delete player;
+	for (auto bullet : bullets)
+	{
+		delete bullet;
+	}
+
 
 	// Quit Functions
 	SDL_DestroyRenderer(renderer);
