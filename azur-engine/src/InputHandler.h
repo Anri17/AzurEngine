@@ -11,6 +11,7 @@ namespace InputHandler
 		KEY_A,
 		KEY_S,
 		KEY_D,
+		KEY_Z,
 
 		KEY_ESCAPE,
 		KEY_LSHIFT,
@@ -31,6 +32,7 @@ namespace InputHandler
 	extern bool isDown_A, firstTap_A;
 	extern bool isDown_S, firstTap_S;
 	extern bool isDown_D, firstTap_D;
+	extern bool isDown_Z, firstTap_Z;
 
 	extern bool isDown_ESCAPE, firstTap_ESCAPE;
 	extern bool isDown_LSHIFT, firstTap_LSHIFT;

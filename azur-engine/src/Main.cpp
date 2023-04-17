@@ -81,15 +81,6 @@ int main(int argc, char* argv[])
 	Render_SpriteComponents.push_back(player->getComponent<SpriteComponent>());
 
 
-	// Initialise Bullet with ECS
-	Bullet* bullet = new Bullet(renderer, 320, 400);
-	// Save the ESC components
-	entities.push_back(bullet);
-	Render_PositionComponents.push_back(bullet->getComponent<PositionComponent>());
-	Render_SpriteComponents.push_back(bullet->getComponent<SpriteComponent>());
-	bullets.push_back(bullet);
-
-
 	// FPS Calculation Variables
 	Uint64 current_frame = 0;
 	Uint32 previousTime = SDL_GetTicks();
@@ -106,6 +97,7 @@ int main(int argc, char* argv[])
 		InputHandler::firstTap_A = false;
 		InputHandler::firstTap_S = false;
 		InputHandler::firstTap_D = false;
+		InputHandler::firstTap_Z = false;
 
 		InputHandler::firstTap_LSHIFT = false;
 		InputHandler::firstTap_LCTRL  = false;
@@ -132,6 +124,7 @@ int main(int argc, char* argv[])
 					case SDLK_a: if (!InputHandler::isDown_A) { InputHandler::isDown_A = InputHandler::firstTap_A = true; } break;
 					case SDLK_s: if (!InputHandler::isDown_S) { InputHandler::isDown_S = InputHandler::firstTap_S = true; } break;
 					case SDLK_d: if (!InputHandler::isDown_D) { InputHandler::isDown_D = InputHandler::firstTap_D = true; } break;
+					case SDLK_z: if (!InputHandler::isDown_Z) { InputHandler::isDown_Z = InputHandler::firstTap_Z = true; } break;
 
 					case SDLK_LSHIFT: if (!InputHandler::isDown_LSHIFT) { InputHandler::isDown_LSHIFT = InputHandler::firstTap_LSHIFT = true; } break;
 					case SDLK_LCTRL:  if (!InputHandler::isDown_LCTRL)  { InputHandler::isDown_LCTRL  = InputHandler::firstTap_LCTRL  = true; } break;
@@ -151,6 +144,7 @@ int main(int argc, char* argv[])
 					case SDLK_a: InputHandler::isDown_A = false; break;
 					case SDLK_s: InputHandler::isDown_S = false; break;
 					case SDLK_d: InputHandler::isDown_D = false; break;
+					case SDLK_z: InputHandler::isDown_Z = false; break;
 
 					case SDLK_LSHIFT: InputHandler::isDown_LSHIFT = false; break;
 					case SDLK_LCTRL:  InputHandler::isDown_LCTRL  = false; break;
@@ -176,7 +170,17 @@ int main(int argc, char* argv[])
 		{
 			bullet->Logic();
 		}
-		
+		if (InputHandler::GetKeyTap(InputHandler::KEY_Z)) // Fire Bullet
+		{
+			// Initialise Bullet with ECS
+			Bullet* bullet = new Bullet(renderer, player->position->x, player->position->y);
+			// Save the ESC components
+			entities.push_back(bullet);
+			Render_PositionComponents.push_back(bullet->getComponent<PositionComponent>());
+			Render_SpriteComponents.push_back(bullet->getComponent<SpriteComponent>());
+			bullets.push_back(bullet);
+		}
+
 		// Update UI
 		// Text Update
 		msg_current_frame.Set(

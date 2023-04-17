@@ -6,6 +6,7 @@ namespace InputHandler
 	bool isDown_A, firstTap_A;
 	bool isDown_S, firstTap_S;
 	bool isDown_D, firstTap_D;
+	bool isDown_Z, firstTap_Z;
 
 	bool isDown_ESCAPE, firstTap_ESCAPE;
 	bool isDown_LSHIFT, firstTap_LSHIFT;
@@ -25,6 +26,7 @@ namespace InputHandler
 		case InputHandler::KEY_A: return firstTap_A;
 		case InputHandler::KEY_S: return firstTap_S;
 		case InputHandler::KEY_D: return firstTap_D;
+		case InputHandler::KEY_Z: return firstTap_Z;
 
 		case InputHandler::KEY_ESCAPE: return firstTap_ESCAPE;
 		case InputHandler::KEY_LSHIFT: return firstTap_LSHIFT;
@@ -48,6 +50,7 @@ namespace InputHandler
 		case InputHandler::KEY_A: return isDown_A;
 		case InputHandler::KEY_S: return isDown_S;
 		case InputHandler::KEY_D: return isDown_D;
+		case InputHandler::KEY_Z: return isDown_Z;
 
 		case InputHandler::KEY_ESCAPE: return isDown_ESCAPE;
 		case InputHandler::KEY_LSHIFT: return isDown_LSHIFT;
