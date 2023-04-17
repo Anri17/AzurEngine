@@ -8,7 +8,6 @@
 
 // Engine
 #include "Debug.h"
-#include "GameObject.h"
 #include "Mouse.h"
 #include "InputHandler.h"
 #include "Text.h"
@@ -26,7 +25,6 @@
 
 
 // Game Related Objects
-std::vector<GameObject*> gameObjects;
 std::vector<Entity*>	 entities;
 
 
@@ -209,16 +207,6 @@ int main(int argc, char* argv[])
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 1); // while color for playfield
 		SDL_RenderDrawRect(renderer, &playfield_rect);
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 1); // black color for background
-		// Render GameObject Textures
-		for (GameObject* gm : gameObjects)
-		{
-			SDL_Rect rect;
-			rect.x = gm->rect.x + gm->x;
-			rect.y = gm->rect.y + gm->y;
-			rect.w = gm->rect.w;
-			rect.h = gm->rect.h;
-			SDL_RenderCopy(renderer, gm->texture, NULL, &rect);
-		}
 		// ECS Rendering System using Components
 		// Render ECS Entities
 		for (int i = 0; i < Render_PositionComponents.size(); i++)
@@ -253,11 +241,6 @@ int main(int argc, char* argv[])
 
 
 	// Memory Cleaning
-	// Clear GameObject Vector
-	for (GameObject* gm : gameObjects)
-	{
-		delete gm;
-	}
 	// Clear Entity Vector
 	for (Entity* e : entities)
 	{

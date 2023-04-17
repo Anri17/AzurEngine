@@ -164,9 +164,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\InputHandler.cpp" />
-    <ClCompile Include="src\MyCustomImageEntity.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
-    <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\PlayField.cpp" />
@@ -176,11 +174,9 @@
     <ClInclude Include="src\Debug.h" />
     <ClInclude Include="src\InputHandler.h" />
     <ClInclude Include="src\ECSEntities.h" />
-    <ClInclude Include="src\MyCustomImageEntity.h" />
     <ClInclude Include="src\Mouse.h" />
     <ClInclude Include="src\Components.h" />
     <ClInclude Include="src\ECS.h" />
-    <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\PlayField.h" />
     <ClInclude Include="src\Text.h" />
