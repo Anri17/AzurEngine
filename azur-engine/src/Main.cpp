@@ -120,6 +120,7 @@ int main(int argc, char* argv[])
 
 		// Abstract SDL events into engine components and systems
 		// Reset First Tap Event
+		// First Tap variables of the InputHandler are only true on the first frame when the keys are pressed.
 		InputHandler::firstTap_W = false;
 		InputHandler::firstTap_A = false;
 		InputHandler::firstTap_S = false;
