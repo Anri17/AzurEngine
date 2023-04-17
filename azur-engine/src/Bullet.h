@@ -15,7 +15,8 @@ public:
 
 	void Logic();
 
-	   
+	int width = 12;
+	int height = 12;
 };
 
 #endif // _BULLET_H

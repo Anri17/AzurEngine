@@ -11,7 +11,7 @@ Player::Player(SDL_Renderer* renderer)
 	position = addComponent<PositionComponent>();
 	position->x = spawnX;
 	position->y = spawnY;
-	addComponent<SpriteComponent>()->setTexture(position, renderer, "player.png", 0, 0, 32, 48);
+	addComponent<SpriteComponent>()->setTexture(position, renderer, "player.png", -player_w/2, -player_h/2, player_w, player_h);
 }
 
 void Player::Logic()
@@ -60,8 +60,8 @@ void Player::Logic()
 
 
 	// Limit Player Play Field
-	if (position->x < PlayField::screen_boundaries_left) position->x = PlayField::screen_boundaries_left;
-	if (position->x + player_w > PlayField::screen_boundaries_right) position->x = PlayField::screen_boundaries_right - player_w;
-	if (position->y < PlayField::screen_boundaries_top) position->y = PlayField::screen_boundaries_top;
-	if (position->y + player_h > PlayField::screen_boundaries_bottom) position->y = PlayField::screen_boundaries_bottom - player_h;
+	if (position->x < PlayField::screen_boundaries_left + player_w / 2.0f) position->x = PlayField::screen_boundaries_left + player_w / 2.0f;
+	if (position->x + player_w / 2.0f > PlayField::screen_boundaries_right) position->x = PlayField::screen_boundaries_right - player_w / 2.0f;
+	if (position->y < PlayField::screen_boundaries_top + player_h / 2.0f) position->y = PlayField::screen_boundaries_top + player_h / 2.0f;
+	if (position->y + player_h/2.0f > PlayField::screen_boundaries_bottom) position->y = PlayField::screen_boundaries_bottom - player_h / 2.0f;
 }
