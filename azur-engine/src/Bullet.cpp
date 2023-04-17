@@ -17,6 +17,7 @@ void Bullet::Logic()
 
 	if (position->y < PlayField::screen_boundaries_top)
 	{
-		delete this;
+		position->y = 400; // TODO: Temporary fix. A system needs to be created to handle the deletion of the components of this entity.
+		//delete this;
 	}
 }
