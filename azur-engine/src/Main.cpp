@@ -30,13 +30,6 @@
 #define INPUT_MANAGER_KEY_COUNT 1024
 
 
-// Game Related Objects
-std::vector<Entity*> _entities;
-
-
-// All the bullets
-std::vector<Bullet*> _bullets;
-
 int main(int argc, char* argv[])
 {
 	// Initialise SDL, TTF, IMG

@@ -163,7 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Bullet.cpp" />
+    <ClCompile Include="src\BulletComponent.cpp" />
     <ClCompile Include="src\ECSManager.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
@@ -175,7 +175,7 @@
     <ClCompile Include="src\Text.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Bullet.h" />
+    <ClInclude Include="src\BulletComponent.h" />
     <ClInclude Include="src\Debug.h" />
     <ClInclude Include="src\ECSManager.h" />
     <ClInclude Include="src\InputHandler.h" />

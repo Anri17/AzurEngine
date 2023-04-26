@@ -7,19 +7,24 @@ Entity* EntityManager::AddEntity(Entity* entity)
 	return entity;
 }
 
-Bullet* EntityManager::SpawnBullet(SDL_Renderer* renderer, PlayerComponent* player)
+BulletComponent* EntityManager::SpawnBullet(SDL_Renderer* renderer, PlayerComponent* player)
 {
 	// Initialise Bullet with ECS
-	Bullet* bullet = new Bullet(renderer, player->position->x, player->position->y);
-	// Save the ESC components
+	Entity* bullet = new Entity();
+	PositionComponent* pc = bullet->addComponent<PositionComponent>();
+	pc->x = player->position->x;
+	pc->y = player->position->y;
+	BulletComponent* bc = bullet->addComponent<BulletComponent>();
+	SpriteComponent* sc = bullet->addComponent<SpriteComponent>();
+	sc->setTexture(pc, renderer, "small_bullet.png", -bc->width / 2, -bc->height / 2, bc->width, bc->height);
 	entities.push_back(bullet);
 
-	return bullet;
+	return bc;
 }
 
-void EntityManager::DeleteBullet(Bullet* bullet)
+void EntityManager::DeleteBullet(BulletComponent* bullet)
 {
-	std::vector<Entity*>::iterator pos = std::find(entities.begin(), entities.end(), (Entity*)bullet);
+	std::vector<Entity*>::iterator pos = std::find(entities.begin(), entities.end(), bullet->entity);
 	if (pos != entities.end())
 	{
 		entities.erase(pos);

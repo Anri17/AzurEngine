@@ -7,8 +7,8 @@ class EntityManager
 {
 public:
 	static Entity* AddEntity(Entity* entity);
-	static Bullet* SpawnBullet(SDL_Renderer* renderer, PlayerComponent* player);
-	static void DeleteBullet(Bullet* bullet);
+	static BulletComponent* SpawnBullet(SDL_Renderer* renderer, PlayerComponent* player);
+	static void DeleteBullet(BulletComponent* bullet);
 
 	static void Render(SDL_Renderer* renderer);
 	static void Update();

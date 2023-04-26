@@ -5,16 +5,14 @@
 #include "ECS.h"
 #include "Components.h"
 
-class Bullet : public Entity
+class BulletComponent : public Component
 {
 public:
-	Bullet(SDL_Renderer* renderer, float x, float y);
+	void init() override;
+	void update() override;
 
 
 	PositionComponent* position;
-
-	void Logic();
-
 	int width = 12;
 	int height = 12;
 };

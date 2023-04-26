@@ -4,7 +4,7 @@
 #include "PositionComponent.h"
 #include "SpriteComponent.h"
 #include "PlayerComponent.h"
-#include "Bullet.h"
+#include "BulletComponent.h"
 #include "PlayFieldComponent.h"
 
 #endif // _COMPONENTS_H
