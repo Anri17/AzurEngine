@@ -161,12 +161,15 @@ int main(int argc, char* argv[])
 		// Mouse Update
 		mouse.Update();
 		player->Logic();
-		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false; // End Application
+		// End Application
+		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false;
+		// Bullet Update
 		for (Bullet* bullet : bullets)
 		{
 			bullet->Logic();
 		}
-		if (InputHandler::GetKeyTap(InputHandler::KEY_Z)) // Fire Bullet
+		// Fire Bullet
+		if (InputHandler::GetKeyTap(InputHandler::KEY_Z))
 		{
 			// Initialise Bullet with ECS
 			Bullet* bullet = new Bullet(renderer, player->position->x, player->position->y);
