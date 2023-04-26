@@ -164,13 +164,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Bullet.cpp" />
-    <ClCompile Include="src\Components.cpp" />
     <ClCompile Include="src\ECSManager.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\PlayerComponent.cpp" />
     <ClCompile Include="src\PlayField.cpp" />
+    <ClCompile Include="src\PositionComponent.cpp" />
+    <ClCompile Include="src\SpriteComponent.cpp" />
     <ClCompile Include="src\Text.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +185,8 @@
     <ClInclude Include="src\ECS.h" />
     <ClInclude Include="src\PlayerComponent.h" />
     <ClInclude Include="src\PlayField.h" />
+    <ClInclude Include="src\PositionComponent.h" />
+    <ClInclude Include="src\SpriteComponent.h" />
     <ClInclude Include="src\Text.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

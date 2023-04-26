@@ -39,7 +39,10 @@
     <ClCompile Include="src\ECSManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components.cpp">
+    <ClCompile Include="src\SpriteComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PositionComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -75,6 +78,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ECSManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SpriteComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PositionComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

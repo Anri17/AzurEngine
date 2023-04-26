@@ -1,5 +1,4 @@
-#include "Components.h"
-
+#include "SpriteComponent.h"
 
 int SpriteComponent::setTexture(PositionComponent* position, SDL_Renderer* renderer, const char* imageFileName, int x, int y, int w, int h)
 {
