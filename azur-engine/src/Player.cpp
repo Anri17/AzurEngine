@@ -60,8 +60,8 @@ void Player::Logic()
 
 
 	// Limit Player Play Field
-	if (position->x < PlayField::screen_boundaries_left + player_w / 2.0f) position->x = PlayField::screen_boundaries_left + player_w / 2.0f;
-	if (position->x + player_w / 2.0f > PlayField::screen_boundaries_right) position->x = PlayField::screen_boundaries_right - player_w / 2.0f;
-	if (position->y < PlayField::screen_boundaries_top + player_h / 2.0f) position->y = PlayField::screen_boundaries_top + player_h / 2.0f;
-	if (position->y + player_h/2.0f > PlayField::screen_boundaries_bottom) position->y = PlayField::screen_boundaries_bottom - player_h / 2.0f;
+	if (position->x < PlayField::Left + player_w / 2.0f) position->x = PlayField::Left + player_w / 2.0f;
+	if (position->x + player_w / 2.0f > PlayField::Right) position->x = PlayField::Right - player_w / 2.0f;
+	if (position->y < PlayField::Top + player_h / 2.0f) position->y = PlayField::Top + player_h / 2.0f;
+	if (position->y + player_h/2.0f > PlayField::Bottom) position->y = PlayField::Bottom - player_h / 2.0f;
 }

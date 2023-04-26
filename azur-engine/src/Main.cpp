@@ -67,6 +67,8 @@ int main(int argc, char* argv[])
 
 	// Initialise Mouse
 	Mouse mouse;
+	// Initialise PlayField
+	PlayField playField;
 
 
 	// Initialise Player with ECS
@@ -211,14 +213,7 @@ int main(int argc, char* argv[])
 		SDL_RenderClear(renderer);
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 1);
 		// Render Play Field
-		SDL_Rect playfield_rect;
-		playfield_rect.x = PlayField::screen_boundaries_left;
-		playfield_rect.y = PlayField::screen_boundaries_top;
-		playfield_rect.w = PlayField::screen_boundaries_right - PlayField::screen_boundaries_left;
-		playfield_rect.h = PlayField::screen_boundaries_bottom - PlayField::screen_boundaries_top;
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 1); // while color for playfield
-		SDL_RenderDrawRect(renderer, &playfield_rect);
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 1); // black color for background
+		playField.Render(renderer);
 		// Render ECS Components
 		for (int i = 0; i < entities.size(); i++)
 		{

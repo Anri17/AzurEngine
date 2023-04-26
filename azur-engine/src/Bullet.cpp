@@ -15,7 +15,7 @@ void Bullet::Logic()
 	float speed = 2.5f;
 	position->y -= speed;
 
-	if (position->y - height / 2 < PlayField::screen_boundaries_top)
+	if (position->y - height / 2 < PlayField::Top)
 	{
 		position->y = 400; // TODO: Temporary fix. A system needs to be created to handle the deletion of the components of this entity.
 		//delete this;
