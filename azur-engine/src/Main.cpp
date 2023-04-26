@@ -16,7 +16,7 @@
 
 
 // Game
-#include "ECSEntities.h"
+#include "Components.h"
 // Systems
 #include "ECSManager.h"
 

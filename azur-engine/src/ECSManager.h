@@ -1,7 +1,7 @@
 #ifndef _ECS_MANAGER_H
 #define _ECS_MANAGER_H
 
-#include "ECSEntities.h"
+#include "Components.h"
 
 class EntityManager
 {

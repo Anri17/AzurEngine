@@ -179,7 +179,6 @@
     <ClInclude Include="src\Debug.h" />
     <ClInclude Include="src\ECSManager.h" />
     <ClInclude Include="src\InputHandler.h" />
-    <ClInclude Include="src\ECSEntities.h" />
     <ClInclude Include="src\Mouse.h" />
     <ClInclude Include="src\Components.h" />
     <ClInclude Include="src\ECS.h" />

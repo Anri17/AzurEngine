@@ -56,9 +56,6 @@
     <ClInclude Include="src\Mouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECSEntities.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\InputHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
