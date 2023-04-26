@@ -1,5 +1,6 @@
 #include "SpriteComponent.h"
 
+// return 0 if sucessful
 int SpriteComponent::setTexture(PositionComponent* position, SDL_Renderer* renderer, const char* imageFileName, int x, int y, int w, int h)
 {
 	this->position = position;

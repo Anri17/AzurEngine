@@ -12,7 +12,6 @@
 class SpriteComponent : public Component
 {
 public:
-	// return 0 if sucessful
 	int setTexture(PositionComponent* position, SDL_Renderer* renderer, const char* imageFileName, int x, int y, int w, int h);
 	void draw(SDL_Renderer* renderer) override;
 
