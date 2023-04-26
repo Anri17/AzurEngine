@@ -162,7 +162,7 @@ int main(int argc, char* argv[])
 		mouse.Update();
 		player->Logic();
 		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false; // End Application
-		for (auto bullet : bullets)
+		for (Bullet* bullet : bullets)
 		{
 			bullet->Logic();
 		}
