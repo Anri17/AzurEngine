@@ -73,19 +73,19 @@ int main(int argc, char* argv[])
 
 	// Initialise Mouse
 	Mouse mouse;
+
+
 	// Initialise PlayField
-	PlayField playField;
-
-
+	Entity* playField = new Entity();
+	playField->addComponent<PlayFieldComponent>();
+	EntityManager::AddEntity(playField);
 	// Initialise Player with ECS
 	Entity* player = new Entity();
 	PositionComponent* positionComponent = player->addComponent<PositionComponent>();
 	PlayerComponent* playerComponent = player->addComponent<PlayerComponent>();
 	player->
 		addComponent<SpriteComponent>()->
-		setTexture(positionComponent, renderer, "player.png", -playerComponent->player_w / 2, -playerComponent->player_h / 2, playerComponent->player_w, playerComponent->player_h);;
-
-	// Save the ESC components
+		setTexture(positionComponent, renderer, "player.png", -playerComponent->player_w / 2, -playerComponent->player_h / 2, playerComponent->player_w, playerComponent->player_h);
 	EntityManager::AddEntity(player);
 
 

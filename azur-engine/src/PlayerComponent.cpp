@@ -4,7 +4,7 @@
 
 #include "InputHandler.h"
 
-#include "PlayField.h"
+#include "PlayFieldComponent.h"
 
 
 void PlayerComponent::init()
@@ -60,10 +60,10 @@ void PlayerComponent::update()
 
 
 	// Limit Player Play Field
-	if (position->x < PlayField::Left + player_w / 2.0f) position->x = PlayField::Left + player_w / 2.0f;
-	if (position->x + player_w / 2.0f > PlayField::Right) position->x = PlayField::Right - player_w / 2.0f;
-	if (position->y < PlayField::Top + player_h / 2.0f) position->y = PlayField::Top + player_h / 2.0f;
-	if (position->y + player_h/2.0f > PlayField::Bottom) position->y = PlayField::Bottom - player_h / 2.0f;
+	if (position->x < PlayFieldComponent::Left + player_w / 2.0f) position->x = PlayFieldComponent::Left + player_w / 2.0f;
+	if (position->x + player_w / 2.0f > PlayFieldComponent::Right) position->x = PlayFieldComponent::Right - player_w / 2.0f;
+	if (position->y < PlayFieldComponent::Top + player_h / 2.0f) position->y = PlayFieldComponent::Top + player_h / 2.0f;
+	if (position->y + player_h/2.0f > PlayFieldComponent::Bottom) position->y = PlayFieldComponent::Bottom - player_h / 2.0f;
 }
 
 void PlayerComponent::draw(SDL_Renderer* renderer)

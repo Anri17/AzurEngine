@@ -169,7 +169,7 @@
     <ClCompile Include="src\Mouse.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\PlayerComponent.cpp" />
-    <ClCompile Include="src\PlayField.cpp" />
+    <ClCompile Include="src\PlayFieldComponent.cpp" />
     <ClCompile Include="src\PositionComponent.cpp" />
     <ClCompile Include="src\SpriteComponent.cpp" />
     <ClCompile Include="src\Text.cpp" />
@@ -183,7 +183,7 @@
     <ClInclude Include="src\Components.h" />
     <ClInclude Include="src\ECS.h" />
     <ClInclude Include="src\PlayerComponent.h" />
-    <ClInclude Include="src\PlayField.h" />
+    <ClInclude Include="src\PlayFieldComponent.h" />
     <ClInclude Include="src\PositionComponent.h" />
     <ClInclude Include="src\SpriteComponent.h" />
     <ClInclude Include="src\Text.h" />

@@ -45,7 +45,6 @@ private:
 };
 
 /*
-
 	An entity is an object that hold many components. These components can be simple ones like position and sprites, and also complex ones for specific tasks.
 */
 class Entity

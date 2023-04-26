@@ -1,6 +1,6 @@
 #include "Bullet.h"
 
-#include "PlayField.h"
+#include "PlayFieldComponent.h"
 #include "ECSManager.h"
 
 Bullet::Bullet(SDL_Renderer* renderer, float x, float y)
@@ -16,7 +16,7 @@ void Bullet::Logic()
 	float speed = 2.5f;
 	position->y -= speed;
 
-	if (position->y - height / 2 < PlayField::Top)
+	if (position->y - height / 2 < PlayFieldComponent::Top)
 	{
 		EntityManager::DeleteBullet(this);
 	}

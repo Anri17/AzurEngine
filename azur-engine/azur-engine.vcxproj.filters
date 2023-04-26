@@ -27,7 +27,7 @@
     <ClCompile Include="src\PlayerComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PlayField.cpp">
+    <ClCompile Include="src\PlayFieldComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Text.cpp">
@@ -62,7 +62,7 @@
     <ClInclude Include="src\PlayerComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\PlayField.h">
+    <ClInclude Include="src\PlayFieldComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Text.h">
