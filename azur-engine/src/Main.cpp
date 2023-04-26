@@ -7,6 +7,7 @@
 #include <cstring>
 
 // Engine
+#include "Application.h"
 #include "Debug.h"
 #include "Mouse.h"
 #include "InputHandler.h"
@@ -24,9 +25,7 @@
 
 #define WINDOW_WIDTH  640
 #define WINDOW_HEIGHT 480
-
 #define FPS_TARGET 60
-
 #define INPUT_MANAGER_KEY_COUNT 1024
 
 
@@ -45,6 +44,8 @@ int main(int argc, char* argv[])
 	// Create Window, Renderer & Event
 	SDL_Window* window = SDL_CreateWindow("Azur Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
+	// TODO: replace all of renderers to Application::renderer
+	Application::renderer = renderer;
 	SDL_Event e; // used for input events
 	
 	// The running state of the applications
@@ -168,10 +169,6 @@ int main(int argc, char* argv[])
 		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false;
 		// Game Level Update
 		EntityManager::Update();
-		if (InputHandler::GetKeyTap(InputHandler::KEY_Z))
-		{
-			EntityManager::SpawnBullet(renderer, playerComponent);
-		}
 
 		// Update UI
 		// Text Update
