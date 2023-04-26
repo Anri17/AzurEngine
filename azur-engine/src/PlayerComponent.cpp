@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "PlayerComponent.h"
 
 #include <cmath>
 
@@ -6,15 +6,15 @@
 
 #include "PlayField.h"
 
-Player::Player(SDL_Renderer* renderer)
+
+void PlayerComponent::init()
 {
-	position = addComponent<PositionComponent>();
+	position = entity->getComponent<PositionComponent>();
 	position->x = spawnX;
 	position->y = spawnY;
-	addComponent<SpriteComponent>()->setTexture(position, renderer, "player.png", -player_w/2, -player_h/2, player_w, player_h);
 }
 
-void Player::Logic()
+void PlayerComponent::update()
 {
 	float xVelocity = 0;
 	float yVelocity = 0;
@@ -64,4 +64,9 @@ void Player::Logic()
 	if (position->x + player_w / 2.0f > PlayField::Right) position->x = PlayField::Right - player_w / 2.0f;
 	if (position->y < PlayField::Top + player_h / 2.0f) position->y = PlayField::Top + player_h / 2.0f;
 	if (position->y + player_h/2.0f > PlayField::Bottom) position->y = PlayField::Bottom - player_h / 2.0f;
+}
+
+void PlayerComponent::draw(SDL_Renderer* renderer)
+{
+
 }

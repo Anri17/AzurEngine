@@ -4,11 +4,12 @@
 #include "ECS.h"
 #include "Components.h"
 
-class Player : public Entity
+class PlayerComponent : public Component
 {
 public:
-	Player(SDL_Renderer* renderer);
-	void Logic();
+	void init() override;
+	void update() override;
+	void draw(SDL_Renderer* renderer) override;
 
 	PositionComponent* position;
 

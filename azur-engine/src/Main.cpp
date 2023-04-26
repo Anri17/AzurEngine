@@ -12,8 +12,14 @@
 #include "InputHandler.h"
 #include "Text.h"
 
+
+
+
 // Game
 #include "ECSEntities.h"
+// Systems
+#include "ECSManager.h"
+
 
 
 #define WINDOW_WIDTH  640
@@ -25,11 +31,11 @@
 
 
 // Game Related Objects
-std::vector<Entity*>	 entities;
+std::vector<Entity*> _entities;
 
 
 // All the bullets
-std::vector<Bullet*> bullets;
+std::vector<Bullet*> _bullets;
 
 int main(int argc, char* argv[])
 {
@@ -72,9 +78,15 @@ int main(int argc, char* argv[])
 
 
 	// Initialise Player with ECS
-	Player* player = new Player(renderer);
+	Entity* player = new Entity();
+	PositionComponent* positionComponent = player->addComponent<PositionComponent>();
+	PlayerComponent* playerComponent = player->addComponent<PlayerComponent>();
+	player->
+		addComponent<SpriteComponent>()->
+		setTexture(positionComponent, renderer, "player.png", -playerComponent->player_w / 2, -playerComponent->player_h / 2, playerComponent->player_w, playerComponent->player_h);;
+
 	// Save the ESC components
-	entities.push_back(player);
+	EntityManager::AddEntity(player);
 
 
 	// FPS Calculation Variables
@@ -158,24 +170,14 @@ int main(int argc, char* argv[])
 
 
 		// Update Game and Application States
-		// Mouse Update
+		// Application Level Update
 		mouse.Update();
-		player->Logic();
-		// End Application
 		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false;
-		// Bullet Update
-		for (Bullet* bullet : bullets)
-		{
-			bullet->Logic();
-		}
-		// Fire Bullet
+		// Game Level Update
+		EntityManager::Update();
 		if (InputHandler::GetKeyTap(InputHandler::KEY_Z))
 		{
-			// Initialise Bullet with ECS
-			Bullet* bullet = new Bullet(renderer, player->position->x, player->position->y);
-			// Save the ESC components
-			entities.push_back(bullet);
-			bullets.push_back(bullet);
+			EntityManager::SpawnBullet(renderer, playerComponent);
 		}
 
 		// Update UI
@@ -200,13 +202,13 @@ int main(int argc, char* argv[])
 		);
 		msg_player_x.Set(
 			renderer,
-			std::string("PlayerX: " + std::to_string(player->position->x)),
+			std::string("PlayerX: " + std::to_string(playerComponent->position->x)),
 			0,
 			msg_mouse_y.rect.y + msg_mouse_y.rect.h
 		);
 		msg_player_y.Set(
 			renderer,
-			std::string("PlayerY: " + std::to_string(player->position->y)),
+			std::string("PlayerY: " + std::to_string(playerComponent->position->y)),
 			0,
 			msg_player_x.rect.y + msg_player_x.rect.h
 		);
@@ -215,13 +217,8 @@ int main(int argc, char* argv[])
 		// Rendering
 		SDL_RenderClear(renderer);
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 1);
-		// Render Play Field
-		playField.Render(renderer);
 		// Render ECS Components
-		for (int i = 0; i < entities.size(); i++)
-		{
-			entities[i]->draw(renderer);
-		}
+		EntityManager::Render(renderer);
 		// Render Text
 		msg_current_frame.Render(renderer);
 		msg_mouse_x.Render(renderer);
@@ -245,12 +242,7 @@ int main(int argc, char* argv[])
 
 	// Memory Cleaning
 	// Clear Entity Vector
-	for (Entity* e : entities)
-	{
-		delete e;
-	}
-
-
+	EntityManager::DeleteAllEntities();
 	// Quit Functions
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);

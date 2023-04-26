@@ -104,30 +104,4 @@ public:
 	ComponentBitSet componentBitSet;
 };
 
-class EntityManager
-{
-public:
-	void refresh()
-	{
-		entities.erase(std::remove_if(std::begin(entities), std::end(entities),
-			[](const std::unique_ptr<Entity>& mEntity)
-			{
-				return !mEntity->active;
-			}),
-			std::end(entities));
-	}
-
-	Entity& addEntity()
-	{
-		Entity* e = new Entity();
-		std::unique_ptr<Entity> uPtr{ e };
-		entities.emplace_back(std::move(uPtr));
-
-		return *e;
-	}
-
-private:
-	std::vector<std::unique_ptr<Entity>> entities;
-};
-
 #endif // _ECS_H
