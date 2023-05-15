@@ -164,6 +164,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\BoxColliderComponent.cpp" />
     <ClCompile Include="src\BulletComponent.cpp" />
     <ClCompile Include="src\ECSManager.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
@@ -177,6 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\BoxColliderComponent.h" />
     <ClInclude Include="src\BulletComponent.h" />
     <ClInclude Include="src\Debug.h" />
     <ClInclude Include="src\ECSManager.h" />
@@ -189,6 +191,7 @@
     <ClInclude Include="src\PositionComponent.h" />
     <ClInclude Include="src\SpriteComponent.h" />
     <ClInclude Include="src\Text.h" />
+    <ClInclude Include="src\vector2float.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -80,6 +80,11 @@ int main(int argc, char* argv[])
 	player->
 		addComponent<SpriteComponent>()->
 		setTexture(positionComponent, renderer, "player.png", -playerComponent->player_w / 2, -playerComponent->player_h / 2, playerComponent->player_w, playerComponent->player_h);
+	BoxColliderComponent* playerBoxColliderComponent = player->addComponent<BoxColliderComponent>();
+	playerBoxColliderComponent->offset_top = -20;
+	playerBoxColliderComponent->offset_right = 12;
+	playerBoxColliderComponent->offset_bottom = 20;
+	playerBoxColliderComponent->offset_left = -12;
 	EntityManager::AddEntity(player);
 
 
@@ -215,6 +220,8 @@ int main(int argc, char* argv[])
 		msg_mouse_y.Render(renderer);
 		msg_player_x.Render(renderer);
 		msg_player_y.Render(renderer);
+		// Some components use this function to set lines or dot colors. This need to be here so that the backgroud is set to black.
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 1);
 		// Present buffer
 		SDL_RenderPresent(renderer);
 

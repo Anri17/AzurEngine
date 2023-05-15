@@ -6,5 +6,6 @@
 #include "PlayerComponent.h"
 #include "BulletComponent.h"
 #include "PlayFieldComponent.h"
+#include "BoxColliderComponent.h"
 
 #endif // _COMPONENTS_H
