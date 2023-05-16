@@ -52,16 +52,18 @@ class Entity
 public:
 	void update()
 	{
-		for (auto& c : components)
+		for (size_t i = 0; i < components.size(); ++i)
 		{
+			Component* c = components[i];
 			c->update();
 		}
 	}
 
 	void draw(SDL_Renderer* renderer)
 	{
-		for (auto& c : components)
+		for (size_t i = 0; i < components.size(); ++i)
 		{
+			Component* c = components[i];
 			c->draw(renderer);
 		}
 	}
@@ -76,7 +78,7 @@ public:
 	{
 		T* c(new T(std::forward<TArgs>(mArgs)...));
 		c->entity = this;
-		std::unique_ptr<Component> uPtr{ c };
+		Component* uPtr = c;
 		components.emplace_back(std::move(uPtr));
 
 		componentArray[getComponentTypeID<T>()] = c;
@@ -95,9 +97,18 @@ public:
 		return static_cast<T*>(ptr);
 	}
 
+	~Entity()
+	{
+		for (size_t i = 0; i < components.size(); ++i)
+		{
+			Component* c = components[i];
+			delete c;
+		}
+	}
+
 public:
 	bool active = true;
-	std::vector<std::unique_ptr<Component>> components;
+	std::vector<Component*> components;
 
 	ComponentArray componentArray;
 	ComponentBitSet componentBitSet;

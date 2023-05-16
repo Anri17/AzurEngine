@@ -177,6 +177,8 @@ int main(int argc, char* argv[])
 		EntityManager::Update();
 		// Collision update
 		CollisionManager::Update();
+		// Delete Flagged Entities
+		EntityManager::DeleteFlagedEntities();
 
 		// Update UI
 		// Text Update

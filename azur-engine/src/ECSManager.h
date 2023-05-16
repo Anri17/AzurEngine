@@ -14,8 +14,11 @@ public:
 	static void Update();
 	static void DeleteAllEntities();
 
+	static void DeleteFlagedEntities();
+	static void FlagForDeletion(Entity* entity);
 private:
 	static std::vector<Entity*> entities;
+	static std::vector<Entity*> flagged_for_deletion;
 };
 
 

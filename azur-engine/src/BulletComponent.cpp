@@ -15,6 +15,6 @@ void BulletComponent::update()
 
 	if (position->y - height / 2 < PlayFieldComponent::Top)
 	{
-		EntityManager::DeleteBullet(this);
+		EntityManager::FlagForDeletion(this->entity);
 	}
 }

@@ -1,5 +1,8 @@
 ﻿#include "ECSManager.h"
 
+std::vector<Entity*> EntityManager::entities;
+std::vector<Entity*> EntityManager::flagged_for_deletion;
+
 Entity* EntityManager::AddEntity(Entity* entity)
 {
 	entities.emplace_back(entity);
@@ -33,6 +36,9 @@ void EntityManager::DeleteBullet(BulletComponent* bullet)
 	std::vector<Entity*>::iterator pos = std::find(entities.begin(), entities.end(), bullet->entity);
 	if (pos != entities.end())
 	{
+		size_t index = pos - entities.begin();
+		Entity* e = entities[index];
+		delete e;
 		entities.erase(pos);
 	}
 }
@@ -62,4 +68,26 @@ void EntityManager::DeleteAllEntities()
 	entities.clear();
 }
 
-std::vector<Entity*> EntityManager::entities;
+void EntityManager::DeleteFlagedEntities()
+{
+	for (size_t i = 0; i < flagged_for_deletion.size(); ++i)
+	{
+		Entity* entity = flagged_for_deletion[i];
+
+		std::vector<Entity*>::iterator pos = std::find(entities.begin(), entities.end(), entity);
+		if (pos != entities.end())
+		{
+			size_t index = pos - entities.begin();
+			Entity* e = entities[index];
+			delete e;
+			entities.erase(pos);
+		}
+	}
+
+	flagged_for_deletion.clear();
+}
+
+void EntityManager::FlagForDeletion(Entity* entity)
+{
+	flagged_for_deletion.push_back(entity);
+}
