@@ -12,6 +12,7 @@ public:
 	void draw(SDL_Renderer* renderer) override;
 	void update() override;
 	void init() override;
+	~BoxColliderComponent() override;
 
 public:
 	float offset_top;
@@ -24,7 +25,14 @@ public:
 	float true_bottom;
 	float true_left;
 
+	// A reference to the position component of this component's entity 
 	PositionComponent* position;
+
+	std::string collisionTagName;
+
+	bool isColliding;
+	std::vector<BoxColliderComponent*> collision_references;
+	std::vector<std::string> collision_tags;
 };
 
 

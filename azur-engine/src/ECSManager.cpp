@@ -17,6 +17,12 @@ BulletComponent* EntityManager::SpawnBullet(SDL_Renderer* renderer, PlayerCompon
 	BulletComponent* bc = bullet->addComponent<BulletComponent>();
 	SpriteComponent* sc = bullet->addComponent<SpriteComponent>();
 	sc->setTexture(pc, renderer, "small_bullet.png", -bc->width / 2, -bc->height / 2, bc->width, bc->height);
+	BoxColliderComponent* bcc = bullet->addComponent<BoxColliderComponent>();
+	bcc->offset_top = -10;
+	bcc->offset_right = 10;
+	bcc->offset_bottom = 10;
+	bcc->offset_left = -10;
+	bcc->collisionTagName = "bullet";
 	entities.push_back(bullet);
 
 	return bc;

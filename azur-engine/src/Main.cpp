@@ -20,7 +20,7 @@
 #include "Components.h"
 // Systems
 #include "ECSManager.h"
-
+#include "CollisionManager.h"
 
 
 #define WINDOW_WIDTH  640
@@ -85,6 +85,7 @@ int main(int argc, char* argv[])
 	playerBoxColliderComponent->offset_right = 12;
 	playerBoxColliderComponent->offset_bottom = 20;
 	playerBoxColliderComponent->offset_left = -12;
+	playerBoxColliderComponent->collisionTagName = "player";
 	EntityManager::AddEntity(player);
 
 
@@ -174,6 +175,8 @@ int main(int argc, char* argv[])
 		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false;
 		// Game Level Update
 		EntityManager::Update();
+		// Collision update
+		CollisionManager::Update();
 
 		// Update UI
 		// Text Update

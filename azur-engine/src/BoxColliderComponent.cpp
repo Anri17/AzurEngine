@@ -1,6 +1,7 @@
 #include "BoxColliderComponent.h"
 
 #include "vector2float.h"
+#include "CollisionManager.h"
 
 void BoxColliderComponent::draw(SDL_Renderer* renderer)
 {
@@ -12,7 +13,8 @@ void BoxColliderComponent::draw(SDL_Renderer* renderer)
 
 #ifdef _DEBUG
 	// This is a debug drawing of the collision box.
-	SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+	if (isColliding) SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // red
+	else SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // green
 	SDL_RenderDrawLine(renderer, p0.x, p0.y, p1.x, p1.y);
 	SDL_RenderDrawLine(renderer, p1.x, p1.y, p3.x, p3.y);
 	SDL_RenderDrawLine(renderer, p2.x, p2.y, p0.x, p0.y);
@@ -26,6 +28,12 @@ void BoxColliderComponent::update()
 	true_right = position->x + offset_right;
 	true_bottom = position->y + offset_bottom;
 	true_left = position->x + offset_left;
+
+	isColliding = false;
+	for (size_t i = 0; i < collision_references.size(); ++i)
+		collision_references.pop_back();
+	for (size_t i = 0; i < collision_tags.size(); ++i)
+		collision_tags.pop_back();
 }
 
 void BoxColliderComponent::init()
@@ -42,4 +50,17 @@ void BoxColliderComponent::init()
 	true_right = 0;
 	true_bottom = 0;
 	true_left = 0;
+
+	collisionTagName = "default";
+	isColliding = false;
+
+	collision_references = {};
+	collision_tags = {};
+
+	CollisionManager::AddCollider(this);
+}
+
+BoxColliderComponent::~BoxColliderComponent()
+{
+	CollisionManager::RemoveCollider(this);
 }
