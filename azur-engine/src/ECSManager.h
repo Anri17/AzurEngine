@@ -1,14 +1,18 @@
 #ifndef _ECS_MANAGER_H
 #define _ECS_MANAGER_H
 
+#include "EntityTag.h"
 #include "Components.h"
 
 class EntityManager
 {
 public:
+	/* Entity Creation Methods */
+	static BulletComponent* CreateBulletEntity(float spawn_x, float spawn_y, EntityTag tag);
+	static BulletSpawerComponent* CreateBulletSpawnerEntity(float spawn_x, float spawn_y, EntityTag tag);
+
+public:
 	static Entity* AddEntity(Entity* entity);
-	static BulletComponent* SpawnBullet(SDL_Renderer* renderer, PlayerComponent* player);
-	static void DeleteBullet(BulletComponent* bullet);
 
 	static void Render(SDL_Renderer* renderer);
 	static void Update();

@@ -1,10 +1,11 @@
-#pragma once
 #ifndef _BOX_COLLIDER_COMPONENT_H
 #define _BOX_COLLIDER_COMPONENT_H
 
 #include "Debug.h"
 #include "ECS.h"
 #include "PositionComponent.h"
+
+#include "EntityTag.h"
 
 class BoxColliderComponent : public Component
 {
@@ -28,11 +29,11 @@ public:
 	// A reference to the position component of this component's entity 
 	PositionComponent* position;
 
-	std::string collisionTagName;
+	EntityTag collisionTagName;
 
 	bool isColliding;
 	std::vector<BoxColliderComponent*> collision_references;
-	std::vector<std::string> collision_tags;
+	std::vector<EntityTag> collision_tags;
 };
 
 

@@ -7,7 +7,7 @@
 
 #include "Debug.h"
 #include "ECS.h"
-#include "PositionComponent.h"
+#include "Components.h"
 
 class SpriteComponent : public Component
 {

@@ -76,18 +76,21 @@ int main(int argc, char* argv[])
 	// Initialise Player with ECS
 	Entity* player = new Entity();
 	PositionComponent* positionComponent = player->addComponent<PositionComponent>();
-	PlayerComponent* playerComponent = player->addComponent<PlayerComponent>();
-	player->
-		addComponent<SpriteComponent>()->
-		setTexture(positionComponent, renderer, "player.png", -playerComponent->player_w / 2, -playerComponent->player_h / 2, playerComponent->player_w, playerComponent->player_h);
 	BoxColliderComponent* playerBoxColliderComponent = player->addComponent<BoxColliderComponent>();
 	playerBoxColliderComponent->offset_top = -20;
 	playerBoxColliderComponent->offset_right = 12;
 	playerBoxColliderComponent->offset_bottom = 20;
 	playerBoxColliderComponent->offset_left = -12;
-	playerBoxColliderComponent->collisionTagName = "player";
+	playerBoxColliderComponent->collisionTagName = EntityTag::PLAYER;
+	PlayerComponent* playerComponent = player->addComponent<PlayerComponent>();	// TODO: NOTE -> Order of Initializarion is very important. the Position and BoxCollider Components need to be created before the Player COmponent so that hte Player Component can initialize it and get their references. Initializing everything in bulk after is not a solution either because the same order of initialization problem persists.
+	player->
+		addComponent<SpriteComponent>()->
+		setTexture(positionComponent, renderer, "player.png", -playerComponent->player_w / 2, -playerComponent->player_h / 2, playerComponent->player_w, playerComponent->player_h);
 	EntityManager::AddEntity(player);
 
+
+	// Create Bullet Spawner
+	EntityManager::CreateBulletSpawnerEntity(320, 240, EntityTag::ENEMY);
 
 	// FPS Calculation Variables
 	Uint64 current_frame = 0;
@@ -173,10 +176,12 @@ int main(int argc, char* argv[])
 		// Application Level Update
 		mouse.Update();
 		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false;
+		// Collision update
+		// TODO: Collision updates must be executed before the entities, so that the required data is provided for the components to work with
+		// TODO: However, if we swap the CollisionManager Update with the EntityManager Update, we break the systems in place, because the BoxColliderComponent will reset itself. Move the defaulting of the state to the CollisionManger.Update()
+		CollisionManager::Update();
 		// Game Level Update
 		EntityManager::Update();
-		// Collision update
-		CollisionManager::Update();
 		// Delete Flagged Entities
 		EntityManager::DeleteFlagedEntities();
 
@@ -200,18 +205,21 @@ int main(int argc, char* argv[])
 			0,
 			msg_mouse_x.rect.y + msg_mouse_x.rect.h
 		);
-		msg_player_x.Set(
-			renderer,
-			std::string("PlayerX: " + std::to_string(playerComponent->position->x)),
-			0,
-			msg_mouse_y.rect.y + msg_mouse_y.rect.h
-		);
-		msg_player_y.Set(
-			renderer,
-			std::string("PlayerY: " + std::to_string(playerComponent->position->y)),
-			0,
-			msg_player_x.rect.y + msg_player_x.rect.h
-		);
+		if (player->active) // TODO: THis is a temporary Fix. A proper solution would be to probably activate or deactiveate an entity, so taht it doesn't come up when the update and draw loops are executed, having that entity be skipped.
+		{
+			msg_player_x.Set(
+				renderer,
+				std::string("PlayerX: " + std::to_string(playerComponent->position->x)),
+				0,
+				msg_mouse_y.rect.y + msg_mouse_y.rect.h
+			);
+			msg_player_y.Set(
+				renderer,
+				std::string("PlayerY: " + std::to_string(playerComponent->position->y)),
+				0,
+				msg_player_x.rect.y + msg_player_x.rect.h
+			);
+		}
 
 
 		// Rendering

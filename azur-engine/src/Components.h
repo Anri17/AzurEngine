@@ -7,5 +7,6 @@
 #include "BulletComponent.h"
 #include "PlayFieldComponent.h"
 #include "BoxColliderComponent.h"
+#include "BulletSpawnerComponent.h"
 
 #endif // _COMPONENTS_H

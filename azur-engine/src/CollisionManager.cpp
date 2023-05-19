@@ -9,16 +9,34 @@ void CollisionManager::Update()
 	// ie, if they are colliding,
 	// and what are the colliders that are overlapping.
 
+	// Reset Collider Data First
+	
+	for (size_t i = 0; i < colliders.size(); ++i)
+	{
+		colliders[i]->isColliding = false;
+		for (size_t j = 0; j < colliders[i]->collision_references.size(); ++j)
+			colliders[i]->collision_references.pop_back();
+		for (size_t j = 0; j < colliders[i]->collision_tags.size(); ++j)
+			colliders[i]->collision_tags.pop_back();
+	}
+
+	// Check for Collisions and set the respective data for each collider
 	for (size_t i = 0; i < colliders.size(); ++i)
 	{
 		BoxColliderComponent* collider0 = colliders[i];
+		// We don't need to evaluate collisions for inactie entities
+		if (!collider0->entity->active) continue;
+
+
 		for (size_t j = i + 1; j < colliders.size(); ++j)
 		{
 			BoxColliderComponent* collider1 = colliders[j];
+			// We don't need to evaluate collisions for inactie entities
+			if (!collider1->entity->active) continue;
+
 
 			bool is_colliding = collider0->true_top < collider1->true_bottom && collider0->true_left < collider1->true_right &&
 				collider1->true_top < collider0->true_bottom && collider1->true_left < collider0->true_right;
-
 			if (is_colliding)
 			{
 				/*
@@ -34,13 +52,13 @@ void CollisionManager::Update()
 				collider0->collision_references.push_back(collider1);
 				collider1->collision_references.push_back(collider0);
 
-				bool add_tag_0 = false;
-				bool add_tag_1 = false;
+				bool add_tag_0 = true;
+				bool add_tag_1 = true;
 				for (size_t k = 0; k < collider0->collision_tags.size(); ++k)
 				{
 					if (collider0->collision_tags[i] == collider1->collisionTagName)
 					{
-						add_tag_0 = true;
+						add_tag_0 = false;
 						break;
 					}
 				}
@@ -48,7 +66,7 @@ void CollisionManager::Update()
 				{
 					if (collider1->collision_tags[i] == collider0->collisionTagName)
 					{
-						add_tag_1 = true;
+						add_tag_1 = false;
 						break;
 					}
 				}

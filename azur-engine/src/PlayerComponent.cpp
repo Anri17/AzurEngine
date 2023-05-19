@@ -12,6 +12,7 @@
 void PlayerComponent::init()
 {
 	position = entity->getComponent<PositionComponent>();
+	boxCollider = entity->getComponent<BoxColliderComponent>();
 	position->x = spawnX;
 	position->y = spawnY;
 	fire_frame = 0;
@@ -66,24 +67,30 @@ void PlayerComponent::update()
 	if (position->x < PlayFieldComponent::Left + player_w / 2.0f) position->x = PlayFieldComponent::Left + player_w / 2.0f;
 	if (position->x + player_w / 2.0f > PlayFieldComponent::Right) position->x = PlayFieldComponent::Right - player_w / 2.0f;
 	if (position->y < PlayFieldComponent::Top + player_h / 2.0f) position->y = PlayFieldComponent::Top + player_h / 2.0f;
-	if (position->y + player_h/2.0f > PlayFieldComponent::Bottom) position->y = PlayFieldComponent::Bottom - player_h / 2.0f;
+	if (position->y + player_h / 2.0f > PlayFieldComponent::Bottom) position->y = PlayFieldComponent::Bottom - player_h / 2.0f;
 
 
 	// Fire Bullet
 	if (InputHandler::GetKeyDown(InputHandler::KEY_Z))
 	{
-		if ((fire_frame % 5) == 0)
-			EntityManager::SpawnBullet(Application::renderer, this);
-		
+		if ((fire_frame % 10) == 0)
+		{
+			EntityManager::CreateBulletEntity(this->position->x, this->position->y, EntityTag::BULLET_PLAYER);
+		}
+
 		fire_frame++;
 	}
 	else
 	{
 		fire_frame = 0;
 	}
-}
 
-void PlayerComponent::draw(SDL_Renderer* renderer)
-{
-
+	for (size_t i = 0; i < boxCollider->collision_tags.size(); ++i)
+	{
+		if (boxCollider->collision_tags[i] == EntityTag::BULLET_ENEMY || boxCollider->collision_tags[i] == EntityTag::ENEMY)
+		{
+			entity->active = false;
+			break;
+		}
+	}
 }

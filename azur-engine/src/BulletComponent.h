@@ -1,16 +1,14 @@
-#pragma once
 #ifndef _BULLET_H
 #define _BULLET_H
 
 #include "ECS.h"
-#include "Components.h"
+#include "PositionComponent.h"
 
 class BulletComponent : public Component
 {
 public:
 	void init() override;
 	void update() override;
-
 
 	PositionComponent* position;
 	int width = 12;

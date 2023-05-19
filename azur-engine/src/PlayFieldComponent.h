@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include "ECS.h"
+#include "Components.h"
 
 class PlayFieldComponent : public Component
 {

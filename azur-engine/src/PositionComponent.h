@@ -7,7 +7,6 @@
 
 #include "Debug.h"
 #include "ECS.h"
-#include "PositionComponent.h"
 
 class PositionComponent : public Component
 {
