@@ -42,6 +42,10 @@ void CollisionManager::Update()
 			if (!collider1->entity->active) continue;
 
 
+			// TODO: I can probably replace all of this with a simple distance check between the two neared points of each collision border.
+			// TODO: This implementation would work for both ovals and squares.
+			// TODO: Another solutions would be if two lines intersect, thought that would probably require my to convert the data into usable linear functions with which I could make that kind of calculation.
+			// TODO: Think of a star shaped Collider. The closed points would probalby be the vertices of the star. The implementation would be different because the shape is concave.
 			bool is_colliding = collider0->true_top < collider1->true_bottom && collider0->true_left < collider1->true_right &&
 				collider1->true_top < collider0->true_bottom && collider1->true_left < collider0->true_right;
 			if (is_colliding)
