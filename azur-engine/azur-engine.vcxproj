@@ -197,6 +197,7 @@
     <ClInclude Include="src\SpriteComponent.h" />
     <ClInclude Include="src\Text.h" />
     <ClInclude Include="src\vector2float.h" />
+    <ClInclude Include="src\vector2int.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

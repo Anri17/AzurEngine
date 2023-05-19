@@ -7,10 +7,10 @@ float PlayFieldComponent::Left = 200;
 
 void PlayFieldComponent::init()
 {
-	playfield_rect.x = PlayFieldComponent::Left;
-	playfield_rect.y = PlayFieldComponent::Top;
-	playfield_rect.w = PlayFieldComponent::Right - PlayFieldComponent::Left;
-	playfield_rect.h = PlayFieldComponent::Bottom - PlayFieldComponent::Top;
+	playfield_rect.x = int(PlayFieldComponent::Left);
+	playfield_rect.y = int(PlayFieldComponent::Top);
+	playfield_rect.w = int(PlayFieldComponent::Right - PlayFieldComponent::Left);
+	playfield_rect.h = int(PlayFieldComponent::Bottom - PlayFieldComponent::Top);
 }
 
 void PlayFieldComponent::draw(SDL_Renderer* renderer)

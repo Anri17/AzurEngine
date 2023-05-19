@@ -29,11 +29,11 @@ public:
 	// A reference to the position component of this component's entity 
 	PositionComponent* position;
 
-	EntityTag collisionTagName;
+	EntityCollisionTag collisionTagName;
 
 	bool isColliding;
 	std::vector<BoxColliderComponent*> collision_references;
-	std::vector<EntityTag> collision_tags;
+	std::vector<EntityCollisionTag> collision_tags;
 };
 
 

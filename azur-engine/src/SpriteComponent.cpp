@@ -34,8 +34,8 @@ int SpriteComponent::setTexture(PositionComponent* position, SDL_Renderer* rende
 void SpriteComponent::draw(SDL_Renderer* renderer)
 {
 	SDL_Rect dstrect;
-	dstrect.x = position->x + rect.x;
-	dstrect.y = position->y + rect.y;
+	dstrect.x = int(position->x) + rect.x;
+	dstrect.y = int(position->y) + rect.y;
 	dstrect.w = rect.w;
 	dstrect.h = rect.h;
 	SDL_RenderCopy(renderer, texture, NULL, &dstrect);

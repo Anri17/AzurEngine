@@ -8,8 +8,8 @@ class EntityManager
 {
 public:
 	/* Entity Creation Methods */
-	static BulletComponent* CreateBulletEntity(float spawn_x, float spawn_y, EntityTag tag);
-	static BulletSpawerComponent* CreateBulletSpawnerEntity(float spawn_x, float spawn_y, EntityTag tag);
+	static BulletComponent* CreateBulletEntity(std::string name, float spawn_x, float spawn_y, EntityCollisionTag tag);
+	static Entity* CreateBulletSpawnerEntity(std::string name, float spawn_x, float spawn_y, EntityCollisionTag tag);
 
 public:
 	static Entity* AddEntity(Entity* entity);

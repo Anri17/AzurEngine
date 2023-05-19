@@ -55,8 +55,8 @@ void PlayerComponent::update()
 	// Diagonal Velocity
 	if (yVelocity != 0 && xVelocity != 0)
 	{
-		xVelocity = cos((M_PI / 4.0)) * xVelocity;
-		yVelocity = sin((M_PI / 4.0)) * yVelocity;
+		xVelocity = (float)cos((M_PI / 4.0)) * xVelocity;
+		yVelocity = (float)sin((M_PI / 4.0)) * yVelocity;
 	}
 
 	position->y += yVelocity;
@@ -75,7 +75,7 @@ void PlayerComponent::update()
 	{
 		if ((fire_frame % 10) == 0)
 		{
-			EntityManager::CreateBulletEntity(this->position->x, this->position->y, EntityTag::BULLET_PLAYER);
+			EntityManager::CreateBulletEntity("Player Bullet", this->position->x, this->position->y, EntityCollisionTag::BULLET_PLAYER);
 		}
 
 		fire_frame++;
@@ -87,7 +87,7 @@ void PlayerComponent::update()
 
 	for (size_t i = 0; i < boxCollider->collision_tags.size(); ++i)
 	{
-		if (boxCollider->collision_tags[i] == EntityTag::BULLET_ENEMY || boxCollider->collision_tags[i] == EntityTag::ENEMY)
+		if (boxCollider->collision_tags[i] == EntityCollisionTag::BULLET_ENEMY || boxCollider->collision_tags[i] == EntityCollisionTag::ENEMY)
 		{
 			entity->active = false;
 			break;

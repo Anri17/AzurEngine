@@ -113,5 +113,8 @@
     <ClInclude Include="src\EntityTag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\vector2int.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

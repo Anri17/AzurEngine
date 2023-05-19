@@ -1,7 +1,7 @@
 #ifndef _ENTITY_TAG_H
 #define _ENTITY_TAG_H
 
-enum class EntityTag
+enum class EntityCollisionTag
 {
 	UNDEFINED = -1,
 	PLAYER = 0,

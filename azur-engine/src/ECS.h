@@ -110,6 +110,8 @@ public:
 	bool active = true;
 	std::vector<Component*> components;
 
+	std::string name = "undefined";
+
 	ComponentArray componentArray;
 	ComponentBitSet componentBitSet;
 };

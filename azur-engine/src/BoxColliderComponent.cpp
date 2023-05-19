@@ -1,6 +1,6 @@
 #include "BoxColliderComponent.h"
 
-#include "vector2float.h"
+#include "vector2int.h"
 #include "CollisionManager.h"
 
 #include "EntityTag.h"
@@ -8,10 +8,10 @@
 void BoxColliderComponent::draw(SDL_Renderer* renderer)
 {
 	// drawing points
-	vector2float p0{ true_left,  true_top };
-	vector2float p1{ true_right, true_top };
-	vector2float p2{ true_left,  true_bottom };
-	vector2float p3{ true_right, true_bottom };
+	vector2int p0{ (int)true_left,  (int)true_top };
+	vector2int p1{ (int)true_right, (int)true_top };
+	vector2int p2{ (int)true_left,  (int)true_bottom };
+	vector2int p3{ (int)true_right, (int)true_bottom };
 
 #ifdef _DEBUG
 	// This is a debug drawing of the collision box.
@@ -47,7 +47,7 @@ void BoxColliderComponent::init()
 	true_bottom = 0;
 	true_left = 0;
 
-	collisionTagName = EntityTag::UNDEFINED;
+	collisionTagName = EntityCollisionTag::UNDEFINED;
 	isColliding = false;
 
 	collision_references = {};

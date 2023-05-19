@@ -75,13 +75,14 @@ int main(int argc, char* argv[])
 	EntityManager::AddEntity(playField);
 	// Initialise Player with ECS
 	Entity* player = new Entity();
+	player->name = "Player";
 	PositionComponent* positionComponent = player->addComponent<PositionComponent>();
 	BoxColliderComponent* playerBoxColliderComponent = player->addComponent<BoxColliderComponent>();
 	playerBoxColliderComponent->offset_top = -20;
 	playerBoxColliderComponent->offset_right = 12;
 	playerBoxColliderComponent->offset_bottom = 20;
 	playerBoxColliderComponent->offset_left = -12;
-	playerBoxColliderComponent->collisionTagName = EntityTag::PLAYER;
+	playerBoxColliderComponent->collisionTagName = EntityCollisionTag::PLAYER;
 	PlayerComponent* playerComponent = player->addComponent<PlayerComponent>();	// TODO: NOTE -> Order of Initializarion is very important. the Position and BoxCollider Components need to be created before the Player COmponent so that hte Player Component can initialize it and get their references. Initializing everything in bulk after is not a solution either because the same order of initialization problem persists.
 	player->
 		addComponent<SpriteComponent>()->
@@ -90,7 +91,8 @@ int main(int argc, char* argv[])
 
 
 	// Create Bullet Spawner
-	EntityManager::CreateBulletSpawnerEntity(320, 240, EntityTag::ENEMY);
+	Entity* BulletSpawnerEntity = EntityManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 240, EntityCollisionTag::ENEMY);
+
 
 	// FPS Calculation Variables
 	Uint64 current_frame = 0;

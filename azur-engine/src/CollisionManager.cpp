@@ -56,7 +56,7 @@ void CollisionManager::Update()
 				bool add_tag_1 = true;
 				for (size_t k = 0; k < collider0->collision_tags.size(); ++k)
 				{
-					if (collider0->collision_tags[i] == collider1->collisionTagName)
+					if (collider0->collision_tags[k] == collider1->collisionTagName)
 					{
 						add_tag_0 = false;
 						break;
@@ -64,7 +64,7 @@ void CollisionManager::Update()
 				}
 				for (size_t k = 0; k < collider1->collision_tags.size(); ++k)
 				{
-					if (collider1->collision_tags[i] == collider0->collisionTagName)
+					if (collider1->collision_tags[k] == collider0->collisionTagName)
 					{
 						add_tag_1 = false;
 						break;
