@@ -14,7 +14,7 @@ void BulletSpawerComponent::update()
 
 	if (frame % 60 == 0)
 	{
-		EntityManager::CreateBulletEntity("Enemy Bullet", this->position->x, this->position->y, EntityCollisionTag::BULLET_ENEMY);
+		EntityManager::CreateBulletEntity("Enemy Bullet", this->position->x, this->position->y, ColliderTag::BULLET_ENEMY);
 	}
 }
 

@@ -2,18 +2,15 @@
 #define _BOX_COLLIDER_COMPONENT_H
 
 #include "Debug.h"
-#include "ECS.h"
-#include "PositionComponent.h"
 
-#include "EntityTag.h"
+#include "ColliderComponent.h"
 
-class BoxColliderComponent : public Component
+class BoxColliderComponent : public ColliderComponent
 {
 public:
 	void draw(SDL_Renderer* renderer) override;
 	void update() override;
 	void init() override;
-	~BoxColliderComponent() override;
 
 public:
 	float offset_top;
@@ -25,15 +22,6 @@ public:
 	float true_right;
 	float true_bottom;
 	float true_left;
-
-	// A reference to the position component of this component's entity 
-	PositionComponent* position;
-
-	EntityCollisionTag collisionTagName;
-
-	bool isColliding;
-	std::vector<BoxColliderComponent*> collision_references;
-	std::vector<EntityCollisionTag> collision_tags;
 };
 
 

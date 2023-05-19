@@ -1,6 +1,6 @@
 #include "CollisionManager.h"
 
-std::vector<BoxColliderComponent*> CollisionManager::colliders;
+std::vector<ColliderComponent*> CollisionManager::colliders;
 
 void CollisionManager::Update()
 {
@@ -14,23 +14,30 @@ void CollisionManager::Update()
 	for (size_t i = 0; i < colliders.size(); ++i)
 	{
 		colliders[i]->isColliding = false;
-		for (size_t j = 0; j < colliders[i]->collision_references.size(); ++j)
-			colliders[i]->collision_references.pop_back();
-		for (size_t j = 0; j < colliders[i]->collision_tags.size(); ++j)
-			colliders[i]->collision_tags.pop_back();
+		for (size_t j = 0; j < colliders[i]->collider_references.size(); ++j)
+			colliders[i]->collider_references.pop_back();
+		for (size_t j = 0; j < colliders[i]->collider_tags.size(); ++j)
+			colliders[i]->collider_tags.pop_back();
 	}
 
+	// TODO: THIS IS FOR BOXCOLLIDER ONLY. A test check needs to be made for circle colliders.
+	// TODO: This is only set up for the mean time so that the program compiles. 
 	// Check for Collisions and set the respective data for each collider
 	for (size_t i = 0; i < colliders.size(); ++i)
 	{
-		BoxColliderComponent* collider0 = colliders[i];
+		// TODO: Test BoxColliders agains Circle Colliders.
+		// TODO: At this moment this is only working with BoxColliders
+		// WARNING: TODO: The moment a CircleColliderComponent is added to vector of colliders, everything breaks.
+		BoxColliderComponent* collider0 = (BoxColliderComponent*)colliders[i];
 		// We don't need to evaluate collisions for inactie entities
 		if (!collider0->entity->active) continue;
 
 
 		for (size_t j = i + 1; j < colliders.size(); ++j)
 		{
-			BoxColliderComponent* collider1 = colliders[j];
+			// TODO: Test BoxColliders agains Circle Colliders.
+			// TODO: At this moment this is only working with BoxColliders
+			BoxColliderComponent* collider1 = (BoxColliderComponent*)colliders[j];
 			// We don't need to evaluate collisions for inactie entities
 			if (!collider1->entity->active) continue;
 
@@ -49,42 +56,42 @@ void CollisionManager::Update()
 				collider0->isColliding = true;
 				collider1->isColliding = true;
 
-				collider0->collision_references.push_back(collider1);
-				collider1->collision_references.push_back(collider0);
+				collider0->collider_references.push_back(collider1);
+				collider1->collider_references.push_back(collider0);
 
 				bool add_tag_0 = true;
 				bool add_tag_1 = true;
-				for (size_t k = 0; k < collider0->collision_tags.size(); ++k)
+				for (size_t k = 0; k < collider0->collider_tags.size(); ++k)
 				{
-					if (collider0->collision_tags[k] == collider1->collisionTagName)
+					if (collider0->collider_tags[k] == collider1->tag)
 					{
 						add_tag_0 = false;
 						break;
 					}
 				}
-				for (size_t k = 0; k < collider1->collision_tags.size(); ++k)
+				for (size_t k = 0; k < collider1->collider_tags.size(); ++k)
 				{
-					if (collider1->collision_tags[k] == collider0->collisionTagName)
+					if (collider1->collider_tags[k] == collider0->tag)
 					{
 						add_tag_1 = false;
 						break;
 					}
 				}
-				if (add_tag_0) collider0->collision_tags.push_back(collider1->collisionTagName);
-				if (add_tag_1) collider1->collision_tags.push_back(collider0->collisionTagName);
+				if (add_tag_0) collider0->collider_tags.push_back(collider1->tag);
+				if (add_tag_1) collider1->collider_tags.push_back(collider0->tag);
 			}
 		}
 	}
 }
 
-void CollisionManager::AddCollider(BoxColliderComponent* collider)
+void CollisionManager::AddCollider(ColliderComponent* collider)
 {
 	colliders.push_back(collider);
 }
 
-void CollisionManager::RemoveCollider(BoxColliderComponent* collider)
+void CollisionManager::RemoveCollider(ColliderComponent* collider)
 {
-	std::vector<BoxColliderComponent*>::iterator pos = std::find(colliders.begin(), colliders.end(), collider);
+	std::vector<ColliderComponent*>::iterator pos = std::find(colliders.begin(), colliders.end(), collider);
 	if (pos != colliders.end())
 	{
 		colliders.erase(pos);

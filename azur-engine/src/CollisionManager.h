@@ -9,11 +9,11 @@ class CollisionManager
 {
 public:
 	static void Update();
-	static void AddCollider(BoxColliderComponent* collider);
-	static void RemoveCollider(BoxColliderComponent* collider);
+	static void AddCollider(ColliderComponent* collider);
+	static void RemoveCollider(ColliderComponent* collider);
 
 private:
-	static std::vector<BoxColliderComponent*> colliders;
+	static std::vector<ColliderComponent*> colliders;
 };
 
 

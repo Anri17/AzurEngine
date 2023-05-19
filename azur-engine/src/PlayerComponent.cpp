@@ -75,7 +75,7 @@ void PlayerComponent::update()
 	{
 		if ((fire_frame % 10) == 0)
 		{
-			EntityManager::CreateBulletEntity("Player Bullet", this->position->x, this->position->y, EntityCollisionTag::BULLET_PLAYER);
+			EntityManager::CreateBulletEntity("Player Bullet", this->position->x, this->position->y, ColliderTag::BULLET_PLAYER);
 		}
 
 		fire_frame++;
@@ -85,9 +85,9 @@ void PlayerComponent::update()
 		fire_frame = 0;
 	}
 
-	for (size_t i = 0; i < boxCollider->collision_tags.size(); ++i)
+	for (size_t i = 0; i < boxCollider->collider_tags.size(); ++i)
 	{
-		if (boxCollider->collision_tags[i] == EntityCollisionTag::BULLET_ENEMY || boxCollider->collision_tags[i] == EntityCollisionTag::ENEMY)
+		if (boxCollider->collider_tags[i] == ColliderTag::BULLET_ENEMY || boxCollider->collider_tags[i] == ColliderTag::ENEMY)
 		{
 			entity->active = false;
 			break;

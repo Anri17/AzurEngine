@@ -12,7 +12,7 @@ Entity* EntityManager::AddEntity(Entity* entity)
 	return entity;
 }
 
-BulletComponent* EntityManager::CreateBulletEntity(std::string name, float spawn_x, float spawn_y, EntityCollisionTag tag)
+BulletComponent* EntityManager::CreateBulletEntity(std::string name, float spawn_x, float spawn_y, ColliderTag tag)
 {
 	// Initialise Bullet with ECS
 	Entity* bullet = new Entity();
@@ -28,13 +28,13 @@ BulletComponent* EntityManager::CreateBulletEntity(std::string name, float spawn
 	bcc->offset_right = 10;
 	bcc->offset_bottom = 10;
 	bcc->offset_left = -10;
-	bcc->collisionTagName = tag;
+	bcc->tag = tag;
 	entities.push_back(bullet);
 
 	return bc;
 }
 
-Entity* EntityManager::CreateBulletSpawnerEntity(std::string name, float spawn_x, float spawn_y, EntityCollisionTag tag)
+Entity* EntityManager::CreateBulletSpawnerEntity(std::string name, float spawn_x, float spawn_y, ColliderTag tag)
 {
 	// Initialise Bullet with ECS
 	Entity* entity = new Entity();

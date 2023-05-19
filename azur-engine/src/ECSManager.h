@@ -1,15 +1,15 @@
 #ifndef _ECS_MANAGER_H
 #define _ECS_MANAGER_H
 
-#include "EntityTag.h"
+#include "ColliderTag.h"
 #include "Components.h"
 
 class EntityManager
 {
 public:
 	/* Entity Creation Methods */
-	static BulletComponent* CreateBulletEntity(std::string name, float spawn_x, float spawn_y, EntityCollisionTag tag);
-	static Entity* CreateBulletSpawnerEntity(std::string name, float spawn_x, float spawn_y, EntityCollisionTag tag);
+	static BulletComponent* CreateBulletEntity(std::string name, float spawn_x, float spawn_y, ColliderTag tag);
+	static Entity* CreateBulletSpawnerEntity(std::string name, float spawn_x, float spawn_y, ColliderTag tag);
 
 public:
 	static Entity* AddEntity(Entity* entity);

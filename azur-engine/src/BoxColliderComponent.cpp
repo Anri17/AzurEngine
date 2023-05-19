@@ -3,8 +3,6 @@
 #include "vector2int.h"
 #include "CollisionManager.h"
 
-#include "EntityTag.h"
-
 void BoxColliderComponent::draw(SDL_Renderer* renderer)
 {
 	// drawing points
@@ -34,9 +32,10 @@ void BoxColliderComponent::update()
 
 void BoxColliderComponent::init()
 {
-	position = entity->getComponent<PositionComponent>();
+	ColliderComponent::init();
+	type = ColliderType::BOX;
 
-	// test value. Default should be 0. The actual values are set outside of this function.
+	// Test values. Default should be 0. The actual values are set outside of this function.
 	offset_top = 0;
 	offset_right = 0;
 	offset_bottom = 0;
@@ -46,17 +45,4 @@ void BoxColliderComponent::init()
 	true_right = 0;
 	true_bottom = 0;
 	true_left = 0;
-
-	collisionTagName = EntityCollisionTag::UNDEFINED;
-	isColliding = false;
-
-	collision_references = {};
-	collision_tags = {};
-
-	CollisionManager::AddCollider(this);
-}
-
-BoxColliderComponent::~BoxColliderComponent()
-{
-	CollisionManager::RemoveCollider(this);
 }

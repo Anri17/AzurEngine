@@ -82,7 +82,7 @@ int main(int argc, char* argv[])
 	playerBoxColliderComponent->offset_right = 12;
 	playerBoxColliderComponent->offset_bottom = 20;
 	playerBoxColliderComponent->offset_left = -12;
-	playerBoxColliderComponent->collisionTagName = EntityCollisionTag::PLAYER;
+	playerBoxColliderComponent->tag = ColliderTag::PLAYER;
 	PlayerComponent* playerComponent = player->addComponent<PlayerComponent>();	// TODO: NOTE -> Order of Initializarion is very important. the Position and BoxCollider Components need to be created before the Player COmponent so that hte Player Component can initialize it and get their references. Initializing everything in bulk after is not a solution either because the same order of initialization problem persists.
 	player->
 		addComponent<SpriteComponent>()->
@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
 
 
 	// Create Bullet Spawner
-	Entity* BulletSpawnerEntity = EntityManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 240, EntityCollisionTag::ENEMY);
+	Entity* BulletSpawnerEntity = EntityManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 240, ColliderTag::ENEMY);
 
 
 	// FPS Calculation Variables
@@ -235,6 +235,43 @@ int main(int argc, char* argv[])
 		msg_mouse_y.Render(renderer);
 		msg_player_x.Render(renderer);
 		msg_player_y.Render(renderer);
+		// DEBUG: Draw circle for testing
+		int32_t circleCenterX = 320;
+		int32_t circleCenterY = 120;
+		int32_t circleRadius = 50;
+		// Implementation
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		const int32_t circleDiameter = (circleRadius * 2);
+		int32_t circleX = (circleRadius - 1);
+		int32_t circleY = 0;
+		int32_t circleTX = 1;
+		int32_t circleTY = 1;
+		int32_t circleError = (circleTX - circleDiameter);
+		while (circleX >= circleY)
+		{
+			SDL_RenderDrawPoint(renderer, circleCenterX + circleX, circleCenterY - circleY);
+			SDL_RenderDrawPoint(renderer, circleCenterX + circleX, circleCenterY + circleY);
+			SDL_RenderDrawPoint(renderer, circleCenterX - circleX, circleCenterY - circleY);
+			SDL_RenderDrawPoint(renderer, circleCenterX - circleX, circleCenterY + circleY);
+			SDL_RenderDrawPoint(renderer, circleCenterX + circleY, circleCenterY - circleX);
+			SDL_RenderDrawPoint(renderer, circleCenterX + circleY, circleCenterY + circleX);
+			SDL_RenderDrawPoint(renderer, circleCenterX - circleY, circleCenterY - circleX);
+			SDL_RenderDrawPoint(renderer, circleCenterX - circleY, circleCenterY + circleX);
+			if (circleError <= 0)
+			{
+				++circleY;
+				circleError += circleY;
+				circleTY += 2;
+			}
+			if (circleError > 0)
+			{
+				--circleX;
+				circleTX += 2;
+				circleError += (circleTX - circleDiameter);
+			}
+		}
+
+
 		// Some components use this function to set lines or dot colors. This need to be here so that the backgroud is set to black.
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 1);
 		// Present buffer
