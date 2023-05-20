@@ -16,21 +16,33 @@
 
 
 
-// Game
+// TODO: Might want to separate these into engine specific components and game specific components
+// TODO: A player component doesn't have to be in the engine, compared to a Collider component
+// TODO: This is probably best identififed by putting a side the componends that are tied to a system of sorts.
+// Game Components
 #include "Components.h"
-// Systems
+// TODO: Same as the components.
+// TODO: Might want to separate the systems that are engine specific and game specific.
+// Application and Engine Systems
 #include "ECSManager.h"
 #include "CollisionManager.h"
 
 
+
+// TODO: These defines are both game specific and engine speficic
+// TODO: What this means is that the values are specific to the need of the applicaiton, but they are needed none the less
+//       in every application
 #define WINDOW_WIDTH  640
 #define WINDOW_HEIGHT 480
 #define FPS_TARGET 60
 #define INPUT_MANAGER_KEY_COUNT 1024
 
 
+
+
 int main(int argc, char* argv[])
 {
+	// Initialise libraries, create the window and renderer, set initial program and system states.
 	// Initialise SDL, TTF, IMG
 	SDL_Init(SDL_INIT_EVERYTHING);
 	if (TTF_Init() == -1)
@@ -39,19 +51,19 @@ int main(int argc, char* argv[])
 		exit(-1);
 	}
 	IMG_Init(IMG_INIT_PNG);
-
-
 	// Create Window, Renderer & Event
 	SDL_Window* window = SDL_CreateWindow("Azur Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
 	// TODO: replace all of renderers to Application::renderer
 	Application::renderer = renderer;
 	SDL_Event e; // used for input events
-	
 	// The running state of the applications
 	bool application_is_running = true;
 	
 
+
+
+	// Entity and Component Initialization
 	// Initialise Text For Debuging
 	std::string basepath = SDL_GetBasePath();
 	std::string fontname = "SpaceMono-Regular.ttf";
@@ -63,33 +75,13 @@ int main(int argc, char* argv[])
 	Text msg_mouse_y(fontpath, fontsize, message_color);
 	Text msg_player_x(fontpath, fontsize, message_color);
 	Text msg_player_y(fontpath, fontsize, message_color);
-
-
 	// Initialise Mouse
 	Mouse mouse;
-
-
 	// Initialise PlayField
-	Entity* playField = new Entity();
-	playField->addComponent<PlayFieldComponent>();
-	EntityManager::AddEntity(playField);
+	Entity* playFieldEntity = EntityManager::CreatePlayFieldEntity("PlayField");
 	// Initialise Player with ECS
-	Entity* player = new Entity();
-	player->name = "Player";
-	PositionComponent* positionComponent = player->addComponent<PositionComponent>();
-	BoxColliderComponent* playerBoxColliderComponent = player->addComponent<BoxColliderComponent>();
-	playerBoxColliderComponent->offset_top = -20;
-	playerBoxColliderComponent->offset_right = 12;
-	playerBoxColliderComponent->offset_bottom = 20;
-	playerBoxColliderComponent->offset_left = -12;
-	playerBoxColliderComponent->tag = ColliderTag::PLAYER;
-	PlayerComponent* playerComponent = player->addComponent<PlayerComponent>();	// TODO: NOTE -> Order of Initializarion is very important. the Position and BoxCollider Components need to be created before the Player COmponent so that hte Player Component can initialize it and get their references. Initializing everything in bulk after is not a solution either because the same order of initialization problem persists.
-	player->
-		addComponent<SpriteComponent>()->
-		setTexture(positionComponent, renderer, "player.png", -playerComponent->player_w / 2, -playerComponent->player_h / 2, playerComponent->player_w, playerComponent->player_h);
-	EntityManager::AddEntity(player);
-
-
+	Entity* playerEntity = EntityManager::CreatePlayerEntity("Player", ColliderTag::PLAYER);
+	PlayerComponent* playerComponent = playerEntity->getComponent<PlayerComponent>();
 	// DEBUG: Create Test Entity with a Circle Collider
 	Entity* testCircleEntityWithCircleCollider = new Entity();
 	testCircleEntityWithCircleCollider->name = "testCircleEntityWithCircleCollider";
@@ -100,19 +92,17 @@ int main(int argc, char* argv[])
 	testCircleEntityWithCircleCollider_CircleColliderComponent->radius = 24;
 	testCircleEntityWithCircleCollider_CircleColliderComponent->tag = ColliderTag::UNDEFINED;
 	EntityManager::AddEntity(testCircleEntityWithCircleCollider);
-
-
 	// Create Bullet Spawner
 	Entity* BulletSpawnerEntity = EntityManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 240, ColliderTag::ENEMY);
 
 
+
+
+	// The Application Loop
 	// FPS Calculation Variables
 	Uint64 current_frame = 0;
 	Uint32 previousTime = SDL_GetTicks();
 	Uint32 currentTime = SDL_GetTicks();
-
-
-	// The Application Loop
 	while (application_is_running)
 	{
 		// Abstract SDL events into engine components and systems
@@ -219,7 +209,7 @@ int main(int argc, char* argv[])
 			0,
 			msg_mouse_x.rect.y + msg_mouse_x.rect.h
 		);
-		if (player->active) // TODO: THis is a temporary Fix. A proper solution would be to probably activate or deactiveate an entity, so taht it doesn't come up when the update and draw loops are executed, having that entity be skipped.
+		if (playerEntity->active) // TODO: THis is a temporary Fix. A proper solution would be to probably activate or deactiveate an entity, so taht it doesn't come up when the update and draw loops are executed, having that entity be skipped.
 		{
 			msg_player_x.Set(
 				renderer,

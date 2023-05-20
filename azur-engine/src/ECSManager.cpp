@@ -48,6 +48,35 @@ Entity* EntityManager::CreateBulletSpawnerEntity(std::string name, float spawn_x
 	return entity;
 }
 
+Entity* EntityManager::CreatePlayerEntity(std::string name, ColliderTag tag)
+{
+	Entity* entity = new Entity();
+	entity->name = name;
+	PositionComponent* positionComponent = entity->addComponent<PositionComponent>();
+	BoxColliderComponent* playerBoxColliderComponent = entity->addComponent<BoxColliderComponent>();
+	playerBoxColliderComponent->offset_top = -20;
+	playerBoxColliderComponent->offset_right = 12;
+	playerBoxColliderComponent->offset_bottom = 20;
+	playerBoxColliderComponent->offset_left = -12;
+	playerBoxColliderComponent->tag = tag;
+	PlayerComponent* playerComponent = entity->addComponent<PlayerComponent>();	// TODO: NOTE -> Order of Initializarion is very important. the Position and BoxCollider Components need to be created before the Player COmponent so that hte Player Component can initialize it and get their references. Initializing everything in bulk after is not a solution either because the same order of initialization problem persists.
+	entity->
+		addComponent<SpriteComponent>()->
+		setTexture(positionComponent, Application::renderer, "player.png", -playerComponent->player_w / 2, -playerComponent->player_h / 2, playerComponent->player_w, playerComponent->player_h);
+	EntityManager::AddEntity(entity);
+
+	return entity;
+}
+
+Entity* EntityManager::CreatePlayFieldEntity(std::string name)
+{
+	Entity* entity = new Entity();
+	entity->addComponent<PlayFieldComponent>();
+	EntityManager::AddEntity(entity);
+
+	return entity;
+}
+
 void EntityManager::Render(SDL_Renderer* renderer)
 {
 	for (int i = 0; i < entities.size(); i++)

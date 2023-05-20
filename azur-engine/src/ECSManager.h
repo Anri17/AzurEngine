@@ -10,6 +10,8 @@ public:
 	/* Entity Creation Methods */
 	static BulletComponent* CreateBulletEntity(std::string name, float spawn_x, float spawn_y, ColliderTag tag);
 	static Entity* CreateBulletSpawnerEntity(std::string name, float spawn_x, float spawn_y, ColliderTag tag);
+	static Entity* CreatePlayerEntity(std::string name, ColliderTag tag);
+	static Entity* CreatePlayFieldEntity(std::string name);
 
 public:
 	static Entity* AddEntity(Entity* entity);
