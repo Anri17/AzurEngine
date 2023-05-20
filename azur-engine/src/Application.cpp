@@ -76,14 +76,14 @@ int Application::Start()
 	Entity* playFieldEntity = EntityManager::CreatePlayFieldEntity("PlayField");
 	// Initialise Player with ECS
 	Entity* playerEntity = EntityManager::CreatePlayerEntity("Player", ColliderTag::PLAYER);
-	PlayerComponent* playerComponent = playerEntity->getComponent<PlayerComponent>();
+	PlayerComponent* playerComponent = playerEntity->GetComponent<PlayerComponent>();
 	// DEBUG: Create Test Entity with a Circle Collider
 	Entity* testCircleEntityWithCircleCollider = new Entity();
 	testCircleEntityWithCircleCollider->name = "testCircleEntityWithCircleCollider";
-	PositionComponent* testCircleEntityWithCircleCollider_positionComponent = testCircleEntityWithCircleCollider->addComponent<PositionComponent>();
+	PositionComponent* testCircleEntityWithCircleCollider_positionComponent = testCircleEntityWithCircleCollider->AddComponent<PositionComponent>();
 	testCircleEntityWithCircleCollider_positionComponent->x = 250;
 	testCircleEntityWithCircleCollider_positionComponent->y = 200;
-	CircleColliderComponent* testCircleEntityWithCircleCollider_CircleColliderComponent = testCircleEntityWithCircleCollider->addComponent<CircleColliderComponent>();
+	CircleColliderComponent* testCircleEntityWithCircleCollider_CircleColliderComponent = testCircleEntityWithCircleCollider->AddComponent<CircleColliderComponent>();
 	testCircleEntityWithCircleCollider_CircleColliderComponent->radius = 24;
 	testCircleEntityWithCircleCollider_CircleColliderComponent->tag = ColliderTag::UNDEFINED;
 	EntityManager::AddEntity(testCircleEntityWithCircleCollider);

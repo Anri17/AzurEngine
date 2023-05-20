@@ -17,13 +17,13 @@ BulletComponent* EntityManager::CreateBulletEntity(std::string name, float spawn
 	// Initialise Bullet with ECS
 	Entity* bullet = new Entity();
 	bullet->name = name;
-	PositionComponent* pc = bullet->addComponent<PositionComponent>();
+	PositionComponent* pc = bullet->AddComponent<PositionComponent>();
 	pc->x = spawn_x;
 	pc->y = spawn_y;
-	BulletComponent* bc = bullet->addComponent<BulletComponent>();
-	SpriteComponent* sc = bullet->addComponent<SpriteComponent>();
+	BulletComponent* bc = bullet->AddComponent<BulletComponent>();
+	SpriteComponent* sc = bullet->AddComponent<SpriteComponent>();
 	sc->setTexture(pc, Application::renderer, "small_bullet.png", -bc->width / 2, -bc->height / 2, bc->width, bc->height);
-	BoxColliderComponent* bcc = bullet->addComponent<BoxColliderComponent>();
+	BoxColliderComponent* bcc = bullet->AddComponent<BoxColliderComponent>();
 	bcc->offset_top = -10;
 	bcc->offset_right = 10;
 	bcc->offset_bottom = 10;
@@ -39,10 +39,10 @@ Entity* EntityManager::CreateBulletSpawnerEntity(std::string name, float spawn_x
 	// Initialise Bullet with ECS
 	Entity* entity = new Entity();
 	entity->name = name;
-	PositionComponent* pc = entity->addComponent<PositionComponent>();
+	PositionComponent* pc = entity->AddComponent<PositionComponent>();
 	pc->x = spawn_x;
 	pc->y = spawn_y;
-	BulletSpawerComponent* bsc = entity->addComponent<BulletSpawerComponent>();
+	BulletSpawerComponent* bsc = entity->AddComponent<BulletSpawerComponent>();
 	entities.push_back(entity);
 
 	return entity;
@@ -52,16 +52,16 @@ Entity* EntityManager::CreatePlayerEntity(std::string name, ColliderTag tag)
 {
 	Entity* entity = new Entity();
 	entity->name = name;
-	PositionComponent* positionComponent = entity->addComponent<PositionComponent>();
-	BoxColliderComponent* playerBoxColliderComponent = entity->addComponent<BoxColliderComponent>();
+	PositionComponent* positionComponent = entity->AddComponent<PositionComponent>();
+	BoxColliderComponent* playerBoxColliderComponent = entity->AddComponent<BoxColliderComponent>();
 	playerBoxColliderComponent->offset_top = -20;
 	playerBoxColliderComponent->offset_right = 12;
 	playerBoxColliderComponent->offset_bottom = 20;
 	playerBoxColliderComponent->offset_left = -12;
 	playerBoxColliderComponent->tag = tag;
-	PlayerComponent* playerComponent = entity->addComponent<PlayerComponent>();	// TODO: NOTE -> Order of Initializarion is very important. the Position and BoxCollider Components need to be created before the Player COmponent so that hte Player Component can initialize it and get their references. Initializing everything in bulk after is not a solution either because the same order of initialization problem persists.
+	PlayerComponent* playerComponent = entity->AddComponent<PlayerComponent>();	// TODO: NOTE -> Order of Initializarion is very important. the Position and BoxCollider Components need to be created before the Player COmponent so that hte Player Component can initialize it and get their references. Initializing everything in bulk after is not a solution either because the same order of initialization problem persists.
 	entity->
-		addComponent<SpriteComponent>()->
+		AddComponent<SpriteComponent>()->
 		setTexture(positionComponent, Application::renderer, "player.png", -playerComponent->player_w / 2, -playerComponent->player_h / 2, playerComponent->player_w, playerComponent->player_h);
 	EntityManager::AddEntity(entity);
 
@@ -71,7 +71,7 @@ Entity* EntityManager::CreatePlayerEntity(std::string name, ColliderTag tag)
 Entity* EntityManager::CreatePlayFieldEntity(std::string name)
 {
 	Entity* entity = new Entity();
-	entity->addComponent<PlayFieldComponent>();
+	entity->AddComponent<PlayFieldComponent>();
 	EntityManager::AddEntity(entity);
 
 	return entity;
@@ -81,7 +81,7 @@ void EntityManager::Render(SDL_Renderer* renderer)
 {
 	for (int i = 0; i < entities.size(); i++)
 	{
-		if (entities[i]->active) entities[i]->draw(renderer);
+		if (entities[i]->active) entities[i]->Draw(renderer);
 	}
 }
 
@@ -89,7 +89,7 @@ void EntityManager::Update()
 {
 	for (int i = 0; i < entities.size(); i++)
 	{
-		if (entities[i]->active) entities[i]->update();
+		if (entities[i]->active) entities[i]->Update();
 	}
 }
 

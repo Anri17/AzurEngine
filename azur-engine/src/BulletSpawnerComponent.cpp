@@ -4,7 +4,7 @@
 
 void BulletSpawerComponent::init()
 {
-	position = entity->getComponent<PositionComponent>();
+	position = entity->GetComponent<PositionComponent>();
 	frame = 0;
 }
 

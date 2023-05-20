@@ -11,8 +11,8 @@
 
 void PlayerComponent::init()
 {
-	position = entity->getComponent<PositionComponent>();
-	boxCollider = entity->getComponent<BoxColliderComponent>();
+	position = entity->GetComponent<PositionComponent>();
+	boxCollider = entity->GetComponent<BoxColliderComponent>();
 	position->x = spawnX;
 	position->y = spawnY;
 	fire_frame = 0;

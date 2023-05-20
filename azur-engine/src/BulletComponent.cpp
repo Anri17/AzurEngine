@@ -5,7 +5,7 @@
 
 void BulletComponent::init()
 {
-	position = entity->getComponent<PositionComponent>();
+	position = entity->GetComponent<PositionComponent>();
 }
 
 void BulletComponent::update()

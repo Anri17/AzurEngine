@@ -14,15 +14,15 @@ class Entity;
 
 using ComponentID = std::size_t;
 
-inline ComponentID getComponentTypeID()
+inline ComponentID GetComponentTypeID()
 {
 	static ComponentID lastID = 0;
 	return lastID++;
 }
 
-template <typename T> inline ComponentID getComponentTypeID() noexcept
+template <typename T> inline ComponentID GetComponentTypeID() noexcept
 {
-	static ComponentID typeID = getComponentTypeID();
+	static ComponentID typeID = GetComponentTypeID();
 	return typeID;
 }
 
@@ -50,7 +50,7 @@ private:
 class Entity
 {
 public:
-	void update()
+	void Update()
 	{
 		for (size_t i = 0; i < components.size(); ++i)
 		{
@@ -59,7 +59,7 @@ public:
 		}
 	}
 
-	void draw(SDL_Renderer* renderer)
+	void Draw(SDL_Renderer* renderer)
 	{
 		for (size_t i = 0; i < components.size(); ++i)
 		{
@@ -68,21 +68,21 @@ public:
 		}
 	}
 
-	template <typename T> bool hasComponent() const
+	template <typename T> bool HasComponent() const
 	{
-		return componentBitSet[getComponentTypeID<T>()];
+		return componentBitSet[GetComponentTypeID<T>()];
 	}
 
 	template <typename T, typename... TArgs>
-	T* addComponent(TArgs&&... mArgs)
+	T* AddComponent(TArgs&&... mArgs)
 	{
 		T* c(new T(std::forward<TArgs>(mArgs)...));
 		c->entity = this;
 		Component* uPtr = c;
 		components.emplace_back(std::move(uPtr));
 
-		componentArray[getComponentTypeID<T>()] = c;
-		componentBitSet[getComponentTypeID<T>()] = true;
+		componentArray[GetComponentTypeID<T>()] = c;
+		componentBitSet[GetComponentTypeID<T>()] = true;
 
 		c->init();
 
@@ -90,9 +90,9 @@ public:
 	}
 
 	template <typename T>
-	T* getComponent() const
+	T* GetComponent() const
 	{
-		auto ptr(componentArray[getComponentTypeID<T>()]);
+		auto ptr(componentArray[GetComponentTypeID<T>()]);
 
 		return static_cast<T*>(ptr);
 	}
