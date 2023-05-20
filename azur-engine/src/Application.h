@@ -5,7 +5,10 @@
 
 struct Application
 {
+	static SDL_Window* window;
 	static SDL_Renderer* renderer;
+
+	static int Start(); // Return 0 if successul
 };
 
 
