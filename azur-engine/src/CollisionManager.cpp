@@ -4,13 +4,10 @@ std::vector<ColliderComponent*> CollisionManager::colliders;
 
 void CollisionManager::Update()
 {
-	// check every collision for overlap
-	// If they overlap, change their state,
-	// ie, if they are colliding,
-	// and what are the colliders that are overlapping.
-
-	// Reset Collider Data First
+	// Check every collision for overlap
+	// If they overlap, change their state.
 	
+	// Reset Collider Data First
 	for (size_t i = 0; i < colliders.size(); ++i)
 	{
 		colliders[i]->isColliding = false;
