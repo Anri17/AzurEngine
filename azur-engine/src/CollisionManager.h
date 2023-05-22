@@ -5,6 +5,8 @@
 
 #include "Components.h"
 
+#include "AzurMath.h"
+
 class CollisionManager
 {
 public:
@@ -13,7 +15,11 @@ public:
 	static void RemoveCollider(ColliderComponent* collider);
 
 private:
+	static std::pair<vector2float, vector2float> find_closest_collision_border_point(ColliderComponent* collider0, ColliderComponent* collider1);
+
+private:
 	static std::vector<ColliderComponent*> colliders;
+
 };
 
 

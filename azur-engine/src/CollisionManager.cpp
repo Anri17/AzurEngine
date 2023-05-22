@@ -1,5 +1,7 @@
 #include "CollisionManager.h"
 
+
+
 std::vector<ColliderComponent*> CollisionManager::colliders;
 
 void CollisionManager::Update()
@@ -16,6 +18,44 @@ void CollisionManager::Update()
 		for (size_t j = 0; j < colliders[i]->collider_tags.size(); ++j)
 			colliders[i]->collider_tags.pop_back();
 	}
+	/*
+
+	for (size_t i = 0; i < colliders.size(); ++i)
+	{
+		ColliderComponent* collider0 = colliders[i];
+		CircleColliderComponent* collider0_circle = nullptr;
+		BoxColliderComponent* collider0_box = nullptr;
+		if (colliders[i]->type == ColliderType::CIRCLE)
+		{
+			collider0_circle = (CircleColliderComponent*)colliders[i];
+		}
+		else if (colliders[i]->type == ColliderType::BOX)
+		{
+			collider0_box = (BoxColliderComponent*)colliders[i];
+		}
+
+		for (size_t j = i + 1; j < colliders.size(); ++j)
+		{
+			ColliderComponent* collider1 = colliders[j];
+			CircleColliderComponent* collider1_circle = nullptr;
+			BoxColliderComponent* collider1_box = nullptr;
+			if (colliders[j]->type == ColliderType::CIRCLE)
+			{
+				collider1_circle = (CircleColliderComponent*)colliders[j];
+			}
+			else if (colliders[j]->type == ColliderType::BOX)
+			{
+				collider1_box = (BoxColliderComponent*)colliders[j];
+			}
+
+
+			
+
+
+		}
+	}
+	*/
+
 
 	// TODO: THIS IS FOR BOXCOLLIDER ONLY. A test check needs to be made for circle colliders.
 	// TODO: This is only set up for the mean time so that the program compiles. 
@@ -97,4 +137,89 @@ void CollisionManager::RemoveCollider(ColliderComponent* collider)
 	{
 		colliders.erase(pos);
 	}
+}
+
+// returns an array of two points with the two closest points of first and second collider, respectively
+std::pair<vector2float, vector2float> CollisionManager::find_closest_collision_border_point(ColliderComponent* collider0, ColliderComponent* collider1)
+{
+	vector2float collider0_border_point = {};
+	vector2float collider1_border_point = {};
+	// Get a linear function going from one collider to the other
+	vector2float collider0_point = { collider0->position->x, collider0->position->y };
+	vector2float collider1_point = { collider1->position->x, collider1->position->y };
+
+	// Collider0
+	if (collider0->type == ColliderType::BOX)
+	{
+		BoxColliderComponent* box_collider0 = (BoxColliderComponent*)collider0;
+		vector2float box_collider0_p0 = { box_collider0->true_left, box_collider0->true_top };
+		vector2float box_collider0_p1 = { box_collider0->true_right, box_collider0->true_top };
+		vector2float box_collider0_p2 = { box_collider0->true_left, box_collider0->true_bottom };
+		vector2float box_collider0_p3 = { box_collider0->true_right, box_collider0->true_bottom };
+
+		vector2float box_collider0_border_point;
+
+		// Check top side
+		vector2float box_collider0_border_point_top = AzurMath::find_point_x(collider0_point, collider1_point, box_collider0->true_top);
+		if (box_collider0_border_point_top.x > box_collider0->true_left || box_collider0_border_point_top.x < box_collider0->true_right)
+		{
+			collider0_border_point = box_collider0_border_point_top;
+		}
+		// Check right side
+		vector2float box_collider0_border_point_right = AzurMath::find_point_y(collider0_point, collider1_point, box_collider0->true_right);
+		if (box_collider0_border_point_right.y < box_collider0->true_top || box_collider0_border_point_right.y < box_collider0->true_bottom)
+		{
+			collider0_border_point = box_collider0_border_point_right;
+		}
+		// Check bottom side
+		vector2float box_collider0_border_point_bottom = AzurMath::find_point_x(collider0_point, collider1_point, box_collider0->true_bottom);
+		if (box_collider0_border_point_bottom.x > box_collider0->true_left || box_collider0_border_point_bottom.x < box_collider0->true_right)
+		{
+			collider0_border_point = box_collider0_border_point_bottom;
+		}
+		// Check bottom left
+		vector2float box_collider0_border_point_left = AzurMath::find_point_y(collider0_point, collider1_point, box_collider0->true_left);
+		if (box_collider0_border_point_left.y < box_collider0->true_top || box_collider0_border_point_left.y > box_collider0->true_right)
+		{
+			collider0_border_point = box_collider0_border_point_left;
+		}
+	}
+	// Collider1
+	if (collider1->type == ColliderType::BOX)
+	{
+		BoxColliderComponent* box_collider1 = (BoxColliderComponent*)collider1;
+		vector2float box_collider1_p0 = { box_collider1->true_left, box_collider1->true_top };
+		vector2float box_collider1_p1 = { box_collider1->true_right, box_collider1->true_top };
+		vector2float box_collider1_p2 = { box_collider1->true_left, box_collider1->true_bottom };
+		vector2float box_collider1_p3 = { box_collider1->true_right, box_collider1->true_bottom };
+
+		vector2float box_collider1_border_point;
+
+		// Check top side
+		vector2float box_collider1_border_point_top = AzurMath::find_point_x(collider0_point, collider1_point, box_collider1->true_top);
+		if (box_collider1_border_point_top.x > box_collider1->true_left || box_collider1_border_point_top.x < box_collider1->true_right)
+		{
+			collider1_border_point = box_collider1_border_point_top;
+		}
+		// Check right side
+		vector2float box_collider1_border_point_right = AzurMath::find_point_y(collider0_point, collider1_point, box_collider1->true_right);
+		if (box_collider1_border_point_right.y < box_collider1->true_top || box_collider1_border_point_right.y < box_collider1->true_bottom)
+		{
+			collider1_border_point = box_collider1_border_point_right;
+		}
+		// Check bottom side
+		vector2float box_collider1_border_point_bottom = AzurMath::find_point_x(collider0_point, collider1_point, box_collider1->true_bottom);
+		if (box_collider1_border_point_bottom.x > box_collider1->true_left || box_collider1_border_point_bottom.x < box_collider1->true_right)
+		{
+			collider1_border_point = box_collider1_border_point_bottom;
+		}
+		// Check bottom left
+		vector2float box_collider1_border_point_left = AzurMath::find_point_y(collider0_point, collider1_point, box_collider1->true_left);
+		if (box_collider1_border_point_left.y < box_collider1->true_top || box_collider1_border_point_left.y > box_collider1->true_right)
+		{
+			collider1_border_point = box_collider1_border_point_left;
+		}
+	}
+
+	return std::make_pair(collider0_border_point, collider1_border_point);
 }
