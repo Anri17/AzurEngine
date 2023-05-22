@@ -172,6 +172,7 @@
     <ClCompile Include="src\CollisionManager.cpp" />
     <ClCompile Include="src\ECSManager.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
+    <ClCompile Include="src\AzurMath.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\PlayerComponent.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="src\ECSManager.h" />
     <ClInclude Include="src\ColliderTag.h" />
     <ClInclude Include="src\InputHandler.h" />
+    <ClInclude Include="src\AzurMath.h" />
     <ClInclude Include="src\Mouse.h" />
     <ClInclude Include="src\Components.h" />
     <ClInclude Include="src\ECS.h" />
