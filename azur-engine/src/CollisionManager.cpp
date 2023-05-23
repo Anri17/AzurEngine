@@ -18,43 +18,6 @@ void CollisionManager::Update()
 		for (size_t j = 0; j < colliders[i]->collider_tags.size(); ++j)
 			colliders[i]->collider_tags.pop_back();
 	}
-	/*
-
-	for (size_t i = 0; i < colliders.size(); ++i)
-	{
-		ColliderComponent* collider0 = colliders[i];
-		CircleColliderComponent* collider0_circle = nullptr;
-		BoxColliderComponent* collider0_box = nullptr;
-		if (colliders[i]->type == ColliderType::CIRCLE)
-		{
-			collider0_circle = (CircleColliderComponent*)colliders[i];
-		}
-		else if (colliders[i]->type == ColliderType::BOX)
-		{
-			collider0_box = (BoxColliderComponent*)colliders[i];
-		}
-
-		for (size_t j = i + 1; j < colliders.size(); ++j)
-		{
-			ColliderComponent* collider1 = colliders[j];
-			CircleColliderComponent* collider1_circle = nullptr;
-			BoxColliderComponent* collider1_box = nullptr;
-			if (colliders[j]->type == ColliderType::CIRCLE)
-			{
-				collider1_circle = (CircleColliderComponent*)colliders[j];
-			}
-			else if (colliders[j]->type == ColliderType::BOX)
-			{
-				collider1_box = (BoxColliderComponent*)colliders[j];
-			}
-
-
-			
-
-
-		}
-	}
-	*/
 
 
 	// TODO: THIS IS FOR BOXCOLLIDER ONLY. A test check needs to be made for circle colliders.
@@ -63,9 +26,8 @@ void CollisionManager::Update()
 	for (size_t i = 0; i < colliders.size(); ++i)
 	{
 		// TODO: Test BoxColliders agains Circle Colliders.
-		// TODO: At this moment this is only working with BoxColliders
 		// WARNING: TODO: The moment a CircleColliderComponent is added to vector of colliders, everything breaks.
-		BoxColliderComponent* collider0 = (BoxColliderComponent*)colliders[i];
+		ColliderComponent* collider0 = colliders[i];
 		// We don't need to evaluate collisions for inactie entities
 		if (!collider0->entity->active) continue;
 
@@ -73,53 +35,39 @@ void CollisionManager::Update()
 		for (size_t j = i + 1; j < colliders.size(); ++j)
 		{
 			// TODO: Test BoxColliders agains Circle Colliders.
-			// TODO: At this moment this is only working with BoxColliders
-			BoxColliderComponent* collider1 = (BoxColliderComponent*)colliders[j];
+			ColliderComponent* collider1 = colliders[j];
 			// We don't need to evaluate collisions for inactie entities
 			if (!collider1->entity->active) continue;
 
 
-			// TODO: I can probably replace all of this with a simple distance check between the two neared points of each collision border.
-			// TODO: This implementation would work for both ovals and squares.
-			// TODO: Another solutions would be if two lines intersect, thought that would probably require my to convert the data into usable linear functions with which I could make that kind of calculation.
-			// TODO: Think of a star shaped Collider. The closed points would probalby be the vertices of the star. The implementation would be different because the shape is concave.
-			bool is_colliding = collider0->true_top < collider1->true_bottom && collider0->true_left < collider1->true_right &&
-				collider1->true_top < collider0->true_bottom && collider1->true_left < collider0->true_right;
-			if (is_colliding)
+			// Box with Box Collision
+			if (collider0->type == ColliderType::BOX && collider1->type == ColliderType::BOX)
 			{
-				/*
-					add collider references to the colliders
-					add collider tags to the collider, if that tag doesn't already exist in that collider's tag vector.,
-					set that it is colliding with something.
-				*/
-				//TODO
-
-				collider0->isColliding = true;
-				collider1->isColliding = true;
-
-				collider0->collider_references.push_back(collider1);
-				collider1->collider_references.push_back(collider0);
-
-				bool add_tag_0 = true;
-				bool add_tag_1 = true;
-				for (size_t k = 0; k < collider0->collider_tags.size(); ++k)
+				BoxColliderComponent* box_collider0 = (BoxColliderComponent*)collider0;
+				BoxColliderComponent* box_collider1 = (BoxColliderComponent*)collider1;
+				bool is_colliding = box_collider0->true_top < box_collider1->true_bottom && box_collider0->true_left < box_collider1->true_right &&
+					box_collider1->true_top < box_collider0->true_bottom && box_collider1->true_left < box_collider0->true_right;
+				if (is_colliding)
 				{
-					if (collider0->collider_tags[k] == collider1->tag)
-					{
-						add_tag_0 = false;
-						break;
-					}
+					set_collision_status(collider0, collider1);
 				}
-				for (size_t k = 0; k < collider1->collider_tags.size(); ++k)
+			}
+			else if (collider0->type == ColliderType::CIRCLE && collider1->type == ColliderType::CIRCLE)
+			{
+				CircleColliderComponent* circle_collider0 = (CircleColliderComponent*)collider0;
+				CircleColliderComponent* circle_collider1 = (CircleColliderComponent*)collider1;
+				vector2float collider0_point = { circle_collider0->position->x , circle_collider0->position->y };
+				vector2float collider1_point = { circle_collider1->position->x , circle_collider1->position->y };
+
+				float d0 = AzurMath::find_distance_between_points(collider0_point, collider1_point);
+				float d1 = AzurMath::find_distance_between_points(collider0_point, collider1_point);
+				float distance = d0 > d1 ? d1 : d0;
+				float diameter = circle_collider0->radius + circle_collider1->radius;
+				bool is_colliding = distance < diameter;
+				if (is_colliding)
 				{
-					if (collider1->collider_tags[k] == collider0->tag)
-					{
-						add_tag_1 = false;
-						break;
-					}
+					set_collision_status(collider0, collider1);
 				}
-				if (add_tag_0) collider0->collider_tags.push_back(collider1->tag);
-				if (add_tag_1) collider1->collider_tags.push_back(collider0->tag);
 			}
 		}
 	}
@@ -139,6 +87,7 @@ void CollisionManager::RemoveCollider(ColliderComponent* collider)
 	}
 }
 
+// TODO: NOT BEING USED. CHECK IF RELEVANT
 // returns an array of two points with the two closest points of first and second collider, respectively
 std::pair<vector2float, vector2float> CollisionManager::find_closest_collision_border_point(ColliderComponent* collider0, ColliderComponent* collider1)
 {
@@ -222,4 +171,32 @@ std::pair<vector2float, vector2float> CollisionManager::find_closest_collision_b
 	}
 
 	return std::make_pair(collider0_border_point, collider1_border_point);
+}
+
+void CollisionManager::set_collision_status(ColliderComponent* collider0, ColliderComponent* collider1)
+{
+	collider0->isColliding = true;
+	collider1->isColliding = true;
+	collider0->collider_references.push_back(collider1);
+	collider1->collider_references.push_back(collider0);
+	bool add_tag_0 = true;
+	bool add_tag_1 = true;
+	for (size_t k = 0; k < collider0->collider_tags.size(); ++k)
+	{
+		if (collider0->collider_tags[k] == collider1->tag)
+		{
+			add_tag_0 = false;
+			break;
+		}
+	}
+	for (size_t k = 0; k < collider1->collider_tags.size(); ++k)
+	{
+		if (collider1->collider_tags[k] == collider0->tag)
+		{
+			add_tag_1 = false;
+			break;
+		}
+	}
+	if (add_tag_0) collider0->collider_tags.push_back(collider1->tag);
+	if (add_tag_1) collider1->collider_tags.push_back(collider0->tag);
 }

@@ -12,7 +12,7 @@ public:
 	void update() override;
 
 	PositionComponent* position;
-	BoxColliderComponent* boxCollider; // TODO: For some reason this is throwing a syntax error and I don't know why
+	ColliderComponent* collider; // TODO: For some reason this is throwing a syntax error and I don't know why
 
 	int player_w = 32; // TODO: Get the sprite w through the SDL_Rect.
 	int player_h = 48; // TODO: Get the sprite h through the SDL_Rect.

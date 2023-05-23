@@ -12,7 +12,6 @@
 void PlayerComponent::init()
 {
 	position = entity->GetComponent<PositionComponent>();
-	boxCollider = entity->GetComponent<BoxColliderComponent>();
 	position->x = spawnX;
 	position->y = spawnY;
 	fire_frame = 0;
@@ -85,9 +84,9 @@ void PlayerComponent::update()
 		fire_frame = 0;
 	}
 
-	for (size_t i = 0; i < boxCollider->collider_tags.size(); ++i)
+	for (size_t i = 0; i < collider->collider_tags.size(); ++i)
 	{
-		if (boxCollider->collider_tags[i] == ColliderTag::BULLET_ENEMY || boxCollider->collider_tags[i] == ColliderTag::ENEMY)
+		if (collider->collider_tags[i] == ColliderTag::BULLET_ENEMY || collider->collider_tags[i] == ColliderTag::ENEMY)
 		{
 			entity->active = false;
 			break;

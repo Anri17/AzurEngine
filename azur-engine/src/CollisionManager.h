@@ -16,7 +16,7 @@ public:
 
 private:
 	static std::pair<vector2float, vector2float> find_closest_collision_border_point(ColliderComponent* collider0, ColliderComponent* collider1);
-
+	static void set_collision_status(ColliderComponent* collider0, ColliderComponent* collider1);
 private:
 	static std::vector<ColliderComponent*> colliders;
 

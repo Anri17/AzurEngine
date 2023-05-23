@@ -1,5 +1,7 @@
 #include "AzurMath.h"
 
+#include <cmath>
+
 namespace AzurMath {
 	// It takes two points of a linear function and find a point of that linear function given a x value. 
 	vector2float find_point_y(vector2float point0, vector2float point1, float point_x)
@@ -25,5 +27,17 @@ namespace AzurMath {
 		float y = point_y;
 		float x = (y - b) / m;
 		return { x, y };
+	}
+
+	// NOT IMPLEMENTEDED
+	vector2float find_point_distance(vector2float point0, vector2float point1, float distance)
+	{
+		return vector2float();
+	}
+
+	// Returns the distance between two points
+	float find_distance_between_points(vector2float point0, vector2float point1)
+	{
+		return sqrt(pow(point1.x - point0.x, 2) + pow(point1.y - point0.y, 2));
 	}
 }

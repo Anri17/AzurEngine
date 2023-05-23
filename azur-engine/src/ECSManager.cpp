@@ -53,16 +53,22 @@ Entity* EntityManager::CreatePlayerEntity(std::string name, ColliderTag tag)
 	Entity* entity = new Entity();
 	entity->name = name;
 	PositionComponent* positionComponent = entity->AddComponent<PositionComponent>();
-	BoxColliderComponent* playerBoxColliderComponent = entity->AddComponent<BoxColliderComponent>();
-	playerBoxColliderComponent->offset_top = -20;
-	playerBoxColliderComponent->offset_right = 12;
-	playerBoxColliderComponent->offset_bottom = 20;
-	playerBoxColliderComponent->offset_left = -12;
-	playerBoxColliderComponent->tag = tag;
+	/*
+	BoxColliderComponent* playerColliderComponent = entity->AddComponent<BoxColliderComponent>();
+	playerColliderComponent->offset_top = -20;
+	playerColliderComponent->offset_right = 12;
+	playerColliderComponent->offset_bottom = 20;
+	playerColliderComponent->offset_left = -12;
+	playerColliderComponent->tag = tag;
+	*/
+	CircleColliderComponent* playerColliderComponent = entity->AddComponent<CircleColliderComponent>();
+	playerColliderComponent->radius = 12;
+	playerColliderComponent->tag = tag;
 	PlayerComponent* playerComponent = entity->AddComponent<PlayerComponent>();	// TODO: NOTE -> Order of Initializarion is very important. the Position and BoxCollider Components need to be created before the Player COmponent so that hte Player Component can initialize it and get their references. Initializing everything in bulk after is not a solution either because the same order of initialization problem persists.
 	entity->
 		AddComponent<SpriteComponent>()->
 		setTexture(positionComponent, Application::renderer, "player.png", -playerComponent->player_w / 2, -playerComponent->player_h / 2, playerComponent->player_w, playerComponent->player_h);
+	playerComponent->collider = playerColliderComponent;
 	EntityManager::AddEntity(entity);
 
 	return entity;
