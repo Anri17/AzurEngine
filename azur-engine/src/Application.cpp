@@ -91,6 +91,12 @@ int Application::Start()
 	Entity* BulletSpawnerEntity = EntityManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 240, ColliderTag::ENEMY);
 
 
+	// Create a Stage Component. Most of the gameplayer logic goes here.
+	// TODO: In the future, I want to somehow save and load a stage data into a file and into the game
+	// TODO: This is so that I can later save the game, but also create a stage editor.
+	// START: RESUME DEVELOPMENT FROM HERE
+	Entity* stageEntity = new Entity();
+	stageEntity->name = "Stage";
 
 
 	// The Application Loop

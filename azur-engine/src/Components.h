@@ -9,5 +9,6 @@
 #include "BoxColliderComponent.h"
 #include "CircleColliderComponent.h"
 #include "BulletSpawnerComponent.h"
+#include "StageComponent.h"
 
 #endif // _COMPONENTS_H
