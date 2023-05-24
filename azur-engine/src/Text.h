@@ -9,6 +9,7 @@ struct Text
 {
 	Text(std::string fontpath, int fontsize, SDL_Color color);
 	~Text();
+	void FreeMemory();
 
 	void Render(SDL_Renderer* renderer);
 

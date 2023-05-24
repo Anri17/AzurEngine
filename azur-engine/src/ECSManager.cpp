@@ -14,6 +14,7 @@ Entity* EntityManager::AddEntity(Entity* entity)
 
 BulletComponent* EntityManager::CreateBulletEntityA(std::string name, float spawn_x, float spawn_y, ColliderTag tag, float speed)
 {
+	// TODO: instead of creating a sprite for each component, create an class with preloaded asset textures, and use that to reference the needed texture for each of the bullet that uses it
 	// Initialise Bullet with ECS
 	Entity* entity = new Entity();
 	entity->name = name;
@@ -37,6 +38,7 @@ BulletComponent* EntityManager::CreateBulletEntityA(std::string name, float spaw
 
 Entity* EntityManager::CreateBulletSpawnerEntity(std::string name, float spawn_x, float spawn_y, ColliderTag tag)
 {
+	
 	// Initialise Bullet with ECS
 	Entity* entity = new Entity();
 	entity->name = name;

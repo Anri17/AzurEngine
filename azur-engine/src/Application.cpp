@@ -58,8 +58,6 @@ int Application::Start()
 	bool application_is_running = true;
 
 
-
-
 	// Entity and Component Initialization
 	// Initialise Text For Debuging
 	std::string basepath = SDL_GetBasePath();
@@ -262,9 +260,13 @@ int Application::Start()
 
 	// Memory Cleaning
 	// Clear Entity Vector
-	_CrtDumpMemoryLeaks();
 	EntityManager::DeleteAllEntities();
-	_CrtDumpMemoryLeaks();
+	// Clear Text (Might want to create a TextComponent and add it to an entity to be deleted with the other entities)
+	msg_current_frame.FreeMemory();
+	msg_mouse_x.FreeMemory();
+	msg_mouse_y.FreeMemory();
+	msg_player_x.FreeMemory();
+	msg_player_y.FreeMemory();
 	// Quit Functions
 	SDL_DestroyRenderer(Application::renderer);
 	SDL_DestroyWindow(Application::window);

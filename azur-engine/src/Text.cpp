@@ -14,8 +14,13 @@ Text::Text(std::string fontpath, int fontsize, SDL_Color color) : message(""), t
 };
 Text::~Text()
 {
+}
+
+// This method was created because the pointers needed to be freed before the destructor could be called, which would had been after TTF_Close() was called.
+void Text::FreeMemory()
+{
 	SDL_DestroyTexture(texture);
-	//TTF_CloseFont(font);
+	TTF_CloseFont(font);
 }
 
 void Text::Render(SDL_Renderer* renderer)
