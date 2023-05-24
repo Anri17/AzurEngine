@@ -74,7 +74,8 @@ void PlayerComponent::update()
 	{
 		if ((fire_frame % 10) == 0)
 		{
-			EntityManager::CreateBulletEntity("Player Bullet", this->position->x, this->position->y, ColliderTag::BULLET_PLAYER);
+			float bulletSpeed = 4.0f;
+			EntityManager::CreateBulletEntityA("Player Bullet", this->position->x, this->position->y, ColliderTag::BULLET_PLAYER, bulletSpeed);
 		}
 
 		fire_frame++;

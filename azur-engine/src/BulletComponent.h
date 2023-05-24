@@ -13,6 +13,8 @@ public:
 	PositionComponent* position;
 	int width = 12;
 	int height = 12;
+
+	float speed = 1;
 };
 
 #endif // _BULLET_H

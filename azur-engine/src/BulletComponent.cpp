@@ -10,7 +10,6 @@ void BulletComponent::init()
 
 void BulletComponent::update()
 {
-	float speed = 2.5f;
 	position->y -= speed;
 
 	if (position->y - height / 2 < PlayFieldComponent::Top)

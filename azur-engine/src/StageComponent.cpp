@@ -6,5 +6,8 @@ void StageComponent::init()
 
 void StageComponent::update()
 {
+	++frame;
+
+
 
 }
