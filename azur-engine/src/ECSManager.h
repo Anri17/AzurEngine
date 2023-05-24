@@ -4,6 +4,8 @@
 #include "ColliderTag.h"
 #include "Components.h"
 
+#include "AzurMemoryLeakFinder.h"
+
 class EntityManager
 {
 public:

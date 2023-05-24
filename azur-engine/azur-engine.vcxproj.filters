@@ -140,5 +140,8 @@
     <ClInclude Include="src\StageComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\AzurMemoryLeakFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

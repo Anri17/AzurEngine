@@ -1,6 +1,6 @@
 #include "CollisionManager.h"
 
-
+#include "AzurMemoryLeakFinder.h"
 
 std::vector<ColliderComponent*> CollisionManager::colliders;
 

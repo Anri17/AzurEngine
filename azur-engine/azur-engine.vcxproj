@@ -184,6 +184,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\AzurMemoryLeakFinder.h" />
     <ClInclude Include="src\BoxColliderComponent.h" />
     <ClInclude Include="src\BulletComponent.h" />
     <ClInclude Include="src\BulletSpawnerComponent.h" />

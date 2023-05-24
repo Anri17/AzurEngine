@@ -7,7 +7,7 @@
 #include <map>
 #include <cstring>
 
-
+#include "AzurMemoryLeakFinder.h"
 
 // Engine
 #include "Application.h"
@@ -99,6 +99,7 @@ int Application::Start()
 	// START: RESUME DEVELOPMENT FROM HERE
 	Entity* stageEntity = new Entity();
 	stageEntity->name = "Stage";
+	EntityManager::AddEntity(stageEntity);
 
 
 	// The Application Loop
@@ -261,7 +262,9 @@ int Application::Start()
 
 	// Memory Cleaning
 	// Clear Entity Vector
+	_CrtDumpMemoryLeaks();
 	EntityManager::DeleteAllEntities();
+	_CrtDumpMemoryLeaks();
 	// Quit Functions
 	SDL_DestroyRenderer(Application::renderer);
 	SDL_DestroyWindow(Application::window);

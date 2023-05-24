@@ -4,6 +4,8 @@
 #include "ECS.h"
 #include "PositionComponent.h"
 
+#include "AzurMemoryLeakFinder.h"
+
 class BulletComponent : public Component
 {
 public:

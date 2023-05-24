@@ -9,6 +9,8 @@
 
 #include <SDL.h>
 
+#include "AzurMemoryLeakFinder.h"
+
 class Component;
 class Entity;
 
@@ -78,14 +80,10 @@ public:
 	{
 		T* c(new T(std::forward<TArgs>(mArgs)...));
 		c->entity = this;
-		Component* uPtr = c;
-		components.emplace_back(std::move(uPtr));
-
+		components.emplace_back(c);
 		componentArray[GetComponentTypeID<T>()] = c;
 		componentBitSet[GetComponentTypeID<T>()] = true;
-
 		c->init();
-
 		return c;
 	}
 

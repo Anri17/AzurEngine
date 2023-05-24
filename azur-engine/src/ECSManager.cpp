@@ -15,22 +15,22 @@ Entity* EntityManager::AddEntity(Entity* entity)
 BulletComponent* EntityManager::CreateBulletEntityA(std::string name, float spawn_x, float spawn_y, ColliderTag tag, float speed)
 {
 	// Initialise Bullet with ECS
-	Entity* bullet = new Entity();
-	bullet->name = name;
-	PositionComponent* pc = bullet->AddComponent<PositionComponent>();
+	Entity* entity = new Entity();
+	entity->name = name;
+	PositionComponent* pc = entity->AddComponent<PositionComponent>();
 	pc->x = spawn_x;
 	pc->y = spawn_y;
-	BulletComponent* bc = bullet->AddComponent<BulletComponent>();
+	BulletComponent* bc = entity->AddComponent<BulletComponent>();
 	bc->speed = speed;
-	SpriteComponent* sc = bullet->AddComponent<SpriteComponent>();
+	SpriteComponent* sc = entity->AddComponent<SpriteComponent>();
 	sc->setTexture(pc, Application::renderer, "small_bullet.png", -bc->width / 2, -bc->height / 2, bc->width, bc->height);
-	BoxColliderComponent* bcc = bullet->AddComponent<BoxColliderComponent>();
+	BoxColliderComponent* bcc = entity->AddComponent<BoxColliderComponent>();
 	bcc->offset_top = -10;
 	bcc->offset_right = 10;
 	bcc->offset_bottom = 10;
 	bcc->offset_left = -10;
 	bcc->tag = tag;
-	entities.push_back(bullet);
+	EntityManager::AddEntity(entity);
 
 	return bc;
 }
@@ -44,7 +44,7 @@ Entity* EntityManager::CreateBulletSpawnerEntity(std::string name, float spawn_x
 	pc->x = spawn_x;
 	pc->y = spawn_y;
 	BulletSpawerComponent* bsc = entity->AddComponent<BulletSpawerComponent>();
-	entities.push_back(entity);
+	EntityManager::AddEntity(entity);
 
 	return entity;
 }
