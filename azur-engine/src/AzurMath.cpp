@@ -38,6 +38,6 @@ namespace AzurMath {
 	// Returns the distance between two points
 	float find_distance_between_points(vector2float point0, vector2float point1)
 	{
-		return sqrt(pow(point1.x - point0.x, 2) + pow(point1.y - point0.y, 2));
+		return (float)sqrt(pow(point1.x - point0.x, 2) + pow(point1.y - point0.y, 2));
 	}
 }

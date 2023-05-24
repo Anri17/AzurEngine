@@ -175,8 +175,6 @@ std::pair<vector2float, vector2float> CollisionManager::find_closest_collision_b
 		vector2float box_collider0_p2 = { box_collider0->true_left, box_collider0->true_bottom };
 		vector2float box_collider0_p3 = { box_collider0->true_right, box_collider0->true_bottom };
 
-		vector2float box_collider0_border_point;
-
 		// Check top side
 		vector2float box_collider0_border_point_top = AzurMath::find_point_x(collider0_point, collider1_point, box_collider0->true_top);
 		if (box_collider0_border_point_top.x > box_collider0->true_left || box_collider0_border_point_top.x < box_collider0->true_right)
@@ -210,8 +208,6 @@ std::pair<vector2float, vector2float> CollisionManager::find_closest_collision_b
 		vector2float box_collider1_p1 = { box_collider1->true_right, box_collider1->true_top };
 		vector2float box_collider1_p2 = { box_collider1->true_left, box_collider1->true_bottom };
 		vector2float box_collider1_p3 = { box_collider1->true_right, box_collider1->true_bottom };
-
-		vector2float box_collider1_border_point;
 
 		// Check top side
 		vector2float box_collider1_border_point_top = AzurMath::find_point_x(collider0_point, collider1_point, box_collider1->true_top);

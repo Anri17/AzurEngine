@@ -7,6 +7,8 @@
 #include <map>
 #include <cstring>
 
+
+
 // Engine
 #include "Application.h"
 #include "Debug.h"
@@ -181,14 +183,13 @@ int Application::Start()
 		// Application Level Update
 		mouse.Update();
 		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false;
-		// Collision update
-		// TODO: Collision updates must be executed before the entities, so that the required data is provided for the components to work with
-		// TODO: However, if we swap the CollisionManager Update with the EntityManager Update, we break the systems in place, because the BoxColliderComponent will reset itself. Move the defaulting of the state to the CollisionManger.Update()
-		CollisionManager::Update();
 		// Game Level Update
 		EntityManager::Update();
+		// Collision update
+		CollisionManager::Update();
 		// Delete Flagged Entities
 		EntityManager::DeleteFlagedEntities();
+
 
 		// Update UI
 		// Text Update
