@@ -26,6 +26,7 @@
 // Application and Engine Systems
 #include "ECSManager.h"
 #include "CollisionManager.h"
+#include "SpriteManager.h"
 
 // TODO: These defines are both game specific and engine speficic
 // TODO: What this means is that the values are specific to the need of the applicaiton, but they are needed none the less
@@ -59,6 +60,8 @@ int Application::Start()
 
 
 	// Entity and Component Initialization
+	// Initialize Sprites
+	SpriteManager::InitializeSprites();
 	// Initialise Text For Debuging
 	std::string basepath = SDL_GetBasePath();
 	std::string fontname = "SpaceMono-Regular.ttf";
@@ -261,6 +264,8 @@ int Application::Start()
 	// Memory Cleaning
 	// Clear Entity Vector
 	EntityManager::DeleteAllEntities();
+	// Clear Sprites
+	SpriteManager::DeleteSprites();
 	// Clear Text (Might want to create a TextComponent and add it to an entity to be deleted with the other entities)
 	msg_current_frame.FreeMemory();
 	msg_mouse_x.FreeMemory();

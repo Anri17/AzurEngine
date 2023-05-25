@@ -9,16 +9,20 @@
 #include "ECS.h"
 #include "Components.h"
 
+#include "Sprite.h"
+
 class SpriteComponent : public Component
 {
 public:
-	int setTexture(PositionComponent* position, SDL_Renderer* renderer, const char* imageFileName, int x, int y, int w, int h);
+	void init() override;
+	// int setTexture(SDL_Renderer* renderer, const char* imageFileName, int x, int y, int w, int h);
 	void draw(SDL_Renderer* renderer) override;
 
-	~SpriteComponent() override;
+	// ~SpriteComponent() override;
 public:
-	SDL_Texture* texture;
-	SDL_Rect rect;
+	Sprite* sprite;
+	// SDL_Texture* texture;
+	// SDL_Rect rect;
 	PositionComponent* position;
 };
 

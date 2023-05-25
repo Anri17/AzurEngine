@@ -179,6 +179,7 @@
     <ClCompile Include="src\PlayFieldComponent.cpp" />
     <ClCompile Include="src\PositionComponent.cpp" />
     <ClCompile Include="src\SpriteComponent.cpp" />
+    <ClCompile Include="src\SpriteManager.cpp" />
     <ClCompile Include="src\StageComponent.cpp" />
     <ClCompile Include="src\Text.cpp" />
   </ItemGroup>
@@ -202,7 +203,9 @@
     <ClInclude Include="src\PlayerComponent.h" />
     <ClInclude Include="src\PlayFieldComponent.h" />
     <ClInclude Include="src\PositionComponent.h" />
+    <ClInclude Include="src\Sprite.h" />
     <ClInclude Include="src\SpriteComponent.h" />
+    <ClInclude Include="src\SpriteManager.h" />
     <ClInclude Include="src\StageComponent.h" />
     <ClInclude Include="src\Text.h" />
     <ClInclude Include="src\vector2float.h" />

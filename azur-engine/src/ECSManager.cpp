@@ -1,6 +1,7 @@
 ﻿#include "ECSManager.h"
 
 #include "Application.h"
+#include "SpriteManager.h"
 
 std::vector<Entity*> EntityManager::entities;
 std::vector<Entity*> EntityManager::flagged_for_deletion;
@@ -24,7 +25,8 @@ BulletComponent* EntityManager::CreateBulletEntityA(std::string name, float spaw
 	BulletComponent* bc = entity->AddComponent<BulletComponent>();
 	bc->speed = speed;
 	SpriteComponent* sc = entity->AddComponent<SpriteComponent>();
-	sc->setTexture(pc, Application::renderer, "small_bullet.png", -bc->width / 2, -bc->height / 2, bc->width, bc->height);
+	sc->sprite = SpriteManager::bullet_a;
+	// sc->setTexture(Application::renderer, "small_bullet.png", -bc->width / 2, -bc->height / 2, bc->width, bc->height);
 	BoxColliderComponent* bcc = entity->AddComponent<BoxColliderComponent>();
 	bcc->offset_top = -10;
 	bcc->offset_right = 10;
@@ -68,9 +70,9 @@ Entity* EntityManager::CreatePlayerEntity(std::string name, ColliderTag tag)
 	playerColliderComponent->tag = tag;
 	*/
 	PlayerComponent* playerComponent = entity->AddComponent<PlayerComponent>();	// TODO: NOTE -> Order of Initializarion is very important. the Position and BoxCollider Components need to be created before the Player COmponent so that hte Player Component can initialize it and get their references. Initializing everything in bulk after is not a solution either because the same order of initialization problem persists.
-	entity->
-		AddComponent<SpriteComponent>()->
-		setTexture(positionComponent, Application::renderer, "player.png", -playerComponent->player_w / 2, -playerComponent->player_h / 2, playerComponent->player_w, playerComponent->player_h);
+	SpriteComponent* sc = entity->AddComponent<SpriteComponent>();
+	sc->sprite = SpriteManager::player;
+	// sc->setTexture(Application::renderer, "player.png", -playerComponent->player_w / 2, -playerComponent->player_h / 2, playerComponent->player_w, playerComponent->player_h);
 	playerComponent->collider = playerColliderComponent;
 	EntityManager::AddEntity(entity);
 
