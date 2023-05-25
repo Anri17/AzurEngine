@@ -167,6 +167,7 @@
     <ClCompile Include="src\BoxColliderComponent.cpp" />
     <ClCompile Include="src\BulletComponent.cpp" />
     <ClCompile Include="src\BulletSpawnerComponent.cpp" />
+    <ClCompile Include="src\BulletTemplate.h" />
     <ClCompile Include="src\CircleColliderComponent.cpp" />
     <ClCompile Include="src\ColliderComponent.cpp" />
     <ClCompile Include="src\CollisionManager.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="src\AzurMemoryLeakFinder.h" />
     <ClInclude Include="src\BoxColliderComponent.h" />
     <ClInclude Include="src\BulletComponent.h" />
+    <ClInclude Include="src\BulletPool.h" />
     <ClInclude Include="src\BulletSpawnerComponent.h" />
     <ClInclude Include="src\CircleColliderComponent.h" />
     <ClInclude Include="src\ColliderComponent.h" />

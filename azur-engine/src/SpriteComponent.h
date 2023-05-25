@@ -15,14 +15,9 @@ class SpriteComponent : public Component
 {
 public:
 	void init() override;
-	// int setTexture(SDL_Renderer* renderer, const char* imageFileName, int x, int y, int w, int h);
 	void draw(SDL_Renderer* renderer) override;
-
-	// ~SpriteComponent() override;
 public:
 	Sprite* sprite;
-	// SDL_Texture* texture;
-	// SDL_Rect rect;
 	PositionComponent* position;
 };
 
