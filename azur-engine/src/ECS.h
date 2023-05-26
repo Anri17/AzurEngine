@@ -14,9 +14,12 @@
 
 enum class EntityTag
 {
-	UNDEFINED,
-	PLAYER,
-	ENEMY_BULLET
+	UNDEFINED = -1,
+	PLAYER = 0,
+	ENEMY = 1,
+	BULLET_PLAYER = 2,
+	BULLET_ENEMY = 3,
+	PLAYFIELD = 10
 };
 
 class Component;

@@ -1,7 +1,6 @@
 #ifndef _ECS_MANAGER_H
 #define _ECS_MANAGER_H
 
-#include "ColliderTag.h"
 #include "Components.h"
 
 #include "AzurMemoryLeakFinder.h"
@@ -12,9 +11,9 @@ class EntityManager
 {
 public:
 	/* Entity Creation Methods */
-	static BulletComponent* CreateBulletEntityA(std::string name, float spawn_x, float spawn_y, ColliderTag colliderTag, EntityTag entityTag, float speed, float angle, BulletType bulletType);
-	static Entity* CreateBulletSpawnerEntity(std::string name, float spawn_x, float spawn_y, ColliderTag tag);
-	static Entity* CreatePlayerEntity(std::string name, ColliderTag tag);
+	static BulletComponent* CreateBulletEntityA(std::string name, float spawn_x, float spawn_y, EntityTag tag, float speed, float angle, BulletType bulletType);
+	static Entity* CreateBulletSpawnerEntity(std::string name, float spawn_x, float spawn_y, EntityTag tag);
+	static Entity* CreatePlayerEntity(std::string name, EntityTag tag);
 	static Entity* CreatePlayFieldEntity(std::string name);
 
 public:

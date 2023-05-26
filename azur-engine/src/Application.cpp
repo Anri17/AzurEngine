@@ -76,10 +76,9 @@ int Application::Start()
 	// Initialise Mouse
 	Mouse mouse;
 	Entity* playFieldEntity = EntityManager::CreatePlayFieldEntity("PlayField");
-	Entity* playerEntity = EntityManager::CreatePlayerEntity("Player", ColliderTag::PLAYER);
+	Entity* playerEntity = EntityManager::CreatePlayerEntity("Player", EntityTag::PLAYER);
 	PlayerComponent* playerComponent = playerEntity->GetComponent<PlayerComponent>();
-	Entity* BulletSpawnerEntity = EntityManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 180, ColliderTag::ENEMY);
-
+	Entity* BulletSpawnerEntity = EntityManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 180, EntityTag::ENEMY);
 
 	// Create a Stage Component. Most of the gameplayer logic goes here.
 	// TODO: In the future, I want to somehow save and load a stage data into a file and into the game

@@ -250,7 +250,7 @@ void CollisionManager::set_collision_status(ColliderComponent* collider0, Collid
 	bool add_tag_1 = true;
 	for (size_t k = 0; k < collider0->collider_tags.size(); ++k)
 	{
-		if (collider0->collider_tags[k] == collider1->tag)
+		if (collider0->collider_tags[k] == collider1->entity->tag)
 		{
 			add_tag_0 = false;
 			break;
@@ -258,12 +258,12 @@ void CollisionManager::set_collision_status(ColliderComponent* collider0, Collid
 	}
 	for (size_t k = 0; k < collider1->collider_tags.size(); ++k)
 	{
-		if (collider1->collider_tags[k] == collider0->tag)
+		if (collider1->collider_tags[k] == collider0->entity->tag)
 		{
 			add_tag_1 = false;
 			break;
 		}
 	}
-	if (add_tag_0) collider0->collider_tags.push_back(collider1->tag);
-	if (add_tag_1) collider1->collider_tags.push_back(collider0->tag);
+	if (add_tag_0) collider0->collider_tags.push_back(collider1->entity->tag);
+	if (add_tag_1) collider1->collider_tags.push_back(collider0->entity->tag);
 }

@@ -13,7 +13,7 @@ Entity* EntityManager::AddEntity(Entity* entity)
 	return entity;
 }
 
-BulletComponent* EntityManager::CreateBulletEntityA(std::string name, float spawn_x, float spawn_y, ColliderTag ColliderTag, EntityTag entityTag, float speed, float angle, BulletType bulletType)
+BulletComponent* EntityManager::CreateBulletEntityA(std::string name, float spawn_x, float spawn_y, EntityTag tag, float speed, float angle, BulletType bulletType)
 {
 	// TODO: The bullet Type is given but used, for now.
 	// 
@@ -22,7 +22,7 @@ BulletComponent* EntityManager::CreateBulletEntityA(std::string name, float spaw
 	// Initialise Bullet with ECS
 	Entity* entity = new Entity();
 	entity->name = name;
-	entity->tag = entityTag;
+	entity->tag = tag;
 	PositionComponent* pc = entity->AddComponent<PositionComponent>();
 	pc->x = spawn_x;
 	pc->y = spawn_y;
@@ -33,17 +33,17 @@ BulletComponent* EntityManager::CreateBulletEntityA(std::string name, float spaw
 	sc->sprite = SpriteManager::bullet_a;
 	CircleColliderComponent* ccc = entity->AddComponent<CircleColliderComponent>();
 	ccc->radius = 6;
-	ccc->tag = ColliderTag;
 	EntityManager::AddEntity(entity);
 
 	return bc;
 }
 
-Entity* EntityManager::CreateBulletSpawnerEntity(std::string name, float spawn_x, float spawn_y, ColliderTag tag)
+Entity* EntityManager::CreateBulletSpawnerEntity(std::string name, float spawn_x, float spawn_y, EntityTag tag)
 {
 	// Initialise Bullet with ECS
 	Entity* entity = new Entity();
 	entity->name = name;
+	entity->tag = tag;
 	PositionComponent* pc = entity->AddComponent<PositionComponent>();
 	pc->x = spawn_x;
 	pc->y = spawn_y;
@@ -53,15 +53,16 @@ Entity* EntityManager::CreateBulletSpawnerEntity(std::string name, float spawn_x
 	return entity;
 }
 
-Entity* EntityManager::CreatePlayerEntity(std::string name, ColliderTag tag)
+Entity* EntityManager::CreatePlayerEntity(std::string name, EntityTag tag)
 {
 	Entity* entity = new Entity();
 	entity->name = name;
+	entity->tag = tag;
 	PositionComponent* positionComponent = entity->AddComponent<PositionComponent>();
 	CircleColliderComponent* playerColliderComponent = entity->AddComponent<CircleColliderComponent>();
 	playerColliderComponent->radius = 2;
-	playerColliderComponent->tag = tag;
-	PlayerComponent* playerComponent = entity->AddComponent<PlayerComponent>();	// TODO: NOTE -> Order of Initializarion is very important. the Position and BoxCollider Components need to be created before the Player COmponent so that hte Player Component can initialize it and get their references. Initializing everything in bulk after is not a solution either because the same order of initialization problem persists.
+	// TODO: NOTE -> Order of Initializarion is very important. the Position and BoxCollider Components need to be created before the Player COmponent so that hte Player Component can initialize it and get their references. Initializing everything in bulk after is not a solution either because the same order of initialization problem persists.
+	PlayerComponent* playerComponent = entity->AddComponent<PlayerComponent>();
 	SpriteComponent* sc = entity->AddComponent<SpriteComponent>();
 	sc->sprite = SpriteManager::player;
 	playerComponent->collider = playerColliderComponent;
@@ -74,12 +75,12 @@ Entity* EntityManager::CreatePlayFieldEntity(std::string name)
 {
 	Entity* entity = new Entity();
 	entity->AddComponent<PlayFieldComponent>();
+	entity->tag = EntityTag::PLAYFIELD;
 	BoxColliderComponent* bcc = entity->AddComponent<BoxColliderComponent>();
 	bcc->offset_top = PlayFieldComponent::Top;
 	bcc->offset_right = PlayFieldComponent::Right;
 	bcc->offset_bottom = PlayFieldComponent::Bottom;
 	bcc->offset_left = PlayFieldComponent::Left;
-	bcc->tag = ColliderTag::PLAYFIELD;
 	
 	EntityManager::AddEntity(entity);
 

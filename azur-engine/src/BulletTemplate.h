@@ -1,14 +1,14 @@
 #ifndef _BULLET_TEMPLATE_H
 #define _BULLET_TEMPLATE_H
 
-#include "ColliderTag.h"
 #include "Sprite.h"
 #include "BulletType.h"
+#include "ECS.h"
 
 struct BulletTemplate
 {
+	EntityTag tag;
 	BulletType type;
-	ColliderTag tag;
 	int circle_collider_radius;
 	Sprite* sprite;
 };

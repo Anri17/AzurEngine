@@ -9,7 +9,6 @@ void ColliderComponent::init()
 	else
 		position = entity->GetComponent<PositionComponent>();
 
-	tag = ColliderTag::UNDEFINED;
 	isColliding = false;
 	collider_references = {};
 	collider_tags = {};

@@ -27,8 +27,7 @@ void BulletSpawerComponent::update()
 				"Enemy Bullet",
 				this->position->x,
 				this->position->y,
-				ColliderTag::BULLET_ENEMY,
-				EntityTag::ENEMY_BULLET,
+				EntityTag::BULLET_ENEMY,
 				bullet_speed,
 				bullet_angle + full_pattern_angle_offset,
 				BulletType::BULLET_A);

@@ -81,8 +81,7 @@ void PlayerComponent::update()
 				"Player Bullet",
 				this->position->x,
 				this->position->y,
-				ColliderTag::BULLET_PLAYER,
-				EntityTag::PLAYER,
+				EntityTag::BULLET_PLAYER,
 				bulletSpeed,
 				bulletAngle,
 				BulletType::PLAYER);
@@ -97,7 +96,7 @@ void PlayerComponent::update()
 
 	for (size_t i = 0; i < collider->collider_tags.size(); ++i)
 	{
-		if (collider->collider_tags[i] == ColliderTag::BULLET_ENEMY || collider->collider_tags[i] == ColliderTag::ENEMY)
+		if (collider->collider_tags[i] == EntityTag::BULLET_ENEMY || collider->collider_tags[i] == EntityTag::ENEMY)
 		{
 			entity->active = false;
 			break;

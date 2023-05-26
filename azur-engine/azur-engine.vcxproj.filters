@@ -128,9 +128,6 @@
     <ClInclude Include="src\BulletSpawnerComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ColliderTag.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\vector2int.h">
       <Filter>Header Files</Filter>
     </ClInclude>

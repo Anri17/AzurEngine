@@ -14,12 +14,12 @@ void BoxColliderComponent::draw(SDL_Renderer* renderer)
 #ifdef _DEBUG
 	// This is a debug drawing of the collision box.
 	// Not need to show playfield collision. That would be red all the time and would make this whole code useless
-	if (tag == ColliderTag::PLAYFIELD)
+	if (entity->tag == EntityTag::PLAYFIELD)
 	{
 		// Playfield is blue to distinguish from other colliders
 		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); // blue
 	}
-	else if (collider_tags.size() == 1 && collider_tags[0] == ColliderTag::PLAYFIELD)
+	else if (collider_tags.size() == 1 && collider_tags[0] == EntityTag::PLAYFIELD)
 	{
 		SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // green
 	}
