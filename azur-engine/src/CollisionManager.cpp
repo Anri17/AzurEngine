@@ -132,7 +132,9 @@ void CollisionManager::Update()
 				float d1 = AzurMath::find_distance_between_points(collision_point, collider0_point);
 				float distance = d0 > d1 ? d1 : d0;
 				float radius = circle_collider->radius;
-				bool is_colliding = distance < radius;
+				bool is_colliding = distance < radius ||
+					circle_collider->position->x >= box_collider->true_left && circle_collider->position->x <= box_collider->true_right &&
+					circle_collider->position->y <= box_collider->true_bottom && circle_collider->position->x >= box_collider->true_top;
 				if (is_colliding)
 				{
 					set_collision_status(collider0, collider1);
