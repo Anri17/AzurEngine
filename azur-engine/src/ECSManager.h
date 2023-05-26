@@ -6,11 +6,13 @@
 
 #include "AzurMemoryLeakFinder.h"
 
+#include "BulletType.h"
+
 class EntityManager
 {
 public:
 	/* Entity Creation Methods */
-	static BulletComponent* CreateBulletEntityA(std::string name, float spawn_x, float spawn_y, ColliderTag tag, float speed);
+	static BulletComponent* CreateBulletEntityA(std::string name, float spawn_x, float spawn_y, ColliderTag tag, float speed, float angle, BulletType bulletType);
 	static Entity* CreateBulletSpawnerEntity(std::string name, float spawn_x, float spawn_y, ColliderTag tag);
 	static Entity* CreatePlayerEntity(std::string name, ColliderTag tag);
 	static Entity* CreatePlayFieldEntity(std::string name);

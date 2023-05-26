@@ -72,73 +72,73 @@ void CollisionManager::Update()
 			else if (collider0->type == ColliderType::CIRCLE && collider1->type == ColliderType::BOX ||
 					 collider0->type == ColliderType::BOX && collider1->type == ColliderType::CIRCLE)
 			{
-				vector2float collision_point = {};
-				CircleColliderComponent* circle_collider = collider0->type == ColliderType::CIRCLE ? (CircleColliderComponent*)collider0 : (CircleColliderComponent*)collider1;
-				BoxColliderComponent* box_collider = collider0->type == ColliderType::BOX ? (BoxColliderComponent*)collider0 : (BoxColliderComponent*)collider1;
+					vector2float collision_point = {};
+					CircleColliderComponent* circle_collider = collider0->type == ColliderType::CIRCLE ? (CircleColliderComponent*)collider0 : (CircleColliderComponent*)collider1;
+					BoxColliderComponent* box_collider = collider0->type == ColliderType::BOX ? (BoxColliderComponent*)collider0 : (BoxColliderComponent*)collider1;
 
-				if (box_collider->true_top <= circle_collider->position->y && box_collider->true_bottom >= circle_collider->position->y &&
-					box_collider->position->x >= circle_collider->position->x)
-				{
-					collision_point.x = box_collider->true_left;
-					collision_point.y = circle_collider->position->y;
-				}
-				else if (box_collider->true_top <= circle_collider->position->y&& box_collider->true_bottom >= circle_collider->position->y&&
-					box_collider->position->x <= circle_collider->position->x)
-				{
-					collision_point.x = box_collider->true_right;
-					collision_point.y = circle_collider->position->y;
-				}
-				else if (box_collider->true_left <= circle_collider->position->x && box_collider->true_right >= circle_collider->position->x &&
-					box_collider->position->y >= circle_collider->position->y)
-				{
-					collision_point.x = circle_collider->position->x;
-					collision_point.y = box_collider->true_top;
-				}
-				else if (box_collider->true_left <= circle_collider->position->x && box_collider->true_right >= circle_collider->position->x &&
-					box_collider->position->y <= circle_collider->position->y)
-				{
-					collision_point.x = circle_collider->position->x;
-					collision_point.y = box_collider->true_bottom;
-				}
-				// top left
-				else if (box_collider->true_bottom <= circle_collider->position->y && box_collider->true_right <= circle_collider->position->x)
-				{
-					collision_point.x = box_collider->true_right;
-					collision_point.y = box_collider->true_bottom;
-				}
-				// top right
-				else if (box_collider->true_bottom <= circle_collider->position->y && box_collider->true_left >= circle_collider->position->x)
-				{
-					collision_point.x = box_collider->true_left;
-					collision_point.y = box_collider->true_bottom;
-				}
-				// bottom left
-				else if (box_collider->true_top >= circle_collider->position->y && box_collider->true_right <= circle_collider->position->x)
-				{
-					collision_point.x = box_collider->true_right;
-					collision_point.y = box_collider->true_top;
-				}
-				// bottom right
-				else if (box_collider->true_top >= circle_collider->position->y && box_collider->true_left >= circle_collider->position->x)
-				{
-					collision_point.x = box_collider->true_left;
-					collision_point.y = box_collider->true_top;
-				}
+					if (box_collider->true_top <= circle_collider->position->y && box_collider->true_bottom >= circle_collider->position->y &&
+						box_collider->position->x >= circle_collider->position->x)
+					{
+						collision_point.x = box_collider->true_left;
+						collision_point.y = circle_collider->position->y;
+					}
+					else if (box_collider->true_top <= circle_collider->position->y&& box_collider->true_bottom >= circle_collider->position->y&&
+						box_collider->position->x <= circle_collider->position->x)
+					{
+						collision_point.x = box_collider->true_right;
+						collision_point.y = circle_collider->position->y;
+					}
+					else if (box_collider->true_left <= circle_collider->position->x && box_collider->true_right >= circle_collider->position->x &&
+						box_collider->position->y >= circle_collider->position->y)
+					{
+						collision_point.x = circle_collider->position->x;
+						collision_point.y = box_collider->true_top;
+					}
+					else if (box_collider->true_left <= circle_collider->position->x && box_collider->true_right >= circle_collider->position->x &&
+						box_collider->position->y <= circle_collider->position->y)
+					{
+						collision_point.x = circle_collider->position->x;
+						collision_point.y = box_collider->true_bottom;
+					}
+					// top left
+					else if (box_collider->true_bottom <= circle_collider->position->y && box_collider->true_right <= circle_collider->position->x)
+					{
+						collision_point.x = box_collider->true_right;
+						collision_point.y = box_collider->true_bottom;
+					}
+					// top right
+					else if (box_collider->true_bottom <= circle_collider->position->y && box_collider->true_left >= circle_collider->position->x)
+					{
+						collision_point.x = box_collider->true_left;
+						collision_point.y = box_collider->true_bottom;
+					}
+					// bottom left
+					else if (box_collider->true_top >= circle_collider->position->y && box_collider->true_right <= circle_collider->position->x)
+					{
+						collision_point.x = box_collider->true_right;
+						collision_point.y = box_collider->true_top;
+					}
+					// bottom right
+					else if (box_collider->true_top >= circle_collider->position->y && box_collider->true_left >= circle_collider->position->x)
+					{
+						collision_point.x = box_collider->true_left;
+						collision_point.y = box_collider->true_top;
+					}
 
 
 
-				vector2float collider0_point = { circle_collider->position->x , circle_collider->position->y };
-				float d0 = AzurMath::find_distance_between_points(collider0_point, collision_point);
-				float d1 = AzurMath::find_distance_between_points(collision_point, collider0_point);
-				float distance = d0 > d1 ? d1 : d0;
-				float radius = circle_collider->radius;
-				bool is_colliding = distance < radius ||
-					circle_collider->position->x >= box_collider->true_left && circle_collider->position->x <= box_collider->true_right &&
-					circle_collider->position->y <= box_collider->true_bottom && circle_collider->position->x >= box_collider->true_top;
-				if (is_colliding)
-				{
-					set_collision_status(collider0, collider1);
-				}
+					vector2float collider0_point = { circle_collider->position->x , circle_collider->position->y };
+					float d0 = AzurMath::find_distance_between_points(collider0_point, collision_point);
+					float d1 = AzurMath::find_distance_between_points(collision_point, collider0_point);
+					float distance = d0 > d1 ? d1 : d0;
+					float radius = circle_collider->radius;
+					bool is_colliding = distance < radius ||
+						circle_collider->position->x >= box_collider->true_left && circle_collider->position->x <= box_collider->true_right &&
+						circle_collider->position->y <= box_collider->true_bottom && circle_collider->position->x >= box_collider->true_top;
+					if (is_colliding)
+					{
+						set_collision_status(collider0, collider1);
+					}
 			}
 		}
 	}

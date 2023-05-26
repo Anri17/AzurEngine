@@ -72,12 +72,19 @@ void PlayerComponent::update()
 	// Fire Bullet
 	if (InputHandler::GetKeyDown(InputHandler::KEY_Z))
 	{
-		//if ((fire_frame % 10) == 0)
-		if ((fire_frame % 1) == 0)
+		if ((fire_frame % 8) == 0)
 		{
 			// float bulletSpeed = 4.0f;
-			float bulletSpeed = 40.0f;
-			EntityManager::CreateBulletEntityA("Player Bullet", this->position->x, this->position->y, ColliderTag::BULLET_PLAYER, bulletSpeed);
+			float bulletSpeed = 32.0f;
+			float bulletAngle = 270.0f;
+			EntityManager::CreateBulletEntityA(
+				"Player Bullet",
+				this->position->x,
+				this->position->y,
+				ColliderTag::BULLET_PLAYER,
+				bulletSpeed,
+				bulletAngle,
+				BulletType::PLAYER);
 		}
 
 		fire_frame++;

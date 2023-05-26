@@ -6,6 +6,8 @@
 
 #include "AzurMemoryLeakFinder.h"
 
+#include "vector2float.h"
+
 class BulletComponent : public Component
 {
 public:
@@ -16,7 +18,10 @@ public:
 	int width = 12;
 	int height = 12;
 
-	float speed = 1;
+	float speed = 1.0f;
+	float angle = 0.0f;
+private:
+	vector2float velocity;
 };
 
 #endif // _BULLET_H

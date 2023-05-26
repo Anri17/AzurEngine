@@ -75,14 +75,10 @@ int Application::Start()
 	Text msg_player_y(fontpath, fontsize, message_color);
 	// Initialise Mouse
 	Mouse mouse;
-	// Initialise PlayField
 	Entity* playFieldEntity = EntityManager::CreatePlayFieldEntity("PlayField");
-	// Initialise Player with ECS
 	Entity* playerEntity = EntityManager::CreatePlayerEntity("Player", ColliderTag::PLAYER);
 	PlayerComponent* playerComponent = playerEntity->GetComponent<PlayerComponent>();
-	// DEBUG: Create Test Entity with a Circle Collider
-	// Create Bullet Spawner
-	Entity* BulletSpawnerEntity = EntityManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 240, ColliderTag::ENEMY);
+	Entity* BulletSpawnerEntity = EntityManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 180, ColliderTag::ENEMY);
 
 
 	// Create a Stage Component. Most of the gameplayer logic goes here.

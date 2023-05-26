@@ -3,9 +3,11 @@
 
 #include "ColliderTag.h"
 #include "Sprite.h"
+#include "BulletType.h"
 
 struct BulletTemplate
 {
+	BulletType type;
 	ColliderTag tag;
 	int circle_collider_radius;
 	Sprite* sprite;

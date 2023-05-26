@@ -13,9 +13,12 @@ Entity* EntityManager::AddEntity(Entity* entity)
 	return entity;
 }
 
-BulletComponent* EntityManager::CreateBulletEntityA(std::string name, float spawn_x, float spawn_y, ColliderTag tag, float speed)
+BulletComponent* EntityManager::CreateBulletEntityA(std::string name, float spawn_x, float spawn_y, ColliderTag tag, float speed, float angle, BulletType bulletType)
 {
-	// TODO: instead of creating a sprite for each component, create an class with preloaded asset textures, and use that to reference the needed texture for each of the bullet that uses it
+	// TODO: The bullet Type is given but used, for now.
+	// 
+	// TODO: There is going to be a list of bullet types. This means that I need to check every type and then get the right eindex of bullet to then spawn it.
+	// TODO: Might need to move the bullet creation to the BulletTool class and then use this class to creata an object.
 	// Initialise Bullet with ECS
 	Entity* entity = new Entity();
 	entity->name = name;
@@ -24,6 +27,7 @@ BulletComponent* EntityManager::CreateBulletEntityA(std::string name, float spaw
 	pc->y = spawn_y;
 	BulletComponent* bc = entity->AddComponent<BulletComponent>();
 	bc->speed = speed;
+	bc->angle = angle;
 	SpriteComponent* sc = entity->AddComponent<SpriteComponent>();
 	sc->sprite = SpriteManager::bullet_a;
 	CircleColliderComponent* ccc = entity->AddComponent<CircleColliderComponent>();

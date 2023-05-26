@@ -14,6 +14,8 @@ public:
 private:
 	PositionComponent* position;
 	int frame;
+	int bullet_angle = 0;
+	int full_pattern_angle_offset = 0;
 };
 
 

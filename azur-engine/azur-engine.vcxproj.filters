@@ -158,5 +158,8 @@
     <ClInclude Include="src\BulletPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\BulletType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
