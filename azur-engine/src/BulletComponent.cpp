@@ -14,7 +14,7 @@ void BulletComponent::update()
 {
 	// TODO: The bullet will use a velocity vector to move.
 	// The calculations are done given a speed and an angle variable.
-	float angle_rad = angle * AzurMath::PI / 180.0f;
+	float angle_rad = angle * (float)AzurMath::PI / 180.0f;
 	velocity.y = sin(angle_rad) * speed;
 	velocity.x = cos(angle_rad) * speed;
 

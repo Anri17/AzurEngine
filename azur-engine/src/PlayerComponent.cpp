@@ -82,6 +82,7 @@ void PlayerComponent::update()
 				this->position->x,
 				this->position->y,
 				ColliderTag::BULLET_PLAYER,
+				EntityTag::PLAYER,
 				bulletSpeed,
 				bulletAngle,
 				BulletType::PLAYER);

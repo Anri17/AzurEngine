@@ -13,7 +13,7 @@ Entity* EntityManager::AddEntity(Entity* entity)
 	return entity;
 }
 
-BulletComponent* EntityManager::CreateBulletEntityA(std::string name, float spawn_x, float spawn_y, ColliderTag tag, float speed, float angle, BulletType bulletType)
+BulletComponent* EntityManager::CreateBulletEntityA(std::string name, float spawn_x, float spawn_y, ColliderTag ColliderTag, EntityTag entityTag, float speed, float angle, BulletType bulletType)
 {
 	// TODO: The bullet Type is given but used, for now.
 	// 
@@ -22,6 +22,7 @@ BulletComponent* EntityManager::CreateBulletEntityA(std::string name, float spaw
 	// Initialise Bullet with ECS
 	Entity* entity = new Entity();
 	entity->name = name;
+	entity->tag = entityTag;
 	PositionComponent* pc = entity->AddComponent<PositionComponent>();
 	pc->x = spawn_x;
 	pc->y = spawn_y;
@@ -32,7 +33,7 @@ BulletComponent* EntityManager::CreateBulletEntityA(std::string name, float spaw
 	sc->sprite = SpriteManager::bullet_a;
 	CircleColliderComponent* ccc = entity->AddComponent<CircleColliderComponent>();
 	ccc->radius = 6;
-	ccc->tag = tag;
+	ccc->tag = ColliderTag;
 	EntityManager::AddEntity(entity);
 
 	return bc;

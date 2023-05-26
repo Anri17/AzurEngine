@@ -11,6 +11,14 @@
 
 #include "AzurMemoryLeakFinder.h"
 
+
+enum class EntityTag
+{
+	UNDEFINED,
+	PLAYER,
+	ENEMY_BULLET
+};
+
 class Component;
 class Entity;
 
@@ -109,6 +117,7 @@ public:
 	std::vector<Component*> components;
 
 	std::string name = "undefined";
+	EntityTag tag = EntityTag::UNDEFINED;
 
 	ComponentArray componentArray;
 	ComponentBitSet componentBitSet;
