@@ -17,8 +17,24 @@ void CircleColliderComponent::update()
 void CircleColliderComponent::draw(SDL_Renderer* renderer)
 {
 #ifdef _DEBUG
-	if (isColliding) SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // red
-	else SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // green
+	// Not need to show playfield collision. That would be red all the time and would make this whole code useless
+	if (tag == ColliderTag::PLAYFIELD)
+	{
+		// Playfield is blue to distinguish from other colliders
+		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); // blue
+	}
+	else if (collider_tags.size() == 1 && collider_tags[0] == ColliderTag::PLAYFIELD)
+	{
+		SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // green
+	}
+	else if (isColliding)
+	{
+		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // red
+	}
+	else
+	{
+		SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // green
+	}
 
 	// DEBUG: Draw circle for testing
 	int32_t centerX = (int32_t)position->x;

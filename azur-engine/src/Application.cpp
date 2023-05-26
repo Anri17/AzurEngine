@@ -81,15 +81,6 @@ int Application::Start()
 	Entity* playerEntity = EntityManager::CreatePlayerEntity("Player", ColliderTag::PLAYER);
 	PlayerComponent* playerComponent = playerEntity->GetComponent<PlayerComponent>();
 	// DEBUG: Create Test Entity with a Circle Collider
-	Entity* testCircleEntityWithCircleCollider = new Entity();
-	testCircleEntityWithCircleCollider->name = "testCircleEntityWithCircleCollider";
-	PositionComponent* testCircleEntityWithCircleCollider_positionComponent = testCircleEntityWithCircleCollider->AddComponent<PositionComponent>();
-	testCircleEntityWithCircleCollider_positionComponent->x = 250;
-	testCircleEntityWithCircleCollider_positionComponent->y = 200;
-	CircleColliderComponent* testCircleEntityWithCircleCollider_CircleColliderComponent = testCircleEntityWithCircleCollider->AddComponent<CircleColliderComponent>();
-	testCircleEntityWithCircleCollider_CircleColliderComponent->radius = 24;
-	testCircleEntityWithCircleCollider_CircleColliderComponent->tag = ColliderTag::UNDEFINED;
-	EntityManager::AddEntity(testCircleEntityWithCircleCollider);
 	// Create Bullet Spawner
 	Entity* BulletSpawnerEntity = EntityManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 240, ColliderTag::ENEMY);
 

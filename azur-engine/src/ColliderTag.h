@@ -7,7 +7,8 @@ enum class ColliderTag
 	PLAYER = 0,
 	ENEMY = 1,
 	BULLET_PLAYER = 2,
-	BULLET_ENEMY = 3
+	BULLET_ENEMY = 3,
+	PLAYFIELD = 10
 };
 
 #endif // _ENTITY_TAG_H

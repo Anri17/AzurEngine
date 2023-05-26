@@ -4,7 +4,10 @@
 
 void ColliderComponent::init()
 {
-	position = entity->GetComponent<PositionComponent>();
+	if (!entity->HasComponent<PositionComponent>())
+		position = entity->AddComponent<PositionComponent>();
+	else
+		position = entity->GetComponent<PositionComponent>();
 
 	tag = ColliderTag::UNDEFINED;
 	isColliding = false;
