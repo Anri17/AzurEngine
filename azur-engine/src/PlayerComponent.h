@@ -3,7 +3,10 @@
 
 #include "ECS.h"
 #include "PositionComponent.h"
-#include "BoxColliderComponent.h"
+#include "ColliderComponent.h"
+
+class SpriteComponent; // This is to prevent a weird syntac error where a semicolon was missing before an asterist
+//#include "SpriteComponent.h"
 
 class PlayerComponent : public Component
 {
@@ -13,6 +16,16 @@ public:
 
 	PositionComponent* position;
 	ColliderComponent* collider; // TODO: For some reason this is throwing a syntax error and I don't know why
+	SpriteComponent* sprite;
+
+#ifdef _DEBUG
+	int lives = 18;
+#else
+	int lives = 2;
+#endif
+	bool was_hit = false;
+	int revive_cooldown = 240; // 4 second
+	int revive_frame_count = 0;
 
 	int player_w = 32; // TODO: Get the sprite w through the SDL_Rect.
 	int player_h = 48; // TODO: Get the sprite h through the SDL_Rect.

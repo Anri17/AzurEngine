@@ -73,6 +73,7 @@ int Application::Start()
 	Text msg_mouse_y(fontpath, fontsize, message_color);
 	Text msg_player_x(fontpath, fontsize, message_color);
 	Text msg_player_y(fontpath, fontsize, message_color);
+	Text msg_player_lives(fontpath, fontsize, message_color);
 	// Initialise Mouse
 	Mouse mouse;
 	Entity* playFieldEntity = EntityManager::CreatePlayFieldEntity("PlayField");
@@ -173,10 +174,10 @@ int Application::Start()
 		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false;
 		// Game Level Update
 		EntityManager::Update();
-		// Collision update
-		CollisionManager::Update();
 		// Delete Flagged Entities
 		EntityManager::DeleteFlagedEntities();
+		// Collision update
+		CollisionManager::Update();
 
 
 		// Update UI
@@ -213,6 +214,11 @@ int Application::Start()
 				0,
 				msg_player_x.rect.y + msg_player_x.rect.h
 			);
+			msg_player_lives.Set(
+				Application::renderer,
+				std::string("Player Lives: " + std::to_string(playerComponent->lives)),
+				0,
+				msg_player_y.rect.y + msg_player_y.rect.h);
 		}
 
 
@@ -227,6 +233,7 @@ int Application::Start()
 		msg_mouse_y.Render(Application::renderer);
 		msg_player_x.Render(Application::renderer);
 		msg_player_y.Render(Application::renderer);
+		msg_player_lives.Render(Application::renderer);
 
 
 
@@ -258,6 +265,7 @@ int Application::Start()
 	msg_mouse_y.FreeMemory();
 	msg_player_x.FreeMemory();
 	msg_player_y.FreeMemory();
+	msg_player_lives.FreeMemory();
 	// Quit Functions
 	SDL_DestroyRenderer(Application::renderer);
 	SDL_DestroyWindow(Application::window);

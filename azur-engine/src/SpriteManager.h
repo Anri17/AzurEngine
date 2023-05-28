@@ -8,6 +8,7 @@ class SpriteManager
 public:
 	static Sprite* bullet_a;
 	static Sprite* player;
+	static Sprite* blank_texture;
 
 public:
 	static void InitializeSprites();

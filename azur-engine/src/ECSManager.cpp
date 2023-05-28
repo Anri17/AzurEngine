@@ -62,9 +62,9 @@ Entity* EntityManager::CreatePlayerEntity(std::string name, EntityTag tag)
 	CircleColliderComponent* playerColliderComponent = entity->AddComponent<CircleColliderComponent>();
 	playerColliderComponent->radius = 2;
 	// TODO: NOTE -> Order of Initializarion is very important. the Position and BoxCollider Components need to be created before the Player COmponent so that hte Player Component can initialize it and get their references. Initializing everything in bulk after is not a solution either because the same order of initialization problem persists.
-	PlayerComponent* playerComponent = entity->AddComponent<PlayerComponent>();
 	SpriteComponent* sc = entity->AddComponent<SpriteComponent>();
 	sc->sprite = SpriteManager::player;
+	PlayerComponent* playerComponent = entity->AddComponent<PlayerComponent>();
 	playerComponent->collider = playerColliderComponent;
 	EntityManager::AddEntity(entity);
 
@@ -134,4 +134,15 @@ void EntityManager::DeleteFlagedEntities()
 void EntityManager::FlagForDeletion(Entity* entity)
 {
 	flagged_for_deletion.push_back(entity);
+}
+
+void EntityManager::FlagForDeletionAllTagged(EntityTag tag)
+{
+	for (size_t i = 0; i < entities.size(); ++i)
+	{
+		if (entities[i]->tag == tag)
+		{
+			flagged_for_deletion.push_back(entities[i]);
+		}
+	}
 }

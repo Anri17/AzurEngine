@@ -25,6 +25,7 @@ public:
 
 	static void DeleteFlagedEntities();
 	static void FlagForDeletion(Entity* entity);
+	static void FlagForDeletionAllTagged(EntityTag tag);
 private:
 	static std::vector<Entity*> entities;
 	static std::vector<Entity*> flagged_for_deletion;

@@ -11,6 +11,7 @@
 
 Sprite* SpriteManager::bullet_a = nullptr;
 Sprite* SpriteManager::player = nullptr;
+Sprite* SpriteManager::blank_texture = nullptr;
 
 void SpriteManager::InitializeSprites()
 {
@@ -28,6 +29,13 @@ void SpriteManager::InitializeSprites()
 	int bullet_a_x = (int)(-bullet_a_w / 2);
 	int bullet_a_y = (int)(-bullet_a_h / 2);
 	bullet_a = CreateSprite(Application::renderer, bullet_a_filename, bullet_a_x, bullet_a_y, bullet_a_w, bullet_a_h);
+
+	const char* blank_texture_filename = "blank_texture.png";
+	int blank_texture_w = 1;
+	int blank_texture_h = 1;
+	int blank_texture_x = (int)(-bullet_a_w / 2);
+	int blank_texture_y = (int)(-bullet_a_h / 2);
+	blank_texture = CreateSprite(Application::renderer, blank_texture_filename, blank_texture_x, blank_texture_y, blank_texture_w, blank_texture_h);
 }
 
 void SpriteManager::DeleteSprites()
