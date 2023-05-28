@@ -19,7 +19,8 @@ enum class EntityTag
 	ENEMY = 1,
 	BULLET_PLAYER = 2,
 	BULLET_ENEMY = 3,
-	PLAYFIELD = 10
+	PLAYFIELD = 10,
+	UI_TEXT = 100
 };
 
 class Component;

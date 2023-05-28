@@ -10,5 +10,6 @@
 #include "CircleColliderComponent.h"
 #include "BulletSpawnerComponent.h"
 #include "StageComponent.h"
+#include "TextComponent.h"
 
 #endif // _COMPONENTS_H

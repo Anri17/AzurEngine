@@ -87,6 +87,23 @@ Entity* EntityManager::CreatePlayFieldEntity(std::string name)
 	return entity;
 }
 
+Entity* EntityManager::CreateText(std::string name, std::string message, std::string fontpath, int fontsize, SDL_Color color)
+{
+	Entity* entity = new Entity();
+	entity->tag = EntityTag::UI_TEXT;
+	entity->AddComponent<PositionComponent>();
+	TextComponent* textComponent = entity->AddComponent<TextComponent>();
+	textComponent->SetColor(color);
+	textComponent->SetFont(fontpath, fontsize);
+	textComponent->SetMessage(message);
+	textComponent->BuildText();
+
+	EntityManager::AddEntity(entity);
+
+	return entity;
+
+}
+
 void EntityManager::Render(SDL_Renderer* renderer)
 {
 	for (int i = 0; i < entities.size(); i++)

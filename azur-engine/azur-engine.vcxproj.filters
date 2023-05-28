@@ -30,7 +30,7 @@
     <ClCompile Include="src\PlayFieldComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Text.cpp">
+    <ClCompile Include="src\TextComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\BulletComponent.cpp">
@@ -98,7 +98,7 @@
     <ClInclude Include="src\PlayFieldComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Text.h">
+    <ClInclude Include="src\TextComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\AzurDebug.h">

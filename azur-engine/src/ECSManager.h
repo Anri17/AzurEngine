@@ -15,6 +15,7 @@ public:
 	static Entity* CreateBulletSpawnerEntity(std::string name, float spawn_x, float spawn_y, EntityTag tag);
 	static Entity* CreatePlayerEntity(std::string name, EntityTag tag);
 	static Entity* CreatePlayFieldEntity(std::string name);
+	static Entity* CreateText(std::string name, std::string message, std::string fontpath, int fontsize, SDL_Color color);
 
 public:
 	static Entity* AddEntity(Entity* entity);

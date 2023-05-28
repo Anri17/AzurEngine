@@ -14,7 +14,6 @@
 #include "AzurDebug.h"
 #include "Mouse.h"
 #include "InputHandler.h"
-#include "Text.h"
 
 // TODO: Might want to separate these into engine specific components and game specific components
 // TODO: A player component doesn't have to be in the engine, compared to a Collider component
@@ -68,13 +67,20 @@ int Application::Start()
 	std::string fontpath = basepath + fontname;
 	int fontsize = 12;
 	SDL_Color message_color = { 255, 255, 255 };
-	Text msg_current_frame(fontpath, fontsize, message_color);
-	Text msg_mouse_x(fontpath, fontsize, message_color);
-	Text msg_mouse_y(fontpath, fontsize, message_color);
-	Text msg_player_x(fontpath, fontsize, message_color);
-	Text msg_player_y(fontpath, fontsize, message_color);
-	Text msg_player_lives(fontpath, fontsize, message_color);
-	Text msg_debug_mode(fontpath, fontsize, message_color);
+	TextComponent* current_frame_text = EntityManager::CreateText("Current Frame Text", "current_frame_text", fontpath, fontsize, message_color)->GetComponent<TextComponent>();
+	current_frame_text->position->y = 0;
+	TextComponent* mouse_x_text = EntityManager::CreateText("Mouse X Text", "mouse_x_text", fontpath, fontsize, message_color)->GetComponent<TextComponent>();
+	mouse_x_text->position->y = current_frame_text->rect.h;
+	TextComponent* mouse_y_text = EntityManager::CreateText("Mouse Y Text", "mouse_y_text", fontpath, fontsize, message_color)->GetComponent<TextComponent>();
+	mouse_y_text->position->y = mouse_x_text->rect.h + mouse_x_text->position->y;
+	TextComponent* player_x_text = EntityManager::CreateText("Player X Text", "player_x_text", fontpath, fontsize, message_color)->GetComponent<TextComponent>();
+	player_x_text->position->y = mouse_y_text->rect.h + mouse_y_text->position->y;
+	TextComponent* player_y_text = EntityManager::CreateText("Player Y Text", "p_y_text", fontpath, fontsize, message_color)->GetComponent<TextComponent>();
+	player_y_text->position->y = player_x_text->rect.h + player_x_text->position->y;
+	TextComponent* player_lives_text = EntityManager::CreateText("Player Lives Text", "player_lives_text", fontpath, fontsize, message_color)->GetComponent<TextComponent>();
+	player_lives_text->position->y = player_y_text->rect.h + player_y_text->position->y;
+	TextComponent* debug_mode_text = EntityManager::CreateText("Debug Mode Text", "debug_mode_text", fontpath, fontsize, message_color)->GetComponent<TextComponent>();
+	debug_mode_text->position->y = player_lives_text->rect.h + player_lives_text->position->y;
 	// Initialise Mouse
 	Mouse mouse;
 	Entity* playFieldEntity = EntityManager::CreatePlayFieldEntity("PlayField");
@@ -183,60 +189,23 @@ int Application::Start()
 
 
 		// Update UI
-		// Text Update
-		msg_current_frame.Set(
-			Application::renderer,
-			std::string("CurrentFrame: " + std::to_string(current_frame)),
-			0,
-			0
-		);
-		msg_mouse_x.Set(
-			Application::renderer,
-			std::string("MouseX: " + std::to_string(mouse.xPos)),
-			0,
-			msg_current_frame.rect.h
-		);
-		msg_mouse_y.Set(
-			Application::renderer,
-			std::string("MouseY: " + std::to_string(mouse.yPos)),
-			0,
-			msg_mouse_x.rect.y + msg_mouse_x.rect.h
-		);
+		// Text Updae
+		current_frame_text->SetMessage(std::string("CurrentFrame: " + std::to_string(current_frame)));
+		mouse_x_text->SetMessage(std::string("MouseX: " + std::to_string(mouse.xPos)));
+		mouse_y_text->SetMessage(std::string("MouseY: " + std::to_string(mouse.yPos)));
 		if (playerEntity->active) // TODO: THis is a temporary Fix. A proper solution would be to probably activate or deactiveate an entity, so taht it doesn't come up when the update and draw loops are executed, having that entity be skipped.
 		{
-			msg_player_x.Set(
-				Application::renderer,
-				std::string("PlayerX: " + std::to_string(playerComponent->position->x)),
-				0,
-				msg_mouse_y.rect.y + msg_mouse_y.rect.h
-			);
-			msg_player_y.Set(
-				Application::renderer,
-				std::string("PlayerY: " + std::to_string(playerComponent->position->y)),
-				0,
-				msg_player_x.rect.y + msg_player_x.rect.h
-			);
-			msg_player_lives.Set(
-				Application::renderer,
-				std::string("Player Lives: " + std::to_string(playerComponent->lives)),
-				0,
-				msg_player_y.rect.y + msg_player_y.rect.h);
+			player_x_text->SetMessage(std::string("PlayerX: " + std::to_string(playerComponent->position->x)));
+			player_y_text->SetMessage(std::string("PlayerY: " + std::to_string(playerComponent->position->y)));
+			player_lives_text->SetMessage(std::string("Player Lives: " + std::to_string(playerComponent->lives)));
 		}
 		if (AzurDebug::debug_mode)
 		{
-			msg_debug_mode.Set(
-				Application::renderer,
-				std::string("Debug Mode: ON"),
-				0,
-				msg_player_lives.rect.y + msg_player_lives.rect.h);
+			debug_mode_text->SetMessage(std::string("Debug Mode: ON"));
 		}
 		else
 		{
-			msg_debug_mode.Set(
-				Application::renderer,
-				std::string("Debug Mode: OFF"),
-				0,
-				msg_player_lives.rect.y + msg_player_lives.rect.h);
+			debug_mode_text->SetMessage(std::string("Debug Mode: OFF"));
 		}
 		// Azur Debug
 		AzurDebug::update();
@@ -248,14 +217,6 @@ int Application::Start()
 		// Render ECS Components
 		EntityManager::Render(Application::renderer);
 		// Render Text
-		msg_current_frame.Render(Application::renderer);
-		msg_mouse_x.Render(Application::renderer);
-		msg_mouse_y.Render(Application::renderer);
-		msg_player_x.Render(Application::renderer);
-		msg_player_y.Render(Application::renderer);
-		msg_player_lives.Render(Application::renderer);
-		msg_debug_mode.Render(Application::renderer);
-
 
 
 		// Some components use this function to set lines or dot colors. This need to be here so that the backgroud is set to black.
@@ -280,14 +241,6 @@ int Application::Start()
 	EntityManager::DeleteAllEntities();
 	// Clear Sprites
 	SpriteManager::DeleteSprites();
-	// Clear Text (Might want to create a TextComponent and add it to an entity to be deleted with the other entities)
-	msg_current_frame.FreeMemory();
-	msg_mouse_x.FreeMemory();
-	msg_mouse_y.FreeMemory();
-	msg_player_x.FreeMemory();
-	msg_player_y.FreeMemory();
-	msg_player_lives.FreeMemory();
-	msg_debug_mode.FreeMemory();
 	// Quit Functions
 	SDL_DestroyRenderer(Application::renderer);
 	SDL_DestroyWindow(Application::window);

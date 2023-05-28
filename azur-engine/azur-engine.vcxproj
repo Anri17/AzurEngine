@@ -183,7 +183,7 @@
     <ClCompile Include="src\SpriteComponent.cpp" />
     <ClCompile Include="src\SpriteManager.cpp" />
     <ClCompile Include="src\StageComponent.cpp" />
-    <ClCompile Include="src\Text.cpp" />
+    <ClCompile Include="src\TextComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
@@ -210,7 +210,7 @@
     <ClInclude Include="src\SpriteComponent.h" />
     <ClInclude Include="src\SpriteManager.h" />
     <ClInclude Include="src\StageComponent.h" />
-    <ClInclude Include="src\Text.h" />
+    <ClInclude Include="src\TextComponent.h" />
     <ClInclude Include="src\vector2float.h" />
     <ClInclude Include="src\vector2int.h" />
   </ItemGroup>
