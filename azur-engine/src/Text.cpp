@@ -1,6 +1,6 @@
 #include "Text.h"
 
-#include "Debug.h"
+#include "AzurDebug.h"
 
 Text::Text(std::string fontpath, int fontsize, SDL_Color color) : message(""), texture(nullptr), rect({ 0,0,0,0 })
 {

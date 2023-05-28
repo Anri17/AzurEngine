@@ -11,7 +11,7 @@
 
 // Engine
 #include "Application.h"
-#include "Debug.h"
+#include "AzurDebug.h"
 #include "Mouse.h"
 #include "InputHandler.h"
 #include "Text.h"
@@ -74,6 +74,7 @@ int Application::Start()
 	Text msg_player_x(fontpath, fontsize, message_color);
 	Text msg_player_y(fontpath, fontsize, message_color);
 	Text msg_player_lives(fontpath, fontsize, message_color);
+	Text msg_debug_mode(fontpath, fontsize, message_color);
 	// Initialise Mouse
 	Mouse mouse;
 	Entity* playFieldEntity = EntityManager::CreatePlayFieldEntity("PlayField");
@@ -88,7 +89,8 @@ int Application::Start()
 	Entity* stageEntity = new Entity();
 	stageEntity->name = "Stage";
 	EntityManager::AddEntity(stageEntity);
-
+	// Azur Debug
+	AzurDebug::init();
 
 	// The Application Loop
 	// FPS Calculation Variables
@@ -220,6 +222,24 @@ int Application::Start()
 				0,
 				msg_player_y.rect.y + msg_player_y.rect.h);
 		}
+		if (AzurDebug::debug_mode)
+		{
+			msg_debug_mode.Set(
+				Application::renderer,
+				std::string("Debug Mode: ON"),
+				0,
+				msg_player_lives.rect.y + msg_player_lives.rect.h);
+		}
+		else
+		{
+			msg_debug_mode.Set(
+				Application::renderer,
+				std::string("Debug Mode: OFF"),
+				0,
+				msg_player_lives.rect.y + msg_player_lives.rect.h);
+		}
+		// Azur Debug
+		AzurDebug::update();
 
 
 		// Rendering
@@ -234,6 +254,7 @@ int Application::Start()
 		msg_player_x.Render(Application::renderer);
 		msg_player_y.Render(Application::renderer);
 		msg_player_lives.Render(Application::renderer);
+		msg_debug_mode.Render(Application::renderer);
 
 
 
@@ -266,6 +287,7 @@ int Application::Start()
 	msg_player_x.FreeMemory();
 	msg_player_y.FreeMemory();
 	msg_player_lives.FreeMemory();
+	msg_debug_mode.FreeMemory();
 	// Quit Functions
 	SDL_DestroyRenderer(Application::renderer);
 	SDL_DestroyWindow(Application::window);

@@ -75,6 +75,9 @@
     <ClCompile Include="src\BulletTemplate.h">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\AzurDebug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ECS.h">
@@ -98,7 +101,7 @@
     <ClInclude Include="src\Text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Debug.h">
+    <ClInclude Include="src\AzurDebug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\BulletComponent.h">

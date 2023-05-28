@@ -164,6 +164,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\AzurDebug.cpp" />
     <ClCompile Include="src\BoxColliderComponent.cpp" />
     <ClCompile Include="src\BulletComponent.cpp" />
     <ClCompile Include="src\BulletSpawnerComponent.cpp" />
@@ -195,7 +196,7 @@
     <ClInclude Include="src\CircleColliderComponent.h" />
     <ClInclude Include="src\ColliderComponent.h" />
     <ClInclude Include="src\CollisionManager.h" />
-    <ClInclude Include="src\Debug.h" />
+    <ClInclude Include="src\AzurDebug.h" />
     <ClInclude Include="src\ECSManager.h" />
     <ClInclude Include="src\InputHandler.h" />
     <ClInclude Include="src\AzurMath.h" />

@@ -4,7 +4,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#include "Debug.h"
+#include "AzurDebug.h"
 
 #include "Application.h"
 

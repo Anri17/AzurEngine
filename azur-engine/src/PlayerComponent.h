@@ -15,14 +15,11 @@ public:
 	void update() override;
 
 	PositionComponent* position;
-	ColliderComponent* collider; // TODO: For some reason this is throwing a syntax error and I don't know why
+	ColliderComponent* collider;
 	SpriteComponent* sprite;
 
-#ifdef _DEBUG
-	int lives = 18;
-#else
 	int lives = 2;
-#endif
+
 	bool was_hit = false;
 	bool is_invincible = false;
 	

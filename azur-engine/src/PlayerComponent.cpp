@@ -27,6 +27,11 @@ void PlayerComponent::update()
 	float normalSpeed = 3.0f;
 	float focusSpeed = 1.5f;
 
+	if (AzurDebug::debug_mode)
+	{
+		lives = 99;
+	}
+
 	if (!was_hit)
 	{
 		if (InputHandler::GetKeyDown(InputHandler::KEY_LSHIFT))

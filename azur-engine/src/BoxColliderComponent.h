@@ -1,7 +1,7 @@
 #ifndef _BOX_COLLIDER_COMPONENT_H
 #define _BOX_COLLIDER_COMPONENT_H
 
-#include "Debug.h"
+#include "AzurDebug.h"
 
 #include "ColliderComponent.h"
 

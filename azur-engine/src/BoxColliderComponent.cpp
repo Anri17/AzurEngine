@@ -11,32 +11,33 @@ void BoxColliderComponent::draw(SDL_Renderer* renderer)
 	vector2int p2{ (int)true_left,  (int)true_bottom };
 	vector2int p3{ (int)true_right, (int)true_bottom };
 
-#ifdef _DEBUG
-	// This is a debug drawing of the collision box.
-	// Not need to show playfield collision. That would be red all the time and would make this whole code useless
-	if (entity->tag == EntityTag::PLAYFIELD)
+	if (AzurDebug::debug_mode)
 	{
-		// Playfield is blue to distinguish from other colliders
-		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); // blue
-	}
-	else if (collider_tags.size() == 1 && collider_tags[0] == EntityTag::PLAYFIELD)
-	{
-		SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // green
-	}
-	else if (isColliding)
-	{
-		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // red
-	}
-	else
-	{
-		SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // green
-	}
+		// This is a debug drawing of the collision box.
+		// Not need to show playfield collision. That would be red all the time and would make this whole code useless
+		if (entity->tag == EntityTag::PLAYFIELD)
+		{
+			// Playfield is blue to distinguish from other colliders
+			SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); // blue
+		}
+		else if (collider_tags.size() == 1 && collider_tags[0] == EntityTag::PLAYFIELD)
+		{
+			SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // green
+		}
+		else if (isColliding)
+		{
+			SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // red
+		}
+		else
+		{
+			SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // green
+		}
 
-	SDL_RenderDrawLine(renderer, p0.x, p0.y, p1.x, p1.y);
-	SDL_RenderDrawLine(renderer, p1.x, p1.y, p3.x, p3.y);
-	SDL_RenderDrawLine(renderer, p2.x, p2.y, p0.x, p0.y);
-	SDL_RenderDrawLine(renderer, p3.x, p3.y, p2.x, p2.y);
-#endif
+		SDL_RenderDrawLine(renderer, p0.x, p0.y, p1.x, p1.y);
+		SDL_RenderDrawLine(renderer, p1.x, p1.y, p3.x, p3.y);
+		SDL_RenderDrawLine(renderer, p2.x, p2.y, p0.x, p0.y);
+		SDL_RenderDrawLine(renderer, p3.x, p3.y, p2.x, p2.y);
+	}
 }
 
 void BoxColliderComponent::update()
