@@ -24,8 +24,15 @@ public:
 	int lives = 2;
 #endif
 	bool was_hit = false;
-	int revive_cooldown = 240; // 4 second
+	bool is_invincible = false;
+	
+	// Revive variables
+	int revive_cooldown = 90; // 1.5 second
 	int revive_frame_count = 0;
+
+	// Invincibility Variables
+	int invincibility_cooldown = 240; // 4 seconds
+	int invincibility_frame_count = 0;
 
 	int player_w = 32; // TODO: Get the sprite w through the SDL_Rect.
 	int player_h = 48; // TODO: Get the sprite h through the SDL_Rect.

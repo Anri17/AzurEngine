@@ -101,7 +101,7 @@ void PlayerComponent::update()
 
 	for (size_t i = 0; i < collider->collider_references.size(); ++i)
 	{
-		if ((collider->collider_references[i]->entity->tag == EntityTag::BULLET_ENEMY || collider->collider_references[i]->entity->tag == EntityTag::ENEMY) && !was_hit)
+		if ((collider->collider_references[i]->entity->tag == EntityTag::BULLET_ENEMY || collider->collider_references[i]->entity->tag == EntityTag::ENEMY) && (!was_hit && !is_invincible))
 		{
 			EntityManager::FlagForDeletion(collider->collider_references[i]->entity);
 			--lives;
@@ -123,6 +123,24 @@ void PlayerComponent::update()
 			was_hit = false;
 			revive_frame_count = 0;
 			EntityManager::FlagForDeletionAllTagged(EntityTag::BULLET_ENEMY);
+			is_invincible = true;
+		}
+	}
+
+	// Player has revived and is now invincible for a few seconds
+	if (is_invincible)
+	{
+		invincibility_frame_count++;
+		// Player flashes while invincible
+		if (invincibility_frame_count % 3 == 0) sprite->sprite = SpriteManager::blank_texture;
+		if (invincibility_frame_count % 6 == 0) sprite->sprite = SpriteManager::player;
+
+		// Cool down is over, invincibility is over
+		if (invincibility_frame_count % invincibility_cooldown == 0)
+		{
+			// TODO: 
+			is_invincible = false;
+			sprite->sprite = SpriteManager::player;
 		}
 	}
 }
