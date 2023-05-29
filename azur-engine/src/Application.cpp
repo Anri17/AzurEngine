@@ -30,13 +30,16 @@
 // TODO: These defines are both game specific and engine speficic
 // TODO: What this means is that the values are specific to the need of the applicaiton, but they are needed none the less
 //       in every application
-#define WINDOW_WIDTH  640
-#define WINDOW_HEIGHT 480
+#define WINDOW_ASPECT_RATION (3/4)
 #define FPS_TARGET 60
 #define INPUT_MANAGER_KEY_COUNT 1024
 
 SDL_Window* Application::window;
 SDL_Renderer* Application::renderer;
+
+int Application::current_window_width = 800;
+int Application::current_window_height = 600;
+float Application::current_window_ratio = 0.75f; // 4:3
 
 int Application::Start()
 {
@@ -50,9 +53,8 @@ int Application::Start()
 	}
 	IMG_Init(IMG_INIT_PNG);
 	// Create Window, Renderer & Event
-	Application::window = SDL_CreateWindow("Azur Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
+	Application::window = SDL_CreateWindow("Azur Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, current_window_width, current_window_height, SDL_WINDOW_OPENGL);
 	Application::renderer = SDL_CreateRenderer(Application::window, -1, 0);
-	// TODO: replace all of renderers to Application::renderer
 	SDL_Event e; // used for input events
 	// The running state of the applications
 	bool application_is_running = true;
@@ -119,6 +121,17 @@ int Application::Start()
 		InputHandler::firstTap_ESCAPE = false;
 		InputHandler::firstTap_RETURN = false;
 
+		InputHandler::firstTap_1 = false;
+		InputHandler::firstTap_2 = false;
+		InputHandler::firstTap_3 = false;
+		InputHandler::firstTap_4 = false;
+		InputHandler::firstTap_5 = false;
+		InputHandler::firstTap_6 = false;
+		InputHandler::firstTap_7 = false;
+		InputHandler::firstTap_8 = false;
+		InputHandler::firstTap_9 = false;
+		InputHandler::firstTap_0 = false;
+
 		InputHandler::firstTap_UP = false;
 		InputHandler::firstTap_DOWN = false;
 		InputHandler::firstTap_LEFT = false;
@@ -142,13 +155,24 @@ int Application::Start()
 				case SDLK_z: if (!InputHandler::isDown_Z) { InputHandler::isDown_Z = InputHandler::firstTap_Z = true; } break;
 
 				case SDLK_LSHIFT: if (!InputHandler::isDown_LSHIFT) { InputHandler::isDown_LSHIFT = InputHandler::firstTap_LSHIFT = true; } break;
-				case SDLK_LCTRL:  if (!InputHandler::isDown_LCTRL) { InputHandler::isDown_LCTRL = InputHandler::firstTap_LCTRL = true; } break;
+				case SDLK_LCTRL:  if (!InputHandler::isDown_LCTRL)  { InputHandler::isDown_LCTRL  = InputHandler::firstTap_LCTRL  = true; } break;
 				case SDLK_ESCAPE: if (!InputHandler::isDown_ESCAPE) { InputHandler::isDown_ESCAPE = InputHandler::firstTap_ESCAPE = true; } break;
 				case SDLK_RETURN: if (!InputHandler::isDown_RETURN) { InputHandler::isDown_RETURN = InputHandler::firstTap_RETURN = true; } break;
 
-				case SDLK_UP:    if (!InputHandler::isDown_UP) { InputHandler::isDown_UP = InputHandler::firstTap_UP = true; } break;
-				case SDLK_DOWN:  if (!InputHandler::isDown_DOWN) { InputHandler::isDown_DOWN = InputHandler::firstTap_DOWN = true; } break;
-				case SDLK_LEFT:  if (!InputHandler::isDown_LEFT) { InputHandler::isDown_LEFT = InputHandler::firstTap_LEFT = true; } break;
+				case SDLK_1: if (!InputHandler::isDown_1) { InputHandler::isDown_1 = InputHandler::firstTap_1 = true; break; }
+				case SDLK_2: if (!InputHandler::isDown_2) { InputHandler::isDown_2 = InputHandler::firstTap_2 = true; break; }
+				case SDLK_3: if (!InputHandler::isDown_3) { InputHandler::isDown_3 = InputHandler::firstTap_3 = true; break; }
+				case SDLK_4: if (!InputHandler::isDown_4) { InputHandler::isDown_4 = InputHandler::firstTap_4 = true; break; }
+				case SDLK_5: if (!InputHandler::isDown_5) { InputHandler::isDown_5 = InputHandler::firstTap_5 = true; break; }
+				case SDLK_6: if (!InputHandler::isDown_6) { InputHandler::isDown_6 = InputHandler::firstTap_6 = true; break; }
+				case SDLK_7: if (!InputHandler::isDown_7) { InputHandler::isDown_7 = InputHandler::firstTap_7 = true; break; }
+				case SDLK_8: if (!InputHandler::isDown_8) { InputHandler::isDown_8 = InputHandler::firstTap_8 = true; break; }
+				case SDLK_9: if (!InputHandler::isDown_9) { InputHandler::isDown_9 = InputHandler::firstTap_9 = true; break; }
+				case SDLK_0: if (!InputHandler::isDown_0) { InputHandler::isDown_0 = InputHandler::firstTap_0 = true; break; }
+
+				case SDLK_UP:    if (!InputHandler::isDown_UP)    { InputHandler::isDown_UP    = InputHandler::firstTap_UP    = true; } break;
+				case SDLK_DOWN:  if (!InputHandler::isDown_DOWN)  { InputHandler::isDown_DOWN  = InputHandler::firstTap_DOWN  = true; } break;
+				case SDLK_LEFT:  if (!InputHandler::isDown_LEFT)  { InputHandler::isDown_LEFT  = InputHandler::firstTap_LEFT  = true; } break;
 				case SDLK_RIGHT: if (!InputHandler::isDown_RIGHT) { InputHandler::isDown_RIGHT = InputHandler::firstTap_RIGHT = true; } break;
 				}
 			} break;
@@ -162,13 +186,24 @@ int Application::Start()
 				case SDLK_z: InputHandler::isDown_Z = false; break;
 
 				case SDLK_LSHIFT: InputHandler::isDown_LSHIFT = false; break;
-				case SDLK_LCTRL:  InputHandler::isDown_LCTRL = false; break;
+				case SDLK_LCTRL:  InputHandler::isDown_LCTRL  = false; break;
 				case SDLK_ESCAPE: InputHandler::isDown_ESCAPE = false; break;
 				case SDLK_RETURN: InputHandler::isDown_RETURN = false; break;
 
-				case SDLK_UP:    InputHandler::isDown_UP = false; break;
-				case SDLK_DOWN:  InputHandler::isDown_DOWN = false; break;
-				case SDLK_LEFT:  InputHandler::isDown_LEFT = false; break;
+				case SDLK_1: InputHandler::isDown_1 = false; break;
+				case SDLK_2: InputHandler::isDown_2 = false; break;
+				case SDLK_3: InputHandler::isDown_3 = false; break;
+				case SDLK_4: InputHandler::isDown_4 = false; break;
+				case SDLK_5: InputHandler::isDown_5 = false; break;
+				case SDLK_6: InputHandler::isDown_6 = false; break;
+				case SDLK_7: InputHandler::isDown_7 = false; break;
+				case SDLK_8: InputHandler::isDown_8 = false; break;
+				case SDLK_9: InputHandler::isDown_9 = false; break;
+				case SDLK_0: InputHandler::isDown_0 = false; break;
+
+				case SDLK_UP:    InputHandler::isDown_UP    = false; break;
+				case SDLK_DOWN:  InputHandler::isDown_DOWN  = false; break;
+				case SDLK_LEFT:  InputHandler::isDown_LEFT  = false; break;
 				case SDLK_RIGHT: InputHandler::isDown_RIGHT = false; break;
 				}
 			} break;
@@ -206,6 +241,52 @@ int Application::Start()
 		else
 		{
 			debug_mode_text->SetMessage(std::string("Debug Mode: OFF"));
+		}
+		// Change Window Resolution
+		if (InputHandler::GetKeyTap(InputHandler::KEY_1))
+		{
+			// TODO: Extract this into a SetResolutionFunction(WIdht, Height);
+			int prev_window_width  = Application::current_window_width;
+			int prev_window_height = Application::current_window_height;
+			Application::current_window_width  = 640;
+			Application::current_window_height = 480;
+			int window_pos_x;
+			int window_pos_y;
+			SDL_GetWindowPosition(window, &window_pos_x, &window_pos_y);
+			window_pos_x = window_pos_x - ((Application::current_window_width - prev_window_width) / 2);
+			window_pos_y = window_pos_y - ((Application::current_window_height - prev_window_height) / 2);
+			SDL_SetWindowPosition(window, window_pos_x, window_pos_y);
+			SDL_SetWindowSize(Application::window, Application::current_window_width, Application::current_window_height);
+		}
+		if (InputHandler::GetKeyTap(InputHandler::KEY_2))
+		{
+			// TODO: Extract this into a SetResolutionFunction(WIdht, Height);
+			int prev_window_width = Application::current_window_width;
+			int prev_window_height = Application::current_window_height;
+			Application::current_window_width  = 800;
+			Application::current_window_height = 600;
+			int window_pos_x;
+			int window_pos_y;
+			SDL_GetWindowPosition(window, &window_pos_x, &window_pos_y);
+			window_pos_x = window_pos_x - ((Application::current_window_width - prev_window_width) / 2);
+			window_pos_y = window_pos_y - ((Application::current_window_height - prev_window_height) / 2);
+			SDL_SetWindowPosition(window, window_pos_x, window_pos_y);
+			SDL_SetWindowSize(Application::window, Application::current_window_width, Application::current_window_height);
+		}
+		if (InputHandler::GetKeyTap(InputHandler::KEY_3))
+		{
+			// TODO: Extract this into a SetResolutionFunction(WIdht, Height);
+			int prev_window_width = Application::current_window_width;
+			int prev_window_height = Application::current_window_height;
+			Application::current_window_width  = 1024;
+			Application::current_window_height = 768;
+			int window_pos_x;
+			int window_pos_y;
+			SDL_GetWindowPosition(window, &window_pos_x, &window_pos_y);
+			window_pos_x = window_pos_x - ((Application::current_window_width - prev_window_width) / 2);
+			window_pos_y = window_pos_y - ((Application::current_window_height - prev_window_height) / 2);
+			SDL_SetWindowPosition(window, window_pos_x, window_pos_y);
+			SDL_SetWindowSize(Application::window, Application::current_window_width, Application::current_window_height);
 		}
 		// Azur Debug
 		AzurDebug::update();
@@ -249,4 +330,14 @@ int Application::Start()
 	IMG_Quit();
 
 	return 0;
+}
+
+int Application::GetWindowTrueX(float x)
+{
+	return (x * Application::current_window_width)/Application::base_window_width;
+}
+
+int Application::GetWindowTrueY(float y)
+{
+	return (y * Application::current_window_height) / Application::base_window_height;
 }

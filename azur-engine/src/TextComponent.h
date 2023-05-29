@@ -34,6 +34,10 @@ public:
 	// Entity and Program References
 	PositionComponent* position;
 	SDL_Renderer* renderer;
+
+
+private:
+	const int FONT_RESOLUTION_RATIO = 2;
 };
 
 #endif // _TEXT_H

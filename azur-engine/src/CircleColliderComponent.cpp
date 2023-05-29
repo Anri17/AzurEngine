@@ -2,6 +2,8 @@
 
 #include "AzurDebug.h"
 
+#include "Application.h"
+
 void CircleColliderComponent::init()
 {
 	ColliderComponent::init();
@@ -52,14 +54,14 @@ void CircleColliderComponent::draw(SDL_Renderer* renderer)
 
 		while (x >= y)
 		{
-			SDL_RenderDrawPoint(renderer, int(position->x + x), int(position->y - y));
-			SDL_RenderDrawPoint(renderer, int(position->x + x), int(position->y + y));
-			SDL_RenderDrawPoint(renderer, int(position->x - x), int(position->y - y));
-			SDL_RenderDrawPoint(renderer, int(position->x - x), int(position->y + y));
-			SDL_RenderDrawPoint(renderer, int(position->x + y), int(position->y - x));
-			SDL_RenderDrawPoint(renderer, int(position->x + y), int(position->y + x));
-			SDL_RenderDrawPoint(renderer, int(position->x - y), int(position->y - x));
-			SDL_RenderDrawPoint(renderer, int(position->x - y), int(position->y + x));
+			SDL_RenderDrawPoint(renderer, Application::GetWindowTrueX(position->x + x), Application::GetWindowTrueY(position->y - y));
+			SDL_RenderDrawPoint(renderer, Application::GetWindowTrueX(position->x + x), Application::GetWindowTrueY(position->y + y));
+			SDL_RenderDrawPoint(renderer, Application::GetWindowTrueX(position->x - x), Application::GetWindowTrueY(position->y - y));
+			SDL_RenderDrawPoint(renderer, Application::GetWindowTrueX(position->x - x), Application::GetWindowTrueY(position->y + y));
+			SDL_RenderDrawPoint(renderer, Application::GetWindowTrueX(position->x + y), Application::GetWindowTrueY(position->y - x));
+			SDL_RenderDrawPoint(renderer, Application::GetWindowTrueX(position->x + y), Application::GetWindowTrueY(position->y + x));
+			SDL_RenderDrawPoint(renderer, Application::GetWindowTrueX(position->x - y), Application::GetWindowTrueY(position->y - x));
+			SDL_RenderDrawPoint(renderer, Application::GetWindowTrueX(position->x - y), Application::GetWindowTrueY(position->y + x));
 			if (error <= 0)
 			{
 				++y;

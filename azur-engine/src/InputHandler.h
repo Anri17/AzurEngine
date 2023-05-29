@@ -13,6 +13,17 @@ namespace InputHandler
 		KEY_D,
 		KEY_Z,
 
+		KEY_1,
+		KEY_2,
+		KEY_3,
+		KEY_4,
+		KEY_5,
+		KEY_6,
+		KEY_7,
+		KEY_8,
+		KEY_9,
+		KEY_0,
+
 		KEY_ESCAPE,
 		KEY_LSHIFT,
 		KEY_LCTRL,
@@ -38,6 +49,17 @@ namespace InputHandler
 	extern bool isDown_LSHIFT, firstTap_LSHIFT;
 	extern bool isDown_LCTRL,  firstTap_LCTRL;
 	extern bool isDown_RETURN, firstTap_RETURN;
+
+	extern bool isDown_1, firstTap_1;
+	extern bool isDown_2, firstTap_2;
+	extern bool isDown_3, firstTap_3;
+	extern bool isDown_4, firstTap_4;
+	extern bool isDown_5, firstTap_5;
+	extern bool isDown_6, firstTap_6;
+	extern bool isDown_7, firstTap_7;
+	extern bool isDown_8, firstTap_8;
+	extern bool isDown_9, firstTap_9;
+	extern bool isDown_0, firstTap_0;
 
 	extern bool isDown_UP,	  firstTap_UP;
 	extern bool isDown_DOWN,  firstTap_DOWN;

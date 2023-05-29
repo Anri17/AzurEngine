@@ -33,6 +33,7 @@ BulletComponent* EntityManager::CreateBulletEntityA(std::string name, float spaw
 	sc->sprite = SpriteManager::bullet_a;
 	CircleColliderComponent* ccc = entity->AddComponent<CircleColliderComponent>();
 	ccc->radius = 6;
+	bc->collider = ccc;
 	EntityManager::AddEntity(entity);
 
 	return bc;

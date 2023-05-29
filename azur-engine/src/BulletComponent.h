@@ -4,6 +4,8 @@
 #include "ECS.h"
 #include "PositionComponent.h"
 
+class ColliderComponent;
+
 #include "AzurMemoryLeakFinder.h"
 
 #include "vector2float.h"
@@ -15,6 +17,7 @@ public:
 	void update() override;
 
 	PositionComponent* position;
+	ColliderComponent* collider;
 	int width = 12;
 	int height = 12;
 
@@ -22,6 +25,9 @@ public:
 	float angle = 0.0f;
 private:
 	vector2float velocity;
+
+	int deletion_timer_frame = 0;
+	int deletion_cooldown = 60; // 1 seconds
 };
 
 #endif // _BULLET_H

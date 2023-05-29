@@ -35,7 +35,7 @@ void TextComponent::SetFont(std::string fontpath, int fontsize)
 {
 	TTF_CloseFont(font);
 	this->size = fontsize;
-	this->font = TTF_OpenFont(fontpath.c_str(), fontsize);
+	this->font = TTF_OpenFont(fontpath.c_str(), fontsize * FONT_RESOLUTION_RATIO);
 	if (font == 0)
 	{
 		DEBUG_CONSOLE_LOG("Could Not Load Font: " << TTF_GetError());
@@ -57,9 +57,9 @@ void TextComponent::BuildText()
 	SDL_DestroyTexture(texture);
 	SDL_Surface* surface = TTF_RenderText_Solid(font, message.c_str(), color);
 	texture = SDL_CreateTextureFromSurface(renderer, surface);
-	rect.x = position->x;
-	rect.y = position->y;
-	rect.w = surface->w;
-	rect.h = surface->h;
+	rect.x = Application::GetWindowTrueX(position->x);
+	rect.y = Application::GetWindowTrueY(position->y);
+	rect.w = Application::GetWindowTrueX(surface->w / FONT_RESOLUTION_RATIO);
+	rect.h = Application::GetWindowTrueY(surface->h / FONT_RESOLUTION_RATIO);
 	SDL_FreeSurface(surface);
 }

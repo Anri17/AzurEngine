@@ -68,10 +68,10 @@ Sprite* SpriteManager::CreateSprite(SDL_Renderer* renderer, const char* imageFil
 	SDL_FreeSurface(surface);
 
 	sprite->texture = texture;
-	sprite->rect.x = x;
-	sprite->rect.y = y;
-	sprite->rect.w = w;
-	sprite->rect.h = h;
+	sprite->rect.x = Application::GetWindowTrueX(x);
+	sprite->rect.y = Application::GetWindowTrueY(y);
+	sprite->rect.w = Application::GetWindowTrueX(w);
+	sprite->rect.h = Application::GetWindowTrueY(h);
 
 	return sprite;
 }

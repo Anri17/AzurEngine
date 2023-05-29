@@ -3,13 +3,15 @@
 #include "vector2int.h"
 #include "CollisionManager.h"
 
+#include "Application.h"
+
 void BoxColliderComponent::draw(SDL_Renderer* renderer)
 {
 	// drawing points
-	vector2int p0{ (int)true_left,  (int)true_top };
-	vector2int p1{ (int)true_right, (int)true_top };
-	vector2int p2{ (int)true_left,  (int)true_bottom };
-	vector2int p3{ (int)true_right, (int)true_bottom };
+	vector2int p0{ Application::GetWindowTrueX(true_left),  Application::GetWindowTrueY(true_top) };
+	vector2int p1{ Application::GetWindowTrueX(true_right), Application::GetWindowTrueY(true_top) };
+	vector2int p2{ Application::GetWindowTrueX(true_left),  Application::GetWindowTrueY(true_bottom)};
+	vector2int p3{ Application::GetWindowTrueX(true_right), Application::GetWindowTrueY(true_bottom) };
 
 	if (AzurDebug::debug_mode)
 	{
