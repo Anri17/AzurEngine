@@ -11,14 +11,14 @@ void BulletSpawerComponent::init()
 
 void BulletSpawerComponent::update()
 {
-	float bullet_speed = 2.0f;
+	float bullet_speed = 1.5f;
 	float full_pattern_angle_offset_change_rate = 8;
-	int frame_change = 12;
+	int frame_change = 24;
 	frame++;
 
 	if (frame % frame_change == 0)
 	{
-		int directions = 12;
+		int directions = 6;
 		int bullet_angle_change_rate = 360 / (directions);
 
 		for (size_t i = 0; i < directions; ++i)

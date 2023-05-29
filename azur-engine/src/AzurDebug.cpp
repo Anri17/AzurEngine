@@ -8,7 +8,12 @@ namespace AzurDebug
 
 	void init()
 	{
+		// AzurDebug::debug_mode is turned on by default if _DEBUG is defined
+#ifdef _DEBUG
+		debug_mode = true;
+#else
 		debug_mode = false;
+#endif
 	}
 
 	void update()
