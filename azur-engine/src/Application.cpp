@@ -7,11 +7,10 @@
 #include <map>
 #include <cstring>
 
-#include "AzurMemoryLeakFinder.h"
+#include "AzurLib.h"
+#include "AzurDebug.h"
 
 // Engine
-#include "Application.h"
-#include "AzurDebug.h"
 #include "Mouse.h"
 #include "InputHandler.h"
 
@@ -19,11 +18,11 @@
 // TODO: A player component doesn't have to be in the engine, compared to a Collider component
 // TODO: This is probably best identififed by putting a side the componends that are tied to a system of sorts.
 // Game Components
-#include "Components.h"
+
 // TODO: Same as the components.
 // TODO: Might want to separate the systems that are engine specific and game specific.
 // Application and Engine Systems
-#include "ECSManager.h"
+#include "ECS.h"
 #include "CollisionManager.h"
 #include "SpriteManager.h"
 
@@ -69,26 +68,26 @@ int Application::Start()
 	std::string fontpath = basepath + fontname;
 	int fontsize = 12;
 	SDL_Color message_color = { 255, 255, 255 };
-	TextComponent* current_frame_text = EntityManager::CreateText("Current Frame Text", "current_frame_text", fontpath, fontsize, message_color)->GetComponent<TextComponent>();
+	Text* current_frame_text = ECS::ECS_Manager::CreateText("Current Frame Text", "current_frame_text", fontpath, fontsize, message_color)->GetComponent<Text>();
 	current_frame_text->position->y = 0;
-	TextComponent* mouse_x_text = EntityManager::CreateText("Mouse X Text", "mouse_x_text", fontpath, fontsize, message_color)->GetComponent<TextComponent>();
+	Text* mouse_x_text = ECS::ECS_Manager::CreateText("Mouse X Text", "mouse_x_text", fontpath, fontsize, message_color)->GetComponent<Text>();
 	mouse_x_text->position->y = current_frame_text->rect.h;
-	TextComponent* mouse_y_text = EntityManager::CreateText("Mouse Y Text", "mouse_y_text", fontpath, fontsize, message_color)->GetComponent<TextComponent>();
+	Text* mouse_y_text = ECS::ECS_Manager::CreateText("Mouse Y Text", "mouse_y_text", fontpath, fontsize, message_color)->GetComponent<Text>();
 	mouse_y_text->position->y = mouse_x_text->rect.h + mouse_x_text->position->y;
-	TextComponent* player_x_text = EntityManager::CreateText("Player X Text", "player_x_text", fontpath, fontsize, message_color)->GetComponent<TextComponent>();
+	Text* player_x_text = ECS::ECS_Manager::CreateText("Player X Text", "player_x_text", fontpath, fontsize, message_color)->GetComponent<Text>();
 	player_x_text->position->y = mouse_y_text->rect.h + mouse_y_text->position->y;
-	TextComponent* player_y_text = EntityManager::CreateText("Player Y Text", "p_y_text", fontpath, fontsize, message_color)->GetComponent<TextComponent>();
+	Text* player_y_text = ECS::ECS_Manager::CreateText("Player Y Text", "p_y_text", fontpath, fontsize, message_color)->GetComponent<Text>();
 	player_y_text->position->y = player_x_text->rect.h + player_x_text->position->y;
-	TextComponent* player_lives_text = EntityManager::CreateText("Player Lives Text", "player_lives_text", fontpath, fontsize, message_color)->GetComponent<TextComponent>();
+	Text* player_lives_text = ECS::ECS_Manager::CreateText("Player Lives Text", "player_lives_text", fontpath, fontsize, message_color)->GetComponent<Text>();
 	player_lives_text->position->y = player_y_text->rect.h + player_y_text->position->y;
-	TextComponent* debug_mode_text = EntityManager::CreateText("Debug Mode Text", "debug_mode_text", fontpath, fontsize, message_color)->GetComponent<TextComponent>();
+	Text* debug_mode_text = ECS::ECS_Manager::CreateText("Debug Mode Text", "debug_mode_text", fontpath, fontsize, message_color)->GetComponent<Text>();
 	debug_mode_text->position->y = player_lives_text->rect.h + player_lives_text->position->y;
 	// Initialise Mouse
 	Mouse mouse;
-	Entity* playFieldEntity = EntityManager::CreatePlayFieldEntity("PlayField");
-	Entity* playerEntity = EntityManager::CreatePlayerEntity("Player", EntityTag::PLAYER);
-	PlayerComponent* playerComponent = playerEntity->GetComponent<PlayerComponent>();
-	Entity* BulletSpawnerEntity = EntityManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 180, EntityTag::ENEMY);
+	Entity* playFieldEntity = ECS::ECS_Manager::CreatePlayFieldEntity("PlayField");
+	Entity* playerEntity = ECS::ECS_Manager::CreatePlayerEntity("Player", ECS::ECS_Tag::PLAYER);
+	Player* playerComponent = playerEntity->GetComponent<Player>();
+	Entity* BulletSpawnerEntity = ECS::ECS_Manager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 180, ECS::ECS_Tag::ENEMY);
 
 	// Create a Stage Component. Most of the gameplayer logic goes here.
 	// TODO: In the future, I want to somehow save and load a stage data into a file and into the game
@@ -96,7 +95,7 @@ int Application::Start()
 	// START: RESUME DEVELOPMENT FROM HERE
 	Entity* stageEntity = new Entity();
 	stageEntity->name = "Stage";
-	EntityManager::AddEntity(stageEntity);
+	ECS::ECS_Manager::AddEntity(stageEntity);
 	// Azur Debug
 	AzurDebug::init();
 
@@ -216,9 +215,9 @@ int Application::Start()
 		mouse.Update();
 		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false;
 		// Game Level Update
-		EntityManager::Update();
+		ECS::ECS_Manager::Update();
 		// Delete Flagged Entities
-		EntityManager::DeleteFlagedEntities();
+		ECS::ECS_Manager::DeleteFlagedEntities();
 		// Collision update
 		CollisionManager::Update();
 
@@ -296,7 +295,7 @@ int Application::Start()
 		SDL_RenderClear(Application::renderer);
 		SDL_SetRenderDrawColor(Application::renderer, 0, 0, 0, 1);
 		// Render ECS Components
-		EntityManager::Render(Application::renderer);
+		ECS::ECS_Manager::Render(Application::renderer);
 		// Render Text
 
 
@@ -319,7 +318,7 @@ int Application::Start()
 
 	// Memory Cleaning
 	// Clear Entity Vector
-	EntityManager::DeleteAllEntities();
+	ECS::ECS_Manager::DeleteAllEntities();
 	// Clear Sprites
 	SpriteManager::DeleteSprites();
 	// Quit Functions

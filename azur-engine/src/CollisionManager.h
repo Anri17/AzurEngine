@@ -3,22 +3,22 @@
 
 #include <vector>
 
-#include "Components.h"
+#include "ECS.h"
 
-#include "AzurMath.h"
+#include "AzurLib.h"
 
 class CollisionManager
 {
 public:
 	static void Update();
-	static void AddCollider(ColliderComponent* collider);
-	static void RemoveCollider(ColliderComponent* collider);
+	static void AddCollider(Collider* collider);
+	static void RemoveCollider(Collider* collider);
 
 private:
-	static std::pair<vector2float, vector2float> find_closest_collision_border_point(ColliderComponent* collider0, ColliderComponent* collider1);
-	static void set_collision_status(ColliderComponent* collider0, ColliderComponent* collider1);
+	static std::pair<vector2float, vector2float> find_closest_collision_border_point(Collider* collider0, Collider* collider1);
+	static void set_collision_status(Collider* collider0, Collider* collider1);
 private:
-	static std::vector<ColliderComponent*> colliders;
+	static std::vector<Collider*> colliders;
 
 };
 

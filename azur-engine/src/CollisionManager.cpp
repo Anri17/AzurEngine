@@ -1,8 +1,6 @@
 #include "CollisionManager.h"
 
-#include "AzurMemoryLeakFinder.h"
-
-std::vector<ColliderComponent*> CollisionManager::colliders;
+std::vector<Collider*> CollisionManager::colliders;
 
 void CollisionManager::Update()
 {
@@ -27,7 +25,7 @@ void CollisionManager::Update()
 	{
 		// TODO: Test BoxColliders agains Circle Colliders.
 		// WARNING: TODO: The moment a CircleColliderComponent is added to vector of colliders, everything breaks.
-		ColliderComponent* collider0 = colliders[i];
+		Collider* collider0 = colliders[i];
 		// We don't need to evaluate collisions for inactie entities
 		if (!collider0->entity->active) continue;
 
@@ -35,7 +33,7 @@ void CollisionManager::Update()
 		for (size_t j = i + 1; j < colliders.size(); ++j)
 		{
 			// TODO: Test BoxColliders agains Circle Colliders.
-			ColliderComponent* collider1 = colliders[j];
+			Collider* collider1 = colliders[j];
 			// We don't need to evaluate collisions for inactie entities
 			if (!collider1->entity->active) continue;
 
@@ -43,8 +41,8 @@ void CollisionManager::Update()
 			// Box with Box Collision
 			if (collider0->type == ColliderType::BOX && collider1->type == ColliderType::BOX)
 			{
-				BoxColliderComponent* box_collider0 = (BoxColliderComponent*)collider0;
-				BoxColliderComponent* box_collider1 = (BoxColliderComponent*)collider1;
+				BoxCollider* box_collider0 = (BoxCollider*)collider0;
+				BoxCollider* box_collider1 = (BoxCollider*)collider1;
 				bool is_colliding = box_collider0->true_top < box_collider1->true_bottom && box_collider0->true_left < box_collider1->true_right &&
 					box_collider1->true_top < box_collider0->true_bottom && box_collider1->true_left < box_collider0->true_right;
 				if (is_colliding)
@@ -54,8 +52,8 @@ void CollisionManager::Update()
 			}
 			else if (collider0->type == ColliderType::CIRCLE && collider1->type == ColliderType::CIRCLE)
 			{
-				CircleColliderComponent* circle_collider0 = (CircleColliderComponent*)collider0;
-				CircleColliderComponent* circle_collider1 = (CircleColliderComponent*)collider1;
+				CircleCollider* circle_collider0 = (CircleCollider*)collider0;
+				CircleCollider* circle_collider1 = (CircleCollider*)collider1;
 				vector2float collider0_point = { circle_collider0->position->x , circle_collider0->position->y };
 				vector2float collider1_point = { circle_collider1->position->x , circle_collider1->position->y };
 
@@ -73,8 +71,8 @@ void CollisionManager::Update()
 					 collider0->type == ColliderType::BOX && collider1->type == ColliderType::CIRCLE)
 			{
 					vector2float collision_point = {};
-					CircleColliderComponent* circle_collider = collider0->type == ColliderType::CIRCLE ? (CircleColliderComponent*)collider0 : (CircleColliderComponent*)collider1;
-					BoxColliderComponent* box_collider = collider0->type == ColliderType::BOX ? (BoxColliderComponent*)collider0 : (BoxColliderComponent*)collider1;
+					CircleCollider* circle_collider = collider0->type == ColliderType::CIRCLE ? (CircleCollider*)collider0 : (CircleCollider*)collider1;
+					BoxCollider* box_collider = collider0->type == ColliderType::BOX ? (BoxCollider*)collider0 : (BoxCollider*)collider1;
 
 					if (box_collider->true_top <= circle_collider->position->y && box_collider->true_bottom >= circle_collider->position->y &&
 						box_collider->position->x >= circle_collider->position->x)
@@ -144,14 +142,14 @@ void CollisionManager::Update()
 	}
 }
 
-void CollisionManager::AddCollider(ColliderComponent* collider)
+void CollisionManager::AddCollider(Collider* collider)
 {
 	colliders.push_back(collider);
 }
 
-void CollisionManager::RemoveCollider(ColliderComponent* collider)
+void CollisionManager::RemoveCollider(Collider* collider)
 {
-	std::vector<ColliderComponent*>::iterator pos = std::find(colliders.begin(), colliders.end(), collider);
+	std::vector<Collider*>::iterator pos = std::find(colliders.begin(), colliders.end(), collider);
 	if (pos != colliders.end())
 	{
 		colliders.erase(pos);
@@ -160,7 +158,7 @@ void CollisionManager::RemoveCollider(ColliderComponent* collider)
 
 // TODO: NOT BEING USED. CHECK IF RELEVANT
 // returns an array of two points with the two closest points of first and second collider, respectively
-std::pair<vector2float, vector2float> CollisionManager::find_closest_collision_border_point(ColliderComponent* collider0, ColliderComponent* collider1)
+std::pair<vector2float, vector2float> CollisionManager::find_closest_collision_border_point(Collider* collider0, Collider* collider1)
 {
 	vector2float collider0_border_point = {};
 	vector2float collider1_border_point = {};
@@ -171,7 +169,7 @@ std::pair<vector2float, vector2float> CollisionManager::find_closest_collision_b
 	// Collider0
 	if (collider0->type == ColliderType::BOX)
 	{
-		BoxColliderComponent* box_collider0 = (BoxColliderComponent*)collider0;
+		BoxCollider* box_collider0 = (BoxCollider*)collider0;
 		vector2float box_collider0_p0 = { box_collider0->true_left, box_collider0->true_top };
 		vector2float box_collider0_p1 = { box_collider0->true_right, box_collider0->true_top };
 		vector2float box_collider0_p2 = { box_collider0->true_left, box_collider0->true_bottom };
@@ -205,7 +203,7 @@ std::pair<vector2float, vector2float> CollisionManager::find_closest_collision_b
 	// Collider1
 	if (collider1->type == ColliderType::BOX)
 	{
-		BoxColliderComponent* box_collider1 = (BoxColliderComponent*)collider1;
+		BoxCollider* box_collider1 = (BoxCollider*)collider1;
 		vector2float box_collider1_p0 = { box_collider1->true_left, box_collider1->true_top };
 		vector2float box_collider1_p1 = { box_collider1->true_right, box_collider1->true_top };
 		vector2float box_collider1_p2 = { box_collider1->true_left, box_collider1->true_bottom };
@@ -240,7 +238,7 @@ std::pair<vector2float, vector2float> CollisionManager::find_closest_collision_b
 	return std::make_pair(collider0_border_point, collider1_border_point);
 }
 
-void CollisionManager::set_collision_status(ColliderComponent* collider0, ColliderComponent* collider1)
+void CollisionManager::set_collision_status(Collider* collider0, Collider* collider1)
 {
 	collider0->isColliding = true;
 	collider1->isColliding = true;

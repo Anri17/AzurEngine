@@ -3,7 +3,7 @@
 
 #include <SDL.h>
 
-struct Sprite
+struct SpriteData
 {
 	SDL_Texture* texture;
 	SDL_Rect rect;

@@ -4,14 +4,14 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+#include "AzurLib.h"
 #include "AzurDebug.h"
 
 #include "Application.h"
 
-
-Sprite* SpriteManager::bullet_a = nullptr;
-Sprite* SpriteManager::player = nullptr;
-Sprite* SpriteManager::blank_texture = nullptr;
+SpriteData* SpriteManager::bullet_a = nullptr;
+SpriteData* SpriteManager::player = nullptr;
+SpriteData* SpriteManager::blank_texture = nullptr;
 
 void SpriteManager::InitializeSprites()
 {
@@ -46,9 +46,9 @@ void SpriteManager::DeleteSprites()
 	delete bullet_a;
 }
 
-Sprite* SpriteManager::CreateSprite(SDL_Renderer* renderer, const char* imageFileName, int x, int y, int w, int h)
+SpriteData* SpriteManager::CreateSprite(SDL_Renderer* renderer, const char* imageFileName, int x, int y, int w, int h)
 {
-	Sprite* sprite = new Sprite();
+	SpriteData* sprite = new SpriteData();
 	const char* baseDir = SDL_GetBasePath();
 	std::string fileDir = baseDir;
 	fileDir += imageFileName;
