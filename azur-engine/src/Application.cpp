@@ -40,6 +40,12 @@ int Application::current_window_width = 800;
 int Application::current_window_height = 600;
 float Application::current_window_ratio = 0.75f; // 4:3
 
+// TODO: extract the logic from the components into their own separate system
+// I.E.: Rendering of sprites and position to Renderer
+// I.E.: Collider Calculations to ColliderManager
+// I.E.: Rendering of Text to Renderer
+// I.E.: Movement of Bullets with BulletManager
+// I.E.: Spawning of Shot with ShotManager
 int Application::Start()
 {
 	// Initialise libraries, create the window and renderer, set initial program and system states.
