@@ -1,6 +1,6 @@
 #include "Application.h"
 
-#include "AzurMemoryLeakFinder.h"
+#include "AzurLib.h"
 
 int main(int argc, char* argv[])
 {

@@ -10,6 +10,7 @@
 #include ".\..\..\SpriteManager.h"
 #include ".\..\ECS_Manager.h"
 
+#include ".\..\..\AzurDebug.h"
 #include "Sprite.h"
 
 namespace ECS

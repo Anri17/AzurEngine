@@ -3,6 +3,7 @@
 
 #include ".\..\..\Application.h"
 #include ".\..\..\AzurLib.h"
+#include ".\..\..\AzurDebug.h"
 #include ".\..\ECS_Tag.h"
 namespace ECS
 {
