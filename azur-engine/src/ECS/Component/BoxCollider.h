@@ -11,19 +11,18 @@ namespace ECS
 	{
 	public:
 		void draw(SDL_Renderer* renderer) override;
-		void update() override;
-		void init() override;
+		void update()					  override;
+		void init()						  override;
 
+		inline float get_true_top()    const { return position->y + offset_top; }
+		inline float get_true_right()  const { return position->x + offset_right; }
+		inline float get_true_bottom() const { return position->y + offset_bottom; }
+		inline float get_true_left()   const { return position->x + offset_left; }
 	public:
 		float offset_top;
 		float offset_right;
 		float offset_bottom;
 		float offset_left;
-
-		float true_top;
-		float true_right;
-		float true_bottom;
-		float true_left;
 	};
 }
 #endif // _BOX_COLLIDER_H

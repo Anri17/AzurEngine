@@ -14,10 +14,10 @@ namespace ECS
 	void BoxCollider::draw(SDL_Renderer* renderer)
 	{
 		// drawing points
-		vector2int p0{ Application::GetWindowTrueX(true_left),  Application::GetWindowTrueY(true_top) };
-		vector2int p1{ Application::GetWindowTrueX(true_right), Application::GetWindowTrueY(true_top) };
-		vector2int p2{ Application::GetWindowTrueX(true_left),  Application::GetWindowTrueY(true_bottom) };
-		vector2int p3{ Application::GetWindowTrueX(true_right), Application::GetWindowTrueY(true_bottom) };
+		vector2int p0{ Application::GetWindowTrueX(get_true_left()), Application::GetWindowTrueY(get_true_top()) };
+		vector2int p1{ Application::GetWindowTrueX(get_true_right()), Application::GetWindowTrueY(get_true_top()) };
+		vector2int p2{ Application::GetWindowTrueX(get_true_left ()), Application::GetWindowTrueY(get_true_bottom()) };
+		vector2int p3{ Application::GetWindowTrueX(get_true_right()), Application::GetWindowTrueY(get_true_bottom()) };
 
 		if (AzurDebug::debug_mode)
 		{
@@ -50,10 +50,7 @@ namespace ECS
 
 	void BoxCollider::update()
 	{
-		true_top = position->y + offset_top;
-		true_right = position->x + offset_right;
-		true_bottom = position->y + offset_bottom;
-		true_left = position->x + offset_left;
+
 	}
 
 	void BoxCollider::init()
@@ -66,10 +63,6 @@ namespace ECS
 		offset_right = 0;
 		offset_bottom = 0;
 		offset_left = 0;
-
-		true_top = 0;
-		true_right = 0;
-		true_bottom = 0;
-		true_left = 0;
 	}
+
 }
