@@ -187,6 +187,7 @@
     <ClCompile Include="src\SpriteManager.cpp" />
     <ClCompile Include="src\ECS\Component\Stage.cpp" />
     <ClCompile Include="src\ECS\Component\Text.cpp" />
+    <ClCompile Include="src\StageSystem.cpp" />
     <ClCompile Include="src\TextManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -202,7 +203,9 @@
     <ClInclude Include="src\ECS\Component\Collider.h" />
     <ClInclude Include="src\CollisionManager.h" />
     <ClInclude Include="src\AzurDebug.h" />
+    <ClInclude Include="src\ECS\Component\TextAlignment.h" />
     <ClInclude Include="src\ECS\ECS_Manager.h" />
+    <ClInclude Include="src\StageSystem.h" />
     <ClInclude Include="src\InputHandler.h" />
     <ClInclude Include="src\AzurLib\AzurMath.h" />
     <ClInclude Include="src\Mouse.h" />

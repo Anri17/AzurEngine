@@ -104,6 +104,7 @@ namespace ECS
 		text->SetColor(color);
 		text->SetFont(fontpath, fontsize);
 		text->SetMessage(message);
+		text->SetAlignment(TextAlignment::LEFT);
 
 		TextManager::BuildText(position, text);
 		TextManager::entities.push_back(std::pair<Position*, Text*>(position, text));

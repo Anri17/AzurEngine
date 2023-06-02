@@ -8,6 +8,7 @@
 #include ".\..\ECS_Component.h"
 
 #include "Position.h"
+#include "TextAlignment.h"
 
 namespace ECS
 {
@@ -17,14 +18,11 @@ namespace ECS
 		~Text();
 
 		void init() override;
-		void update() override;
-		void draw(SDL_Renderer* renderer) override;
 
 		void SetFont(std::string fontpath, int fontsize);
 		void SetColor(SDL_Color color);
 		void SetMessage(std::string message);
-
-		void BuildText();
+		void SetAlignment(TextAlignment alignment);
 
 		std::string message;
 		SDL_Texture* texture;
@@ -37,7 +35,7 @@ namespace ECS
 		Position* position;
 		SDL_Renderer* renderer;
 
-
+		TextAlignment alignment;
 	private:
 		const int FONT_RESOLUTION_RATIO = 2;
 	};

@@ -17,22 +17,13 @@ namespace ECS
 		size = 0;
 		font = nullptr;
 		renderer = Application::renderer;
+		alignment = TextAlignment::LEFT;
 	};
 
 	Text::~Text()
 	{
 		SDL_DestroyTexture(texture);
 		TTF_CloseFont(font);
-	}
-
-	void Text::draw(SDL_Renderer* renderer)
-	{
-
-	}
-
-	void Text::update()
-	{
-
 	}
 
 	void Text::SetFont(std::string fontpath, int fontsize)
@@ -56,15 +47,8 @@ namespace ECS
 		this->message = message;
 	}
 
-	void Text::BuildText()
+	void Text::SetAlignment(TextAlignment alignment)
 	{
-		SDL_DestroyTexture(texture);
-		SDL_Surface* surface = TTF_RenderText_Solid(font, message.c_str(), color);
-		texture = SDL_CreateTextureFromSurface(renderer, surface);
-		rect.x = Application::GetWindowTrueX(position->x);
-		rect.y = Application::GetWindowTrueY(position->y);
-		rect.w = Application::GetWindowTrueX(surface->w / FONT_RESOLUTION_RATIO);
-		rect.h = Application::GetWindowTrueY(surface->h / FONT_RESOLUTION_RATIO);
-		SDL_FreeSurface(surface);
+		this->alignment = alignment;
 	}
 }

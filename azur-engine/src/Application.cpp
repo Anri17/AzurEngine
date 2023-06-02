@@ -26,6 +26,7 @@
 #include "CollisionManager.h"
 #include "SpriteManager.h"
 #include "TextManager.h"
+#include "StageSystem.h"
 
 // TODO: These defines are both game specific and engine speficic
 // TODO: What this means is that the values are specific to the need of the applicaiton, but they are needed none the less
@@ -95,6 +96,10 @@ int Application::Start()
 	Entity* playerEntity = ECS::ECS_Manager::CreatePlayerEntity("Player", ECS::ECS_Tag::PLAYER);
 	Player* playerComponent = playerEntity->GetComponent<Player>();
 	Entity* BulletSpawnerEntity = ECS::ECS_Manager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 180, ECS::ECS_Tag::ENEMY);
+	// Text Manager
+	TextManager::Init();
+	// Stage System
+	StageSystem::Init();
 
 	// Create a Stage Component. Most of the gameplayer logic goes here.
 	// TODO: In the future, I want to somehow save and load a stage data into a file and into the game
@@ -293,6 +298,8 @@ int Application::Start()
 			SDL_SetWindowPosition(window, window_pos_x, window_pos_y);
 			SDL_SetWindowSize(Application::window, Application::current_window_width, Application::current_window_height);
 		}
+		// Stage System
+		StageSystem::Update();
 		// Azur Debug
 		AzurDebug::update();
 
