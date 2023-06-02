@@ -10,9 +10,7 @@ namespace ECS
 	class BoxCollider : public Collider
 	{
 	public:
-		void draw(SDL_Renderer* renderer) override;
-		void update()					  override;
-		void init()						  override;
+		void init() override;
 
 		inline float get_true_top()    const { return position->y + offset_top; }
 		inline float get_true_right()  const { return position->x + offset_right; }

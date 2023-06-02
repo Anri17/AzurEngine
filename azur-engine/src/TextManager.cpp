@@ -5,11 +5,12 @@
 std::vector<std::pair<Position*, Text*>> TextManager::entities;
 const int TextManager::FONT_RESOLUTION_RATIO = 2;
 
-void TextManager::init()
+void TextManager::Init()
 {
+
 }
 
-void TextManager::update()
+void TextManager::Update()
 {
 	for (auto e : entities)
 	{
@@ -19,7 +20,7 @@ void TextManager::update()
 	}
 }
 
-void TextManager::render(SDL_Renderer* renderer)
+void TextManager::Render(SDL_Renderer* renderer)
 {
 	for (auto e : entities)
 	{

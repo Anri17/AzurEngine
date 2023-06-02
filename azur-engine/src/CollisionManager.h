@@ -11,15 +11,17 @@ class CollisionManager
 {
 public:
 	static void Update();
-	static void Draw(SDL_Renderer* renderer);
-	static void AddCollider(Collider* collider);
-	static void RemoveCollider(Collider* collider);
+	static void Render(SDL_Renderer* renderer);
+
+	static void AddCollider(Position* position, Collider* collider);
+
+	static void RemoveCollider(Position* position, Collider* collider);
 
 private:
 	static std::pair<vector2float, vector2float> find_closest_collision_border_point(Collider* collider0, Collider* collider1);
 	static void set_collision_status(Collider* collider0, Collider* collider1);
 private:
-	static std::vector<Collider*> colliders;
+	static std::vector<std::pair<Position*, Collider*>> colliders;
 
 };
 

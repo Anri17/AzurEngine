@@ -246,7 +246,7 @@ int Application::Start()
 		{
 			debug_mode_text->SetMessage(std::string("Debug Mode: OFF"));
 		}
-		TextManager::update();
+		TextManager::Update();
 		// Change Window Resolution
 		if (InputHandler::GetKeyTap(InputHandler::KEY_1))
 		{
@@ -303,9 +303,9 @@ int Application::Start()
 		// Render ECS Components
 		ECS::ECS_Manager::Render(Application::renderer);
 		// Render Collisisons
-		CollisionManager::Draw(Application::renderer);
+		CollisionManager::Render(Application::renderer);
 		// Render Text
-		TextManager::render(Application::renderer);
+		TextManager::Render(Application::renderer);
 		// Some components use this function to set lines or dot colors. This need to be here so that the backgroud is set to black.
 		SDL_SetRenderDrawColor(Application::renderer, 0, 0, 0, 1);
 		// Present buffer

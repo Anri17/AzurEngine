@@ -11,8 +11,6 @@ namespace ECS
 	{
 	public:
 		void init() override;
-		void update() override;
-		void draw(SDL_Renderer* renderer) override;
 
 	public:
 		float radius;

@@ -10,9 +10,9 @@
 class TextManager
 {
 public:
-	static void init();
-	static void update();
-	static void render(SDL_Renderer* renderer);
+	static void Init();
+	static void Update();
+	static void Render(SDL_Renderer* renderer);
 
 	static void BuildText(const Position* position, Text* text);
 public:
