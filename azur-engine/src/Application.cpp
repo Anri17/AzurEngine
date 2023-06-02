@@ -25,6 +25,7 @@
 #include "ECS.h"
 #include "CollisionManager.h"
 #include "SpriteManager.h"
+#include "TextManager.h"
 
 // TODO: These defines are both game specific and engine speficic
 // TODO: What this means is that the values are specific to the need of the applicaiton, but they are needed none the less
@@ -226,10 +227,8 @@ int Application::Start()
 		ECS::ECS_Manager::DeleteFlagedEntities();
 		// Collision update
 		CollisionManager::Update();
-
-
 		// Update UI
-		// Text Updae
+		// Text Update
 		current_frame_text->SetMessage(std::string("CurrentFrame: " + std::to_string(current_frame)));
 		mouse_x_text->SetMessage(std::string("MouseX: " + std::to_string(mouse.xPos)));
 		mouse_y_text->SetMessage(std::string("MouseY: " + std::to_string(mouse.yPos)));
@@ -247,6 +246,7 @@ int Application::Start()
 		{
 			debug_mode_text->SetMessage(std::string("Debug Mode: OFF"));
 		}
+		TextManager::update();
 		// Change Window Resolution
 		if (InputHandler::GetKeyTap(InputHandler::KEY_1))
 		{
@@ -302,9 +302,10 @@ int Application::Start()
 		SDL_SetRenderDrawColor(Application::renderer, 0, 0, 0, 1);
 		// Render ECS Components
 		ECS::ECS_Manager::Render(Application::renderer);
+		// Render Collisisons
+		CollisionManager::Draw(Application::renderer);
 		// Render Text
-
-
+		TextManager::render(Application::renderer);
 		// Some components use this function to set lines or dot colors. This need to be here so that the backgroud is set to black.
 		SDL_SetRenderDrawColor(Application::renderer, 0, 0, 0, 1);
 		// Present buffer

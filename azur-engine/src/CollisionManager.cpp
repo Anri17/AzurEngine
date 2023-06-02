@@ -150,6 +150,11 @@ void CollisionManager::Update()
 	}
 }
 
+void CollisionManager::Draw(SDL_Renderer* renderer)
+{
+
+}
+
 void CollisionManager::AddCollider(Collider* collider)
 {
 	colliders.push_back(collider);

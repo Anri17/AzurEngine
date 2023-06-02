@@ -27,12 +27,12 @@ namespace ECS
 
 	void Text::draw(SDL_Renderer* renderer)
 	{
-		SDL_RenderCopy(renderer, texture, NULL, &rect);
+
 	}
 
 	void Text::update()
 	{
-		BuildText();
+
 	}
 
 	void Text::SetFont(std::string fontpath, int fontsize)

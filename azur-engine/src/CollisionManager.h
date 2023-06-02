@@ -11,6 +11,7 @@ class CollisionManager
 {
 public:
 	static void Update();
+	static void Draw(SDL_Renderer* renderer);
 	static void AddCollider(Collider* collider);
 	static void RemoveCollider(Collider* collider);
 

@@ -4,7 +4,7 @@
 #include ".\..\SpriteManager.h"
 #include "Component/Sprite.h"
 
-
+#include ".\..\TextManager.h"
 
 namespace ECS
 {
@@ -99,13 +99,14 @@ namespace ECS
 	{
 		Entity* entity = new Entity();
 		entity->tag = ECS_Tag::UI_TEXT;
-		entity->AddComponent<Position>();
+		Position* position = entity->AddComponent<Position>();
 		Text* text = entity->AddComponent<Text>();
 		text->SetColor(color);
 		text->SetFont(fontpath, fontsize);
 		text->SetMessage(message);
-		text->BuildText();
 
+		TextManager::BuildText(position, text);
+		TextManager::entities.push_back(std::pair<Position*, Text*>(position, text));
 		ECS_Manager::AddEntity(entity);
 
 		return entity;
