@@ -7,22 +7,23 @@
 
 #include "AzurLib.h"
 
-class CollisionManager
+
+class CollisionSystem : public ECS::SystemBase
 {
 public:
-	static void Update();
-	static void Render(SDL_Renderer* renderer);
+	void Update() override;
+	void Render(SDL_Renderer* renderer) override;
 
-	static void AddCollider(Position* position, Collider* collider);
+	void AddCollider(ECS::Position* position, ECS::Collider* collider);
 
-	static void RemoveCollider(Position* position, Collider* collider);
+	void RemoveCollider(ECS::Position* position, ECS::Collider* collider);
+	void DeleteNullComponents() override;
 
 private:
-	static std::pair<vector2float, vector2float> find_closest_collision_border_point(Collider* collider0, Collider* collider1);
-	static void set_collision_status(Collider* collider0, Collider* collider1);
-private:
-	static std::vector<std::pair<Position*, Collider*>> colliders;
+	std::pair<vector2float, vector2float> find_closest_collision_border_point(ECS::Collider* collider0, ECS::Collider* collider1);
+	void set_collision_status(ECS::Collider* collider0, ECS::Collider* collider1);
 
+	std::vector<std::pair<ECS::Position*, ECS::Collider*>> colliders;
 };
 
 

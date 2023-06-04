@@ -12,6 +12,9 @@ namespace ECS
 	void Bullet::update()
 	{
 		// TODO: The bullet will use a velocity vector to move.
+		// TODO: MOve the Update and Draw to the Bullet Manager
+		// TODO: Make it so that there is a Bullet A which takes an angle and a bullet B which takes the x and y coords for the velocity
+		// TODO: Create a getvelocity() method which takes the parameters and types nad sets the velocity that way.
 		// The calculations are done given a speed and an angle variable.
 		float angle_rad = angle * (float)AzurMath::PI / 180.0f;
 		velocity.y = sin(angle_rad) * speed;

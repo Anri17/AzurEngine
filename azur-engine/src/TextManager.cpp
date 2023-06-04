@@ -2,15 +2,15 @@
 
 #include "Application.h"
 
-std::vector<std::pair<Position*, Text*>> TextManager::entities;
-const int TextManager::FONT_RESOLUTION_RATIO = 2;
+std::vector<std::pair<Position*, Text*>> TextSystem::entities;
+const int TextSystem::FONT_RESOLUTION_RATIO = 2;
 
-void TextManager::Init()
+void TextSystem::Init()
 {
 
 }
 
-void TextManager::Update()
+void TextSystem::Update()
 {
 	for (auto e : entities)
 	{
@@ -20,7 +20,7 @@ void TextManager::Update()
 	}
 }
 
-void TextManager::Render(SDL_Renderer* renderer)
+void TextSystem::Render(SDL_Renderer* renderer)
 {
 	for (auto e : entities)
 	{
@@ -29,7 +29,7 @@ void TextManager::Render(SDL_Renderer* renderer)
 	}
 }
 
-void TextManager::BuildText(const Position* position, Text* text)
+void TextSystem::BuildText(const Position* position, Text* text)
 {
 	SDL_DestroyTexture(text->texture);
 	SDL_Surface* surface = TTF_RenderText_Solid(text->font, text->message.c_str(), text->color);

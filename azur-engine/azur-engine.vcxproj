@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\AzurDebug.cpp" />
+    <ClCompile Include="src\BulletManager.cpp" />
     <ClCompile Include="src\ECS\Component\BoxCollider.cpp" />
     <ClCompile Include="src\ECS\Component\Bullet.cpp" />
     <ClCompile Include="src\ECS\Component\BulletSpawner.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="src\ECS\ECS_Entity.cpp" />
     <ClCompile Include="src\ECS\ECS_Manager.cpp" />
     <ClCompile Include="src\ECS\ECS_Tag.h" />
+    <ClCompile Include="src\ECS\SystemBase.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
     <ClCompile Include="src\AzurLib\AzurMath.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
@@ -197,6 +199,7 @@
     <ClInclude Include="src\ECS\Component\BoxCollider.h" />
     <ClInclude Include="src\ECS\Component\Bullet.h" />
     <ClInclude Include="src\BulletPool.h" />
+    <ClInclude Include="src\BulletManager.h" />
     <ClInclude Include="src\ECS\Component\BulletSpawner.h" />
     <ClInclude Include="src\ECS\Component\BulletType.h" />
     <ClInclude Include="src\ECS\Component\CircleCollider.h" />
@@ -205,6 +208,7 @@
     <ClInclude Include="src\AzurDebug.h" />
     <ClInclude Include="src\ECS\Component\TextAlignment.h" />
     <ClInclude Include="src\ECS\ECS_Manager.h" />
+    <ClInclude Include="src\ECS\SystemBase.h" />
     <ClInclude Include="src\StageSystem.h" />
     <ClInclude Include="src\InputHandler.h" />
     <ClInclude Include="src\AzurLib\AzurMath.h" />

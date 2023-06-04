@@ -18,6 +18,8 @@ namespace ECS
 		void init() override;
 		void update() override;
 
+		vector2float GetVelocity();
+
 		Position* position;
 		Collider* collider;
 		int width = 12;

@@ -14,11 +14,10 @@ namespace ECS
 		isColliding = false;
 		collider_references = {};
 		collider_tags = {};
-		CollisionManager::AddCollider(position, this);
 	}
 
 	Collider::~Collider()
 	{
-		CollisionManager::RemoveCollider(position, this);
+		//CollisionSystem::RemoveCollider(position, this);
 	}
 }

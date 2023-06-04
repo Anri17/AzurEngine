@@ -17,9 +17,15 @@
 #include "Component/Stage.h"
 #include "Component/Text.h"
 
+#include ".\..\CollisionManager.h"
+
+// TODO: Take the entity Creation Methods outside of the ECS Folder
+class CollisionSystem;
+
 
 namespace ECS
 {
+	// TODO: Hold a reference to the relevant systems. This should not be in the ECS namespace and Folder anyway...
 	class ECS_Manager
 	{
 	public:
@@ -37,9 +43,11 @@ namespace ECS
 		static void Update();
 		static void DeleteAllEntities();
 
-		static void DeleteFlagedEntities();
+		static void DeleteFlagedEntities(std::vector<SystemBase*> systems);
 		static void FlagForDeletion(Entity* entity);
 		static void FlagForDeletionAllTagged(ECS_Tag tag);
+
+		static CollisionSystem* collisionSystem;
 	private:
 		static std::vector<Entity*> entities;
 		static std::vector<Entity*> flagged_for_deletion;

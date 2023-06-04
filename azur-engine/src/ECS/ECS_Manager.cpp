@@ -6,6 +6,8 @@
 
 #include ".\..\TextManager.h"
 
+#include ".\..\CollisionManager.h"
+
 namespace ECS
 {
 	std::vector<Entity*> ECS_Manager::entities;
@@ -40,7 +42,9 @@ namespace ECS
 		CircleCollider* circleCollider = entity->AddComponent<CircleCollider>();
 		circleCollider->radius = 6;
 		bullet->collider = circleCollider;
+
 		ECS_Manager::AddEntity(entity);
+		collisionSystem->AddCollider(position, circleCollider);
 
 		return entity;
 	}
@@ -74,6 +78,8 @@ namespace ECS
 		sprite->rect = SpriteManager::player->rect;
 		Player* player = entity->AddComponent<Player>();
 		player->collider = collider;
+
+		collisionSystem->AddCollider(position, collider);
 		ECS_Manager::AddEntity(entity);
 
 		return entity;
@@ -82,6 +88,7 @@ namespace ECS
 	Entity* ECS_Manager::CreatePlayFieldEntity(std::string name)
 	{
 		Entity* entity = new Entity();
+		Position* position = entity->AddComponent<Position>();
 		entity->AddComponent<PlayField>();
 		entity->tag = ECS_Tag::PLAYFIELD;
 		BoxCollider* boxCollider = entity->AddComponent<BoxCollider>();
@@ -89,6 +96,8 @@ namespace ECS
 		boxCollider->offset_right = PlayField::Right;
 		boxCollider->offset_bottom = PlayField::Bottom;
 		boxCollider->offset_left = PlayField::Left;
+
+		collisionSystem->AddCollider(position, boxCollider);
 
 		ECS_Manager::AddEntity(entity);
 
@@ -106,14 +115,16 @@ namespace ECS
 		text->SetMessage(message);
 		text->SetAlignment(TextAlignment::LEFT);
 
-		TextManager::BuildText(position, text);
-		TextManager::entities.push_back(std::pair<Position*, Text*>(position, text));
+		TextSystem::BuildText(position, text);
+		TextSystem::entities.push_back(std::pair<Position*, Text*>(position, text));
+
 		ECS_Manager::AddEntity(entity);
 
 		return entity;
 
 	}
 
+	// TODO: The Rendering should be extracted to the systems of the game
 	void ECS_Manager::Render(SDL_Renderer* renderer)
 	{
 		for (int i = 0; i < entities.size(); i++)
@@ -122,6 +133,7 @@ namespace ECS
 		}
 	}
 
+	// TODO: The Updating should be extracted to the systems of the game
 	void ECS_Manager::Update()
 	{
 		for (int i = 0; i < entities.size(); i++)
@@ -139,7 +151,7 @@ namespace ECS
 		entities.clear();
 	}
 
-	void ECS_Manager::DeleteFlagedEntities()
+	void ECS_Manager::DeleteFlagedEntities(std::vector<SystemBase*> systems)
 	{
 		for (size_t i = 0; i < flagged_for_deletion.size(); ++i)
 		{
@@ -156,6 +168,12 @@ namespace ECS
 		}
 
 		flagged_for_deletion.clear();
+
+		// All systems need to be cleared of their components from null entities
+		for (auto system : systems)
+		{
+			system->DeleteNullComponents();
+		}
 	}
 
 	void ECS_Manager::FlagForDeletion(Entity* entity)
@@ -173,4 +191,6 @@ namespace ECS
 			}
 		}
 	}
+
+	CollisionSystem* ECS_Manager::collisionSystem = nullptr;
 }

@@ -3,9 +3,7 @@
 #include "AzurDebug.h"
 #include "Application.h"
 
-std::vector<std::pair<Position*, Collider*>> CollisionManager::colliders;
-
-void CollisionManager::Update()
+void CollisionSystem::Update()
 {
 	// Check every collision for overlap
 	// If they overlap, change their state.
@@ -176,7 +174,7 @@ void CollisionManager::Update()
 	}
 }
 
-void CollisionManager::Render(SDL_Renderer* renderer)
+void CollisionSystem::Render(SDL_Renderer* renderer)
 {
 	if (AzurDebug::debug_mode)
 	{
@@ -280,12 +278,12 @@ void CollisionManager::Render(SDL_Renderer* renderer)
 	}
 }
 
-void CollisionManager::AddCollider(Position* position, Collider* collider)
+void CollisionSystem::AddCollider(Position* position, Collider* collider)
 {
 	colliders.push_back(std::pair<Position*, Collider*>(position, collider));
 }
 
-void CollisionManager::RemoveCollider(Position* position, Collider* collider)
+void CollisionSystem::RemoveCollider(Position* position, Collider* collider)
 {
 	std::vector<std::pair<Position*, Collider*>>::iterator pos = std::find(colliders.begin(), colliders.end(), std::pair<Position*, Collider*>(position, collider));
 	if (pos != colliders.end())
@@ -294,9 +292,24 @@ void CollisionManager::RemoveCollider(Position* position, Collider* collider)
 	}
 }
 
+void CollisionSystem::DeleteNullComponents()
+{
+	for (size_t i = 0; i < colliders.size(); ++i)
+	{
+		std::pair<Position*, Collider*> c = colliders[i];
+		if (c.first->entity == nullptr)
+		{
+			delete c.first;
+			delete c.second;
+			colliders.erase(colliders.begin() + i);
+			i--; // the index was deleted and the vector was shifted to the left.
+		}
+	}
+}
+
 // TODO: NOT BEING USED. CHECK IF RELEVANT
 // returns an array of two points with the two closest points of first and second collider, respectively
-std::pair<vector2float, vector2float> CollisionManager::find_closest_collision_border_point(Collider* collider0, Collider* collider1)
+std::pair<vector2float, vector2float> CollisionSystem::find_closest_collision_border_point(Collider* collider0, Collider* collider1)
 {
 	vector2float collider0_border_point = {};
 	vector2float collider1_border_point = {};
@@ -376,7 +389,7 @@ std::pair<vector2float, vector2float> CollisionManager::find_closest_collision_b
 	return std::make_pair(collider0_border_point, collider1_border_point);
 }
 
-void CollisionManager::set_collision_status(Collider* collider0, Collider* collider1)
+void CollisionSystem::set_collision_status(Collider* collider0, Collider* collider1)
 {
 	collider0->isColliding = true;
 	collider1->isColliding = true;

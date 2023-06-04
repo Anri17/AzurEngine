@@ -7,7 +7,7 @@
 
 
 
-class TextManager
+class TextSystem
 {
 public:
 	static void Init();

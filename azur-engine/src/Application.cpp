@@ -42,9 +42,12 @@ int Application::current_window_width = 800;
 int Application::current_window_height = 600;
 float Application::current_window_ratio = 0.75f; // 4:3
 
+// TODO: These systems can then be extracted such that they are modules of the engine. A tetris game might not need a bullet system, for example
+// TODO: This also means that the engine could potentially allowfor the creation of 3d games. As the 3d Rendering and world would be in their own packages
 // TODO: extract the logic from the components into their own separate system
 // I.E.: Rendering of sprites and position to Renderer
 // I.E.: Collider Calculations to ColliderManager
+// 
 // I.E.: Rendering of Text to Renderer
 // I.E.: Movement of Bullets with BulletManager
 // I.E.: Spawning of Shot with ShotManager
@@ -66,6 +69,18 @@ int Application::Start()
 	// The running state of the applications
 	bool application_is_running = true;
 
+
+	// TODO: Create an instance of each systems
+	ECS::ECS_Manager::collisionSystem = new CollisionSystem();
+	systems.push_back(ECS::ECS_Manager::collisionSystem);
+
+	// Initialize the Systems
+	for (ECS::SystemBase* system : systems)
+	{
+		system->Init();
+	}
+
+	// Initialize the entities and the components of the game
 
 	// Entity and Component Initialization
 	// Initialize Sprites
@@ -97,10 +112,14 @@ int Application::Start()
 	Player* playerComponent = playerEntity->GetComponent<Player>();
 	Entity* BulletSpawnerEntity = ECS::ECS_Manager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 180, ECS::ECS_Tag::ENEMY);
 	// Text Manager
-	TextManager::Init();
+	TextSystem::Init();
 	// Stage System
 	StageSystem::Init();
+	
 
+
+	
+	
 	// Create a Stage Component. Most of the gameplayer logic goes here.
 	// TODO: In the future, I want to somehow save and load a stage data into a file and into the game
 	// TODO: This is so that I can later save the game, but also create a stage editor.
@@ -223,15 +242,21 @@ int Application::Start()
 
 
 		// Update Game and Application States
+		// Update Systems
+		for (ECS::SystemBase* system : systems)
+		{
+			system->Update();
+		}
 		// Application Level Update
 		mouse.Update();
 		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false;
 		// Game Level Update
 		ECS::ECS_Manager::Update();
 		// Delete Flagged Entities
-		ECS::ECS_Manager::DeleteFlagedEntities();
+		// TODO: The ECS_Manager should have the vector of systems
+		ECS::ECS_Manager::DeleteFlagedEntities(systems);
 		// Collision update
-		CollisionManager::Update();
+		//CollisionSystem::Update();
 		// Update UI
 		// Text Update
 		current_frame_text->SetMessage(std::string("CurrentFrame: " + std::to_string(current_frame)));
@@ -251,7 +276,7 @@ int Application::Start()
 		{
 			debug_mode_text->SetMessage(std::string("Debug Mode: OFF"));
 		}
-		TextManager::Update();
+		TextSystem::Update();
 		// Change Window Resolution
 		if (InputHandler::GetKeyTap(InputHandler::KEY_1))
 		{
@@ -307,12 +332,17 @@ int Application::Start()
 		// Rendering
 		SDL_RenderClear(Application::renderer);
 		SDL_SetRenderDrawColor(Application::renderer, 0, 0, 0, 1);
+		// Render Systems
+		for (auto system : systems)
+		{
+			system->Render(renderer);
+		}
 		// Render ECS Components
 		ECS::ECS_Manager::Render(Application::renderer);
 		// Render Collisisons
-		CollisionManager::Render(Application::renderer);
+		//CollisionSystem::Render(Application::renderer);
 		// Render Text
-		TextManager::Render(Application::renderer);
+		TextSystem::Render(Application::renderer);
 		// Some components use this function to set lines or dot colors. This need to be here so that the backgroud is set to black.
 		SDL_SetRenderDrawColor(Application::renderer, 0, 0, 0, 1);
 		// Present buffer
@@ -331,6 +361,11 @@ int Application::Start()
 
 
 	// Memory Cleaning
+	// Clear Systems
+	for (ECS::SystemBase* system : systems)
+	{
+		delete system;
+	}
 	// Clear Entity Vector
 	ECS::ECS_Manager::DeleteAllEntities();
 	// Clear Sprites
@@ -354,3 +389,5 @@ int Application::GetWindowTrueY(float y)
 {
 	return (y * Application::current_window_height) / Application::base_window_height;
 }
+
+std::vector<ECS::SystemBase*> Application::systems;

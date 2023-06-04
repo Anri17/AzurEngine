@@ -3,6 +3,8 @@
 
 #include <SDL.h>
 
+#include "ECS.h"
+
 struct Application
 {
 	static SDL_Window* window;
@@ -19,6 +21,8 @@ struct Application
 	static int current_window_width;
 	static int current_window_height;
 	static float current_window_ratio;
+
+	static std::vector<ECS::SystemBase*> systems;
 };
 
 
