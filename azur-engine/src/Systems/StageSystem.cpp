@@ -1,8 +1,8 @@
 #include "StageSystem.h"
 
-#include "Application.h"
+#include ".\..\Application.h"
 
-#include "AssetManager.h"
+#include ".\..\AssetManager.h"
 
 StageSystem::StageSystem() : 
 	world_text(nullptr),

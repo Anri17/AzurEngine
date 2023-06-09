@@ -1,6 +1,6 @@
 #include "UISystem.h"
 
-#include "Application.h"
+#include ".\..\Application.h"
 
 std::vector<std::pair<Position*, Text*>> UISystem::entities;
 const int UISystem::FONT_RESOLUTION_RATIO = 2;

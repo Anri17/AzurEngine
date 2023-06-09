@@ -4,10 +4,10 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#include "AzurLib.h"
-#include "AzurDebug.h"
+#include ".\..\AzurLib.h"
+#include ".\..\AzurDebug.h"
 
-#include "Application.h"
+#include ".\..\Application.h"
 
 SpriteData* SpriteSystem::bullet_a = nullptr;
 SpriteData* SpriteSystem::player = nullptr;
@@ -40,6 +40,7 @@ void SpriteSystem::Init()
 
 void SpriteSystem::Update()
 {
+
 }
 
 void SpriteSystem::Render(SDL_Renderer* renderer)
@@ -81,10 +82,10 @@ SpriteData* SpriteSystem::CreateSprite(SDL_Renderer* renderer, const char* image
 	SDL_FreeSurface(surface);
 
 	sprite->texture = texture;
-	sprite->rect.x = (int)Application::GetWindowTrueX(x);
-	sprite->rect.y = (int)Application::GetWindowTrueY(y);
-	sprite->rect.w = (int)Application::GetWindowTrueX(w);
-	sprite->rect.h = (int)Application::GetWindowTrueY(h);
+	sprite->rect.x = Application::GetWindowTrueX((float)x);
+	sprite->rect.y = Application::GetWindowTrueY((float)y);
+	sprite->rect.w = Application::GetWindowTrueX((float)w);
+	sprite->rect.h = Application::GetWindowTrueY((float)h);
 
 	return sprite;
 }

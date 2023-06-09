@@ -3,9 +3,9 @@
 
 #include <vector>
 
-#include "ECS.h"
+#include ".\..\ECS.h"
 
-#include "Components.h"
+#include ".\..\Components.h"
 
 class UISystem : public ECS::System<UISystem>
 {

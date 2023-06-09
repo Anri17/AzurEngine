@@ -3,9 +3,9 @@
 
 #include <vector>
 
-#include "AzurLib.h"
-#include "ECS.h"
-#include "Components.h"
+#include ".\..\AzurLib.h"
+#include ".\..\ECS.h"
+#include ".\..\Components.h"
 
 class CollisionSystem : public ECS::System<CollisionSystem>
 {

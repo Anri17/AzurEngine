@@ -1,19 +1,19 @@
 #ifndef _COMPONENTS_H
 #define _COMPONENTS_H
 
-#include ".\Component\BoxCollider.h"
-#include ".\Component\Bullet.h"
-#include ".\Component\BulletSpawner.h"
-#include ".\Component\BulletType.h"
-#include ".\Component\CircleCollider.h"
-#include ".\Component\Collider.h"
-#include ".\Component\Player.h"
-#include ".\Component\PlayField.h"
-#include ".\Component\Position.h"
-#include ".\Component\Sprite.h"
-#include ".\Component\Stage.h"
-#include ".\Component\Position.h"
-#include ".\Component\Text.h"
-#include ".\Component\TextAlignment.h"
+#include ".\Components\BoxCollider.h"
+#include ".\Components\Bullet.h"
+#include ".\Components\BulletSpawner.h"
+#include ".\Components\BulletType.h"
+#include ".\Components\CircleCollider.h"
+#include ".\Components\Collider.h"
+#include ".\Components\Player.h"
+#include ".\Components\PlayField.h"
+#include ".\Components\Position.h"
+#include ".\Components\Sprite.h"
+#include ".\Components\Stage.h"
+#include ".\Components\Position.h"
+#include ".\Components\Text.h"
+#include ".\Components\TextAlignment.h"
 
 #endif // _COMPONENTS_H

@@ -1,10 +1,10 @@
 #ifndef _SYSTEMS_H
 #define _SYSTEMS_H
 
-#include "CollisionSystem.h"
-#include "SpriteSystem.h"
-#include "BulletSystem.h"
-#include "StageSystem.h"
-#include "UISystem.h"
+#include ".\Systems\CollisionSystem.h"
+#include ".\Systems\SpriteSystem.h"
+#include ".\Systems\BulletSystem.h"
+#include ".\Systems\StageSystem.h"
+#include ".\Systems\UISystem.h"
 
 #endif // _SYSTEMS_H

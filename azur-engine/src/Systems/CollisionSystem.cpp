@@ -1,7 +1,7 @@
 #include "CollisionSystem.h"
 
-#include "AzurDebug.h"
-#include "Application.h"
+#include ".\..\AzurDebug.h"
+#include ".\..\Application.h"
 
 CollisionSystem::CollisionSystem()
 {
