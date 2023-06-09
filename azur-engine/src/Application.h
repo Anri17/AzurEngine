@@ -6,6 +6,7 @@
 #include "ECS.h"
 
 #include "Systems.h"
+#include "Mouse.h"
 
 struct Application
 {
@@ -13,6 +14,9 @@ struct Application
 	static SDL_Renderer* renderer;
 
 	static int Start(); // Return 0 if successul
+
+	static void Update(Uint64& current_frame, Mouse& mouse, bool& application_is_running, Text& current_frame_text, Player& playerComponent, Text& mouse_x_text, Text& mouse_y_text, Entity* playerEntity, Text& player_x_text, Text& player_y_text, Text& player_lives_text, Text& debug_mode_text);
+	static void Render();
 
 	static int GetWindowTrueX(float x);
 	static int GetWindowTrueY(float y);

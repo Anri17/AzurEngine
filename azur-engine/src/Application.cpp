@@ -231,108 +231,14 @@ int Application::Start()
 		}
 
 
-		// Update Game and Application States
-		// Update Systems
-		for (ECS::ISystem* system : systems)
-		{
-			system->Update();
-		}
-		// Application Level Update
-		mouse.Update();
-		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false;
-		// Game Level Update
-		// TODO: Change the update from entities to systems
-		ECS::Manager::Update();
-		// Delete Flagged Entities
+		Application::Update(current_frame, mouse, application_is_running, *current_frame_text, *playerComponent, *mouse_x_text, *mouse_y_text, playerEntity, *player_x_text, *player_y_text, *player_lives_text, *debug_mode_text);
+
+		Application::Render();
+
 		
 
 
-		// Update UI
-		// Text Update
-		current_frame_text->SetMessage(std::string("CurrentFrame: " + std::to_string(current_frame)));
-		mouse_x_text->SetMessage(std::string("MouseX: " + std::to_string(mouse.xPos)));
-		mouse_y_text->SetMessage(std::string("MouseY: " + std::to_string(mouse.yPos)));
-		if (playerEntity->active) // TODO: THis is a temporary Fix. A proper solution would be to probably activate or deactiveate an entity, so taht it doesn't come up when the update and draw loops are executed, having that entity be skipped.
-		{
-			player_x_text->SetMessage(std::string("PlayerX: " + std::to_string(playerComponent->position->x)));
-			player_y_text->SetMessage(std::string("PlayerY: " + std::to_string(playerComponent->position->y)));
-			player_lives_text->SetMessage(std::string("Player Lives: " + std::to_string(playerComponent->lives)));
-		}
-		if (AzurDebug::debug_mode)
-		{
-			debug_mode_text->SetMessage(std::string("Debug Mode: ON"));
-		}
-		else
-		{
-			debug_mode_text->SetMessage(std::string("Debug Mode: OFF"));
-		}
-		// Change Window Resolution
-		if (InputHandler::GetKeyTap(InputHandler::KEY_1))
-		{
-			// TODO: Extract this into a SetResolutionFunction(WIdht, Height);
-			int prev_window_width  = Application::current_window_width;
-			int prev_window_height = Application::current_window_height;
-			Application::current_window_width  = 640;
-			Application::current_window_height = 480;
-			int window_pos_x;
-			int window_pos_y;
-			SDL_GetWindowPosition(window, &window_pos_x, &window_pos_y);
-			window_pos_x = window_pos_x - ((Application::current_window_width - prev_window_width) / 2);
-			window_pos_y = window_pos_y - ((Application::current_window_height - prev_window_height) / 2);
-			SDL_SetWindowPosition(window, window_pos_x, window_pos_y);
-			SDL_SetWindowSize(Application::window, Application::current_window_width, Application::current_window_height);
-		}
-		if (InputHandler::GetKeyTap(InputHandler::KEY_2))
-		{
-			// TODO: Extract this into a SetResolutionFunction(WIdht, Height);
-			int prev_window_width = Application::current_window_width;
-			int prev_window_height = Application::current_window_height;
-			Application::current_window_width  = 800;
-			Application::current_window_height = 600;
-			int window_pos_x;
-			int window_pos_y;
-			SDL_GetWindowPosition(window, &window_pos_x, &window_pos_y);
-			window_pos_x = window_pos_x - ((Application::current_window_width - prev_window_width) / 2);
-			window_pos_y = window_pos_y - ((Application::current_window_height - prev_window_height) / 2);
-			SDL_SetWindowPosition(window, window_pos_x, window_pos_y);
-			SDL_SetWindowSize(Application::window, Application::current_window_width, Application::current_window_height);
-		}
-		if (InputHandler::GetKeyTap(InputHandler::KEY_3))
-		{
-			// TODO: Extract this into a SetResolutionFunction(WIdht, Height);
-			int prev_window_width = Application::current_window_width;
-			int prev_window_height = Application::current_window_height;
-			Application::current_window_width  = 1024;
-			Application::current_window_height = 768;
-			int window_pos_x;
-			int window_pos_y;
-			SDL_GetWindowPosition(window, &window_pos_x, &window_pos_y);
-			window_pos_x = window_pos_x - ((Application::current_window_width - prev_window_width) / 2);
-			window_pos_y = window_pos_y - ((Application::current_window_height - prev_window_height) / 2);
-			SDL_SetWindowPosition(window, window_pos_x, window_pos_y);
-			SDL_SetWindowSize(Application::window, Application::current_window_width, Application::current_window_height);
-		}
-		// Azur Debug
-		AzurDebug::update();
-
-
-		// Rendering
-		SDL_RenderClear(Application::renderer);
-		SDL_SetRenderDrawColor(Application::renderer, 0, 0, 0, 1);
-		// Render ECS Components
-		ECS::Manager::Render(Application::renderer);
-		// Render Systems
-		for (auto system : systems)
-		{
-			system->Render(renderer);
-		}
-		// Render Collisisons
-		//CollisionSystem::Render(Application::renderer);
-		// Render Text
-		// Some components use this function to set lines or dot colors. This need to be here so that the backgroud is set to black.
-		SDL_SetRenderDrawColor(Application::renderer, 0, 0, 0, 1);
-		// Present buffer
-		SDL_RenderPresent(Application::renderer);
+		
 
 
 		// Calculate FPS
@@ -366,6 +272,112 @@ int Application::Start()
 	return 0;
 }
 
+// TODO: Simplify the parameters here.
+void Application::Update(Uint64& current_frame, Mouse& mouse, bool& application_is_running, Text& current_frame_text, Player& playerComponent, Text& mouse_x_text, Text& mouse_y_text, Entity* playerEntity, Text& player_x_text, Text& player_y_text, Text& player_lives_text, Text& debug_mode_text)
+{
+	// Update Game and Application States
+		// Update Systems
+	for (ECS::ISystem* system : systems)
+	{
+		system->Update();
+	}
+	// Application Level Update
+	mouse.Update();
+	if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false;
+	// Game Level Update
+	// TODO: Change the update from entities to systems
+	ECS::Manager::Update();
+	// Delete Flagged Entities
+	// Update UI
+	// Text Update
+	current_frame_text.SetMessage(std::string("CurrentFrame: " + std::to_string(current_frame)));
+	mouse_x_text.SetMessage(std::string("MouseX: " + std::to_string(mouse.xPos)));
+	mouse_y_text.SetMessage(std::string("MouseY: " + std::to_string(mouse.yPos)));
+	if (playerEntity->active) // TODO: THis is a temporary Fix. A proper solution would be to probably activate or deactiveate an entity, so taht it doesn't come up when the update and draw loops are executed, having that entity be skipped.
+	{
+		player_x_text.SetMessage(std::string("PlayerX: " + std::to_string(playerComponent.position->x)));
+		player_y_text.SetMessage(std::string("PlayerY: " + std::to_string(playerComponent.position->y)));
+		player_lives_text.SetMessage(std::string("Player Lives: " + std::to_string(playerComponent.lives)));
+	}
+	if (AzurDebug::debug_mode)
+	{
+		debug_mode_text.SetMessage(std::string("Debug Mode: ON"));
+	}
+	else
+	{
+		debug_mode_text.SetMessage(std::string("Debug Mode: OFF"));
+	}
+	// Change Window Resolution
+	if (InputHandler::GetKeyTap(InputHandler::KEY_1))
+	{
+		// TODO: Extract this into a SetResolutionFunction(WIdht, Height);
+		int prev_window_width = Application::current_window_width;
+		int prev_window_height = Application::current_window_height;
+		Application::current_window_width = 640;
+		Application::current_window_height = 480;
+		int window_pos_x;
+		int window_pos_y;
+		SDL_GetWindowPosition(window, &window_pos_x, &window_pos_y);
+		window_pos_x = window_pos_x - ((Application::current_window_width - prev_window_width) / 2);
+		window_pos_y = window_pos_y - ((Application::current_window_height - prev_window_height) / 2);
+		SDL_SetWindowPosition(window, window_pos_x, window_pos_y);
+		SDL_SetWindowSize(Application::window, Application::current_window_width, Application::current_window_height);
+	}
+	if (InputHandler::GetKeyTap(InputHandler::KEY_2))
+	{
+		// TODO: Extract this into a SetResolutionFunction(WIdht, Height);
+		int prev_window_width = Application::current_window_width;
+		int prev_window_height = Application::current_window_height;
+		Application::current_window_width = 800;
+		Application::current_window_height = 600;
+		int window_pos_x;
+		int window_pos_y;
+		SDL_GetWindowPosition(window, &window_pos_x, &window_pos_y);
+		window_pos_x = window_pos_x - ((Application::current_window_width - prev_window_width) / 2);
+		window_pos_y = window_pos_y - ((Application::current_window_height - prev_window_height) / 2);
+		SDL_SetWindowPosition(window, window_pos_x, window_pos_y);
+		SDL_SetWindowSize(Application::window, Application::current_window_width, Application::current_window_height);
+	}
+	if (InputHandler::GetKeyTap(InputHandler::KEY_3))
+	{
+		// TODO: Extract this into a SetResolutionFunction(WIdht, Height);
+		int prev_window_width = Application::current_window_width;
+		int prev_window_height = Application::current_window_height;
+		Application::current_window_width = 1024;
+		Application::current_window_height = 768;
+		int window_pos_x;
+		int window_pos_y;
+		SDL_GetWindowPosition(window, &window_pos_x, &window_pos_y);
+		window_pos_x = window_pos_x - ((Application::current_window_width - prev_window_width) / 2);
+		window_pos_y = window_pos_y - ((Application::current_window_height - prev_window_height) / 2);
+		SDL_SetWindowPosition(window, window_pos_x, window_pos_y);
+		SDL_SetWindowSize(Application::window, Application::current_window_width, Application::current_window_height);
+	}
+	// Azur Debug
+	AzurDebug::update();
+}
+
+void Application::Render()
+{
+	// Rendering
+	SDL_RenderClear(Application::renderer);
+	SDL_SetRenderDrawColor(Application::renderer, 0, 0, 0, 1);
+	// Render ECS Components
+	ECS::Manager::Render(Application::renderer);
+	// Render Systems
+	for (auto system : systems)
+	{
+		system->Render(renderer);
+	}
+	// Render Collisisons
+	//CollisionSystem::Render(Application::renderer);
+	// Render Text
+	// Some components use this function to set lines or dot colors. This need to be here so that the backgroud is set to black.
+	SDL_SetRenderDrawColor(Application::renderer, 0, 0, 0, 1);
+	// Present buffer
+	SDL_RenderPresent(Application::renderer);
+}
+
 int Application::GetWindowTrueX(float x)
 {
 	return int((x * (float)Application::current_window_width) / (float)Application::base_window_width);
@@ -375,3 +387,4 @@ int Application::GetWindowTrueY(float y)
 {
 	return int((y * (float)Application::current_window_height) / (float)Application::base_window_height);
 }
+
