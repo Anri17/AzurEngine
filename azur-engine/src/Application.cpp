@@ -68,43 +68,22 @@ int Application::Start()
 	StageSystem::Instance = new StageSystem();
 	UISystem::Instance = new UISystem();
 	CollisionSystem::Instance = new CollisionSystem();
-
+	
+	// TODO: Tie the game Entities and Systems to a Scene Class Instance.
 	// Initialize the Systems
 	for (ECS::ISystem* system : systems)
 	{
 		system->Init();
 	}
 
-	// TODO: Tie the game entities and systems to a scene object. 
-	// Initialize the entities and the components of the game
-
-	// Create the Entities with Respective Components
-	// Initialise Text For Debuging
-	std::string basepath = SDL_GetBasePath();
-	std::string fontname = "SpaceMono-Regular.ttf";
-	std::string fontpath = basepath + fontname;
-	int fontsize = 12;
-	SDL_Color message_color = { 255, 255, 255 };
-	Text* current_frame_text = AssetManager::CreateText("Current Frame Text", "current_frame_text", fontpath, fontsize, message_color)->GetComponent<Text>();
-	current_frame_text->position->y = 0;
-	Text* mouse_x_text = AssetManager::CreateText("Mouse X Text", "mouse_x_text", fontpath, fontsize, message_color)->GetComponent<Text>();
-	mouse_x_text->position->y = (float)current_frame_text->rect.h;
-	Text* mouse_y_text = AssetManager::CreateText("Mouse Y Text", "mouse_y_text", fontpath, fontsize, message_color)->GetComponent<Text>();
-	mouse_y_text->position->y = mouse_x_text->rect.h + mouse_x_text->position->y;
-	Text* player_x_text = AssetManager::CreateText("Player X Text", "player_x_text", fontpath, fontsize, message_color)->GetComponent<Text>();
-	player_x_text->position->y = mouse_y_text->rect.h + mouse_y_text->position->y;
-	Text* player_y_text = AssetManager::CreateText("Player Y Text", "p_y_text", fontpath, fontsize, message_color)->GetComponent<Text>();
-	player_y_text->position->y = player_x_text->rect.h + player_x_text->position->y;
-	Text* player_lives_text = AssetManager::CreateText("Player Lives Text", "player_lives_text", fontpath, fontsize, message_color)->GetComponent<Text>();
-	player_lives_text->position->y = player_y_text->rect.h + player_y_text->position->y;
-	Text* debug_mode_text = AssetManager::CreateText("Debug Mode Text", "debug_mode_text", fontpath, fontsize, message_color)->GetComponent<Text>();
-	debug_mode_text->position->y = player_lives_text->rect.h + player_lives_text->position->y;
+	
+	// 
+	// 
 	// Initialise Mouse
-	Mouse mouse;
-	Entity* playFieldEntity = AssetManager::CreatePlayFieldEntity("PlayField");
-	Entity* playerEntity = AssetManager::CreatePlayerEntity("Player", ECS::Tag::PLAYER);
-	Player* playerComponent = playerEntity->GetComponent<Player>();
-	Entity* BulletSpawnerEntity = AssetManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 180, ECS::Tag::ENEMY);
+	playFieldEntity = AssetManager::CreatePlayFieldEntity("PlayField");
+	playerEntity = AssetManager::CreatePlayerEntity("Player", ECS::Tag::PLAYER);
+	playerComponent = playerEntity->GetComponent<Player>();
+	BulletSpawnerEntity = AssetManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 180, ECS::Tag::ENEMY);
 
 
 
@@ -122,7 +101,7 @@ int Application::Start()
 
 	// The Application Loop
 	// FPS Calculation Variables
-	Uint64 current_frame = 0;
+	current_frame = 0;
 	Uint32 previousTime = SDL_GetTicks();
 	Uint32 currentTime = SDL_GetTicks();
 	while (application_is_running)
@@ -231,14 +210,8 @@ int Application::Start()
 		}
 
 
-		Application::Update(current_frame, mouse, application_is_running, *current_frame_text, *playerComponent, *mouse_x_text, *mouse_y_text, playerEntity, *player_x_text, *player_y_text, *player_lives_text, *debug_mode_text);
-
+		Application::Update(current_frame, mouse, application_is_running, *playerComponent, playerEntity);
 		Application::Render();
-
-		
-
-
-		
 
 
 		// Calculate FPS
@@ -273,7 +246,7 @@ int Application::Start()
 }
 
 // TODO: Simplify the parameters here.
-void Application::Update(Uint64& current_frame, Mouse& mouse, bool& application_is_running, Text& current_frame_text, Player& playerComponent, Text& mouse_x_text, Text& mouse_y_text, Entity* playerEntity, Text& player_x_text, Text& player_y_text, Text& player_lives_text, Text& debug_mode_text)
+void Application::Update(Uint64& current_frame, Mouse& mouse, bool& application_is_running, Player& playerComponent, Entity* playerEntity)
 {
 	// Update Game and Application States
 		// Update Systems
@@ -287,26 +260,7 @@ void Application::Update(Uint64& current_frame, Mouse& mouse, bool& application_
 	// Game Level Update
 	// TODO: Change the update from entities to systems
 	ECS::Manager::Update();
-	// Delete Flagged Entities
-	// Update UI
-	// Text Update
-	current_frame_text.SetMessage(std::string("CurrentFrame: " + std::to_string(current_frame)));
-	mouse_x_text.SetMessage(std::string("MouseX: " + std::to_string(mouse.xPos)));
-	mouse_y_text.SetMessage(std::string("MouseY: " + std::to_string(mouse.yPos)));
-	if (playerEntity->active) // TODO: THis is a temporary Fix. A proper solution would be to probably activate or deactiveate an entity, so taht it doesn't come up when the update and draw loops are executed, having that entity be skipped.
-	{
-		player_x_text.SetMessage(std::string("PlayerX: " + std::to_string(playerComponent.position->x)));
-		player_y_text.SetMessage(std::string("PlayerY: " + std::to_string(playerComponent.position->y)));
-		player_lives_text.SetMessage(std::string("Player Lives: " + std::to_string(playerComponent.lives)));
-	}
-	if (AzurDebug::debug_mode)
-	{
-		debug_mode_text.SetMessage(std::string("Debug Mode: ON"));
-	}
-	else
-	{
-		debug_mode_text.SetMessage(std::string("Debug Mode: OFF"));
-	}
+
 	// Change Window Resolution
 	if (InputHandler::GetKeyTap(InputHandler::KEY_1))
 	{
@@ -369,9 +323,6 @@ void Application::Render()
 	{
 		system->Render(renderer);
 	}
-	// Render Collisisons
-	//CollisionSystem::Render(Application::renderer);
-	// Render Text
 	// Some components use this function to set lines or dot colors. This need to be here so that the backgroud is set to black.
 	SDL_SetRenderDrawColor(Application::renderer, 0, 0, 0, 1);
 	// Present buffer

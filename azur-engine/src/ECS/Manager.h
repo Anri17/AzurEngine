@@ -24,6 +24,7 @@ namespace ECS
 		static void FlagForDeletion(Entity* entity);
 		static void FlagForDeletionAllTagged(Tag tag);
 
+		// TODO: The entities will be moved to a scene object, together with the scenes. This is because entities are tied to a scene.
 		static std::vector<Entity*>* GetEntitiesVector() { return &entities;  }
 	private:
 		static void DeleteFlaggedEntities();

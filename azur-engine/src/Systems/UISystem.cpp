@@ -1,36 +1,98 @@
 #include "UISystem.h"
 
 #include ".\..\Application.h"
+#include ".\..\AssetManager.h"
+#include ".\..\AzurDebug.h"
 
-std::vector<std::pair<Position*, Text*>> UISystem::entities;
 const int UISystem::FONT_RESOLUTION_RATIO = 2;
 
 UISystem::UISystem()
 {
 	Application::systems.push_back(this);
+	entities = ECS::Manager::GetEntitiesVector();
 }
 
 void UISystem::Init()
 {
+	// Initialise Text For Debuging
+	std::string basepath = SDL_GetBasePath();
+	std::string fontname = "SpaceMono-Regular.ttf";
+	std::string fontpath = basepath + fontname;
+	int fontsize = 12;
+	SDL_Color message_color = { 255, 255, 255 };
+	current_frame_text = AssetManager::CreateText("Current Frame Text", "current_frame_text", fontpath, fontsize, message_color)->GetComponent<Text>();
+	current_frame_text->position->y = 0;
+
+	mouse_x_text = AssetManager::CreateText("Mouse X Text", "mouse_x_text", fontpath, fontsize, message_color)->GetComponent<Text>();
+	mouse_x_text->position->y = (float)current_frame_text->rect.h;
+
+	mouse_y_text = AssetManager::CreateText("Mouse Y Text", "mouse_y_text", fontpath, fontsize, message_color)->GetComponent<Text>();
+	mouse_y_text->position->y = mouse_x_text->rect.h + mouse_x_text->position->y;
+
+	player_x_text = AssetManager::CreateText("Player X Text", "player_x_text", fontpath, fontsize, message_color)->GetComponent<Text>();
+	player_x_text->position->y = mouse_y_text->rect.h + mouse_y_text->position->y;
+
+	player_y_text = AssetManager::CreateText("Player Y Text", "p_y_text", fontpath, fontsize, message_color)->GetComponent<Text>();
+	player_y_text->position->y = player_x_text->rect.h + player_x_text->position->y;
+
+	player_lives_text = AssetManager::CreateText("Player Lives Text", "player_lives_text", fontpath, fontsize, message_color)->GetComponent<Text>();
+	player_lives_text->position->y = player_y_text->rect.h + player_y_text->position->y;
+
+	debug_mode_text = AssetManager::CreateText("Debug Mode Text", "debug_mode_text", fontpath, fontsize, message_color)->GetComponent<Text>();
+	debug_mode_text->position->y = player_lives_text->rect.h + player_lives_text->position->y;
 
 }
 
 void UISystem::Update()
 {
-	for (auto e : entities)
+	for (Entity* e : *entities)
 	{
-		Position* position = e.first;
-		Text* text = e.second;
+		if (!e->active ||
+			!(e->HasComponent<Position>() && e->HasComponent<Text>()))
+		{
+			continue;
+		}
+
+		Position* position = e->GetComponent<Position>();
+		Text* text = e->GetComponent<Text>();
 		BuildText(position, text);
+	}
+
+	// TODO: This could probably all go to a DebugSystem type of class. The AzurDebug could be turned into a system like that.
+	current_frame_text->SetMessage(std::string("CurrentFrame: " + std::to_string(Application::current_frame)));
+	mouse_x_text->SetMessage(std::string("MouseX: " + std::to_string(Application::mouse.xPos)));
+	mouse_y_text->SetMessage(std::string("MouseY: " + std::to_string(Application::mouse.yPos)));
+	if (Application::playerEntity->active)
+	{
+		player_x_text->SetMessage(std::string("PlayerX: " + std::to_string(Application::playerComponent->position->x)));
+		player_y_text->SetMessage(std::string("PlayerY: " + std::to_string(Application::playerComponent->position->y)));
+		player_lives_text->SetMessage(std::string("Player Lives: " + std::to_string(Application::playerComponent->lives)));
+	}
+	if (AzurDebug::debug_mode)
+	{
+		debug_mode_text->SetMessage(std::string("Debug Mode: ON"));
+	}
+	else
+	{
+		debug_mode_text->SetMessage(std::string("Debug Mode: OFF"));
 	}
 }
 
 void UISystem::Render(SDL_Renderer* renderer)
 {
-	for (auto e : entities)
+	for (Entity* e : *entities)
 	{
-		if (e.second->texture != nullptr)
-			SDL_RenderCopy(renderer, e.second->texture, NULL, &e.second->rect);
+		if (!e->active ||
+			!(e->HasComponent<Position>() && e->HasComponent<Text>()))
+		{
+			continue;
+		}
+
+		Position* position = e->GetComponent<Position>();
+		Text* text = e->GetComponent<Text>();
+
+		if (text->texture != nullptr)
+			SDL_RenderCopy(renderer, text->texture, NULL, &text->rect);
 	}
 }
 

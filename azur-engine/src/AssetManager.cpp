@@ -92,9 +92,7 @@ Entity* AssetManager::CreateText(std::string name, std::string message, std::str
 	text->SetFont(fontpath, fontsize);
 	text->SetMessage(message);
 	text->SetAlignment(TextAlignment::LEFT);
-
 	UISystem::BuildText(position, text);
-	UISystem::entities.push_back(std::pair<Position*, Text*>(position, text));
 
 	ECS::Manager::AddEntity(entity);
 
