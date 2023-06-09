@@ -42,7 +42,7 @@ namespace ECS
 	{
 	public:
 		void Update();
-		void Draw(SDL_Renderer* renderer);
+		void Render(SDL_Renderer* renderer);
 		~Entity();
 
 		template <typename T> bool HasComponent() const

@@ -11,7 +11,7 @@ namespace ECS
 		}
 	}
 
-	void Entity::Draw(SDL_Renderer* renderer)
+	void Entity::Render(SDL_Renderer* renderer)
 	{
 		for (size_t i = 0; i < components.size(); ++i)
 		{
@@ -19,6 +19,7 @@ namespace ECS
 			c->Render(renderer);
 		}
 	}
+
 	Entity::~Entity()
 	{
 		for (size_t i = 0; i < components.size(); ++i)

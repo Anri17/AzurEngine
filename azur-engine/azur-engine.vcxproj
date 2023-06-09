@@ -179,7 +179,6 @@
     <ClCompile Include="src\Component\CircleCollider.cpp" />
     <ClCompile Include="src\Component\Collider.cpp" />
     <ClCompile Include="src\CollisionSystem.cpp" />
-    <ClCompile Include="src\ECS\Component.cpp" />
     <ClCompile Include="src\ECS\Component.h" />
     <ClCompile Include="src\ECS\Entity.cpp" />
     <ClCompile Include="src\ECS\Manager.cpp" />

@@ -17,7 +17,7 @@ namespace ECS
 	{
 		for (int i = 0; i < entities.size(); i++)
 		{
-			if (entities[i]->active) entities[i]->Draw(renderer);
+			if (entities[i]->active) entities[i]->Render(renderer);
 		}
 	}
 

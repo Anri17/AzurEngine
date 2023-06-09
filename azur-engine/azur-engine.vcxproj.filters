@@ -84,9 +84,6 @@
     <ClCompile Include="src\ECS\Manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ECS\Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\UISystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -105,7 +102,7 @@
     <ClCompile Include="src\Systems.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ECS\Component.cpp">
+    <ClCompile Include="src\ECS\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
