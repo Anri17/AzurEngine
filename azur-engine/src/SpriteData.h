@@ -9,5 +9,4 @@ struct SpriteData
 	SDL_Rect rect;
 };
 
-
 #endif // _SPRITE_H

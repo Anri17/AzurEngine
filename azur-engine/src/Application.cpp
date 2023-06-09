@@ -22,11 +22,8 @@
 // TODO: Same as the components.
 // TODO: Might want to separate the systems that are engine specific and game specific.
 // Application and Engine Systems
-#include "ECS.h"
-#include "CollisionManager.h"
-#include "SpriteManager.h"
-#include "TextManager.h"
-#include "StageSystem.h"
+
+#include "AssetManager.h"
 
 // TODO: These defines are both game specific and engine speficic
 // TODO: What this means is that the values are specific to the need of the applicaiton, but they are needed none the less
@@ -37,10 +34,6 @@
 
 SDL_Window* Application::window;
 SDL_Renderer* Application::renderer;
-
-int Application::current_window_width = 800;
-int Application::current_window_height = 600;
-float Application::current_window_ratio = 0.75f; // 4:3
 
 // TODO: These systems can then be extracted such that they are modules of the engine. A tetris game might not need a bullet system, for example
 // TODO: This also means that the engine could potentially allowfor the creation of 3d games. As the 3d Rendering and world would be in their own packages
@@ -69,53 +62,50 @@ int Application::Start()
 	// The running state of the applications
 	bool application_is_running = true;
 
-
-	// TODO: Create an instance of each systems
-	ECS::ECS_Manager::collisionSystem = new CollisionSystem();
-	systems.push_back(ECS::ECS_Manager::collisionSystem);
+	// Create the Systems
+	SpriteSystem::Instance = new SpriteSystem();
+	BulletSystem::Instance = new BulletSystem();
+	StageSystem::Instance = new StageSystem();
+	UISystem::Instance = new UISystem();
+	CollisionSystem::Instance = new CollisionSystem();
 
 	// Initialize the Systems
-	for (ECS::SystemBase* system : systems)
+	for (ECS::ISystem* system : systems)
 	{
 		system->Init();
 	}
 
+	// TODO: Tie the game entities and systems to a scene object. 
 	// Initialize the entities and the components of the game
 
-	// Entity and Component Initialization
-	// Initialize Sprites
-	SpriteManager::InitializeSprites();
+	// Create the Entities with Respective Components
 	// Initialise Text For Debuging
 	std::string basepath = SDL_GetBasePath();
 	std::string fontname = "SpaceMono-Regular.ttf";
 	std::string fontpath = basepath + fontname;
 	int fontsize = 12;
 	SDL_Color message_color = { 255, 255, 255 };
-	Text* current_frame_text = ECS::ECS_Manager::CreateText("Current Frame Text", "current_frame_text", fontpath, fontsize, message_color)->GetComponent<Text>();
+	Text* current_frame_text = AssetManager::CreateText("Current Frame Text", "current_frame_text", fontpath, fontsize, message_color)->GetComponent<Text>();
 	current_frame_text->position->y = 0;
-	Text* mouse_x_text = ECS::ECS_Manager::CreateText("Mouse X Text", "mouse_x_text", fontpath, fontsize, message_color)->GetComponent<Text>();
-	mouse_x_text->position->y = current_frame_text->rect.h;
-	Text* mouse_y_text = ECS::ECS_Manager::CreateText("Mouse Y Text", "mouse_y_text", fontpath, fontsize, message_color)->GetComponent<Text>();
+	Text* mouse_x_text = AssetManager::CreateText("Mouse X Text", "mouse_x_text", fontpath, fontsize, message_color)->GetComponent<Text>();
+	mouse_x_text->position->y = (float)current_frame_text->rect.h;
+	Text* mouse_y_text = AssetManager::CreateText("Mouse Y Text", "mouse_y_text", fontpath, fontsize, message_color)->GetComponent<Text>();
 	mouse_y_text->position->y = mouse_x_text->rect.h + mouse_x_text->position->y;
-	Text* player_x_text = ECS::ECS_Manager::CreateText("Player X Text", "player_x_text", fontpath, fontsize, message_color)->GetComponent<Text>();
+	Text* player_x_text = AssetManager::CreateText("Player X Text", "player_x_text", fontpath, fontsize, message_color)->GetComponent<Text>();
 	player_x_text->position->y = mouse_y_text->rect.h + mouse_y_text->position->y;
-	Text* player_y_text = ECS::ECS_Manager::CreateText("Player Y Text", "p_y_text", fontpath, fontsize, message_color)->GetComponent<Text>();
+	Text* player_y_text = AssetManager::CreateText("Player Y Text", "p_y_text", fontpath, fontsize, message_color)->GetComponent<Text>();
 	player_y_text->position->y = player_x_text->rect.h + player_x_text->position->y;
-	Text* player_lives_text = ECS::ECS_Manager::CreateText("Player Lives Text", "player_lives_text", fontpath, fontsize, message_color)->GetComponent<Text>();
+	Text* player_lives_text = AssetManager::CreateText("Player Lives Text", "player_lives_text", fontpath, fontsize, message_color)->GetComponent<Text>();
 	player_lives_text->position->y = player_y_text->rect.h + player_y_text->position->y;
-	Text* debug_mode_text = ECS::ECS_Manager::CreateText("Debug Mode Text", "debug_mode_text", fontpath, fontsize, message_color)->GetComponent<Text>();
+	Text* debug_mode_text = AssetManager::CreateText("Debug Mode Text", "debug_mode_text", fontpath, fontsize, message_color)->GetComponent<Text>();
 	debug_mode_text->position->y = player_lives_text->rect.h + player_lives_text->position->y;
 	// Initialise Mouse
 	Mouse mouse;
-	Entity* playFieldEntity = ECS::ECS_Manager::CreatePlayFieldEntity("PlayField");
-	Entity* playerEntity = ECS::ECS_Manager::CreatePlayerEntity("Player", ECS::ECS_Tag::PLAYER);
+	Entity* playFieldEntity = AssetManager::CreatePlayFieldEntity("PlayField");
+	Entity* playerEntity = AssetManager::CreatePlayerEntity("Player", ECS::Tag::PLAYER);
 	Player* playerComponent = playerEntity->GetComponent<Player>();
-	Entity* BulletSpawnerEntity = ECS::ECS_Manager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 180, ECS::ECS_Tag::ENEMY);
-	// Text Manager
-	TextSystem::Init();
-	// Stage System
-	StageSystem::Init();
-	
+	Entity* BulletSpawnerEntity = AssetManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 180, ECS::Tag::ENEMY);
+
 
 
 	
@@ -126,7 +116,7 @@ int Application::Start()
 	// START: RESUME DEVELOPMENT FROM HERE
 	Entity* stageEntity = new Entity();
 	stageEntity->name = "Stage";
-	ECS::ECS_Manager::AddEntity(stageEntity);
+	ECS::Manager::AddEntity(stageEntity);
 	// Azur Debug
 	AzurDebug::init();
 
@@ -189,16 +179,16 @@ int Application::Start()
 				case SDLK_ESCAPE: if (!InputHandler::isDown_ESCAPE) { InputHandler::isDown_ESCAPE = InputHandler::firstTap_ESCAPE = true; } break;
 				case SDLK_RETURN: if (!InputHandler::isDown_RETURN) { InputHandler::isDown_RETURN = InputHandler::firstTap_RETURN = true; } break;
 
-				case SDLK_1: if (!InputHandler::isDown_1) { InputHandler::isDown_1 = InputHandler::firstTap_1 = true; break; }
-				case SDLK_2: if (!InputHandler::isDown_2) { InputHandler::isDown_2 = InputHandler::firstTap_2 = true; break; }
-				case SDLK_3: if (!InputHandler::isDown_3) { InputHandler::isDown_3 = InputHandler::firstTap_3 = true; break; }
-				case SDLK_4: if (!InputHandler::isDown_4) { InputHandler::isDown_4 = InputHandler::firstTap_4 = true; break; }
-				case SDLK_5: if (!InputHandler::isDown_5) { InputHandler::isDown_5 = InputHandler::firstTap_5 = true; break; }
-				case SDLK_6: if (!InputHandler::isDown_6) { InputHandler::isDown_6 = InputHandler::firstTap_6 = true; break; }
-				case SDLK_7: if (!InputHandler::isDown_7) { InputHandler::isDown_7 = InputHandler::firstTap_7 = true; break; }
-				case SDLK_8: if (!InputHandler::isDown_8) { InputHandler::isDown_8 = InputHandler::firstTap_8 = true; break; }
-				case SDLK_9: if (!InputHandler::isDown_9) { InputHandler::isDown_9 = InputHandler::firstTap_9 = true; break; }
-				case SDLK_0: if (!InputHandler::isDown_0) { InputHandler::isDown_0 = InputHandler::firstTap_0 = true; break; }
+				case SDLK_1: if (!InputHandler::isDown_1) { InputHandler::isDown_1 = InputHandler::firstTap_1 = true; } break;
+				case SDLK_2: if (!InputHandler::isDown_2) { InputHandler::isDown_2 = InputHandler::firstTap_2 = true; } break;
+				case SDLK_3: if (!InputHandler::isDown_3) { InputHandler::isDown_3 = InputHandler::firstTap_3 = true; } break;
+				case SDLK_4: if (!InputHandler::isDown_4) { InputHandler::isDown_4 = InputHandler::firstTap_4 = true; } break;
+				case SDLK_5: if (!InputHandler::isDown_5) { InputHandler::isDown_5 = InputHandler::firstTap_5 = true; } break;
+				case SDLK_6: if (!InputHandler::isDown_6) { InputHandler::isDown_6 = InputHandler::firstTap_6 = true; } break;
+				case SDLK_7: if (!InputHandler::isDown_7) { InputHandler::isDown_7 = InputHandler::firstTap_7 = true; } break;
+				case SDLK_8: if (!InputHandler::isDown_8) { InputHandler::isDown_8 = InputHandler::firstTap_8 = true; } break;
+				case SDLK_9: if (!InputHandler::isDown_9) { InputHandler::isDown_9 = InputHandler::firstTap_9 = true; } break;
+				case SDLK_0: if (!InputHandler::isDown_0) { InputHandler::isDown_0 = InputHandler::firstTap_0 = true; } break;
 
 				case SDLK_UP:    if (!InputHandler::isDown_UP)    { InputHandler::isDown_UP    = InputHandler::firstTap_UP    = true; } break;
 				case SDLK_DOWN:  if (!InputHandler::isDown_DOWN)  { InputHandler::isDown_DOWN  = InputHandler::firstTap_DOWN  = true; } break;
@@ -243,7 +233,7 @@ int Application::Start()
 
 		// Update Game and Application States
 		// Update Systems
-		for (ECS::SystemBase* system : systems)
+		for (ECS::ISystem* system : systems)
 		{
 			system->Update();
 		}
@@ -251,12 +241,12 @@ int Application::Start()
 		mouse.Update();
 		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false;
 		// Game Level Update
-		ECS::ECS_Manager::Update();
+		// TODO: Change the update from entities to systems
+		ECS::Manager::Update();
 		// Delete Flagged Entities
-		// TODO: The ECS_Manager should have the vector of systems
-		ECS::ECS_Manager::DeleteFlagedEntities(systems);
-		// Collision update
-		//CollisionSystem::Update();
+		
+
+
 		// Update UI
 		// Text Update
 		current_frame_text->SetMessage(std::string("CurrentFrame: " + std::to_string(current_frame)));
@@ -276,7 +266,6 @@ int Application::Start()
 		{
 			debug_mode_text->SetMessage(std::string("Debug Mode: OFF"));
 		}
-		TextSystem::Update();
 		// Change Window Resolution
 		if (InputHandler::GetKeyTap(InputHandler::KEY_1))
 		{
@@ -323,8 +312,6 @@ int Application::Start()
 			SDL_SetWindowPosition(window, window_pos_x, window_pos_y);
 			SDL_SetWindowSize(Application::window, Application::current_window_width, Application::current_window_height);
 		}
-		// Stage System
-		StageSystem::Update();
 		// Azur Debug
 		AzurDebug::update();
 
@@ -332,17 +319,16 @@ int Application::Start()
 		// Rendering
 		SDL_RenderClear(Application::renderer);
 		SDL_SetRenderDrawColor(Application::renderer, 0, 0, 0, 1);
+		// Render ECS Components
+		ECS::Manager::Render(Application::renderer);
 		// Render Systems
 		for (auto system : systems)
 		{
 			system->Render(renderer);
 		}
-		// Render ECS Components
-		ECS::ECS_Manager::Render(Application::renderer);
 		// Render Collisisons
 		//CollisionSystem::Render(Application::renderer);
 		// Render Text
-		TextSystem::Render(Application::renderer);
 		// Some components use this function to set lines or dot colors. This need to be here so that the backgroud is set to black.
 		SDL_SetRenderDrawColor(Application::renderer, 0, 0, 0, 1);
 		// Present buffer
@@ -362,14 +348,14 @@ int Application::Start()
 
 	// Memory Cleaning
 	// Clear Systems
-	for (ECS::SystemBase* system : systems)
+	for (ECS::ISystem* system : systems)
 	{
 		delete system;
 	}
 	// Clear Entity Vector
-	ECS::ECS_Manager::DeleteAllEntities();
+	ECS::Manager::DeleteAllEntities();
 	// Clear Sprites
-	SpriteManager::DeleteSprites();
+	SpriteSystem::DeleteSprites();
 	// Quit Functions
 	SDL_DestroyRenderer(Application::renderer);
 	SDL_DestroyWindow(Application::window);
@@ -382,12 +368,10 @@ int Application::Start()
 
 int Application::GetWindowTrueX(float x)
 {
-	return (x * Application::current_window_width)/Application::base_window_width;
+	return int((x * (float)Application::current_window_width) / (float)Application::base_window_width);
 }
 
 int Application::GetWindowTrueY(float y)
 {
-	return (y * Application::current_window_height) / Application::base_window_height;
+	return int((y * (float)Application::current_window_height) / (float)Application::base_window_height);
 }
-
-std::vector<ECS::SystemBase*> Application::systems;

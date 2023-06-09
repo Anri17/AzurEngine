@@ -2,9 +2,15 @@
 
 #include "Application.h"
 
-Text* StageSystem::world_text = nullptr;
-int StageSystem::frame = 0;
-std::vector<std::pair<int, std::string>> StageSystem::messages;
+#include "AssetManager.h"
+
+StageSystem::StageSystem() : 
+	world_text(nullptr),
+	frame(0),
+	messages({})
+{
+	Application::systems.push_back(this);
+}
 
 void StageSystem::Init()
 {
@@ -13,7 +19,7 @@ void StageSystem::Init()
 	std::string fontpath = basepath + fontname;
 	int fontsize = 16;
 	SDL_Color message_color = { 255, 255, 255 };
-	world_text = ECS_Manager::CreateText("World Text", "", fontpath, fontsize, message_color)->GetComponent<Text>();
+	world_text = AssetManager::CreateText("World Text", "", fontpath, fontsize, message_color)->GetComponent<Text>();
 	world_text->position->x = Application::base_window_width / 2.0f;
 	world_text->position->y = Application::base_window_height / 2.0f - 20;
 	world_text->SetAlignment(TextAlignment::CENTER);

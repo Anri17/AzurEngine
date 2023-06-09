@@ -105,6 +105,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -121,6 +122,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,6 +139,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,6 +156,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -164,68 +168,72 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\AssetManager.cpp" />
     <ClCompile Include="src\AzurDebug.cpp" />
-    <ClCompile Include="src\BulletManager.cpp" />
-    <ClCompile Include="src\ECS\Component\BoxCollider.cpp" />
-    <ClCompile Include="src\ECS\Component\Bullet.cpp" />
-    <ClCompile Include="src\ECS\Component\BulletSpawner.cpp" />
+    <ClCompile Include="src\BulletSystem.cpp" />
+    <ClCompile Include="src\Components.h" />
+    <ClCompile Include="src\Component\BoxCollider.cpp" />
+    <ClCompile Include="src\Component\Bullet.cpp" />
+    <ClCompile Include="src\Component\BulletSpawner.cpp" />
     <ClCompile Include="src\BulletTemplate.h" />
-    <ClCompile Include="src\ECS\Component\CircleCollider.cpp" />
-    <ClCompile Include="src\ECS\Component\Collider.cpp" />
-    <ClCompile Include="src\CollisionManager.cpp" />
-    <ClCompile Include="src\ECS\ECS_Component.h" />
-    <ClCompile Include="src\ECS\ECS_Entity.cpp" />
-    <ClCompile Include="src\ECS\ECS_Manager.cpp" />
-    <ClCompile Include="src\ECS\ECS_Tag.h" />
-    <ClCompile Include="src\ECS\SystemBase.cpp" />
+    <ClCompile Include="src\Component\CircleCollider.cpp" />
+    <ClCompile Include="src\Component\Collider.cpp" />
+    <ClCompile Include="src\CollisionSystem.cpp" />
+    <ClCompile Include="src\ECS\Component.cpp" />
+    <ClCompile Include="src\ECS\Component.h" />
+    <ClCompile Include="src\ECS\Entity.cpp" />
+    <ClCompile Include="src\ECS\Manager.cpp" />
+    <ClCompile Include="src\ECS\Tag.h" />
     <ClCompile Include="src\InputHandler.cpp" />
     <ClCompile Include="src\AzurLib\AzurMath.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\ECS\Component\Player.cpp" />
-    <ClCompile Include="src\ECS\Component\PlayField.cpp" />
-    <ClCompile Include="src\ECS\Component\Position.cpp" />
-    <ClCompile Include="src\ECS\Component\Sprite.cpp" />
-    <ClCompile Include="src\SpriteManager.cpp" />
-    <ClCompile Include="src\ECS\Component\Stage.cpp" />
-    <ClCompile Include="src\ECS\Component\Text.cpp" />
+    <ClCompile Include="src\Component\Player.cpp" />
+    <ClCompile Include="src\Component\PlayField.cpp" />
+    <ClCompile Include="src\Component\Position.cpp" />
+    <ClCompile Include="src\Component\Sprite.cpp" />
+    <ClCompile Include="src\SpriteSystem.cpp" />
+    <ClCompile Include="src\Component\Stage.cpp" />
+    <ClCompile Include="src\Component\Text.cpp" />
     <ClCompile Include="src\StageSystem.cpp" />
-    <ClCompile Include="src\TextManager.cpp" />
+    <ClCompile Include="src\Systems.h" />
+    <ClCompile Include="src\UISystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\AssetManager.h" />
     <ClInclude Include="src\AzurLib.h" />
     <ClInclude Include="src\AzurLib\AzurMemoryLeakFinder.h" />
-    <ClInclude Include="src\ECS\Component\BoxCollider.h" />
-    <ClInclude Include="src\ECS\Component\Bullet.h" />
+    <ClInclude Include="src\Component\BoxCollider.h" />
+    <ClInclude Include="src\Component\Bullet.h" />
     <ClInclude Include="src\BulletPool.h" />
-    <ClInclude Include="src\BulletManager.h" />
-    <ClInclude Include="src\ECS\Component\BulletSpawner.h" />
-    <ClInclude Include="src\ECS\Component\BulletType.h" />
-    <ClInclude Include="src\ECS\Component\CircleCollider.h" />
-    <ClInclude Include="src\ECS\Component\Collider.h" />
-    <ClInclude Include="src\CollisionManager.h" />
+    <ClInclude Include="src\BulletSystem.h" />
+    <ClInclude Include="src\Component\BulletSpawner.h" />
+    <ClInclude Include="src\Component\BulletType.h" />
+    <ClInclude Include="src\Component\CircleCollider.h" />
+    <ClInclude Include="src\Component\Collider.h" />
+    <ClInclude Include="src\CollisionSystem.h" />
     <ClInclude Include="src\AzurDebug.h" />
-    <ClInclude Include="src\ECS\Component\TextAlignment.h" />
-    <ClInclude Include="src\ECS\ECS_Manager.h" />
-    <ClInclude Include="src\ECS\SystemBase.h" />
+    <ClInclude Include="src\Component\TextAlignment.h" />
+    <ClInclude Include="src\ECS\Manager.h" />
+    <ClInclude Include="src\ECS\System.h" />
     <ClInclude Include="src\StageSystem.h" />
     <ClInclude Include="src\InputHandler.h" />
     <ClInclude Include="src\AzurLib\AzurMath.h" />
     <ClInclude Include="src\Mouse.h" />
     <ClInclude Include="src\ECS.h" />
-    <ClInclude Include="src\ECS\Component\Player.h" />
-    <ClInclude Include="src\ECS\Component\PlayField.h" />
-    <ClInclude Include="src\ECS\Component\Position.h" />
+    <ClInclude Include="src\Component\Player.h" />
+    <ClInclude Include="src\Component\PlayField.h" />
+    <ClInclude Include="src\Component\Position.h" />
     <ClInclude Include="src\SpriteData.h" />
-    <ClInclude Include="src\ECS\Component\Sprite.h" />
-    <ClInclude Include="src\SpriteManager.h" />
-    <ClInclude Include="src\ECS\Component\Stage.h" />
-    <ClInclude Include="src\ECS\ECS_Entity.h" />
-    <ClInclude Include="src\ECS\Component\Text.h" />
+    <ClInclude Include="src\Component\Sprite.h" />
+    <ClInclude Include="src\SpriteSystem.h" />
+    <ClInclude Include="src\Component\Stage.h" />
+    <ClInclude Include="src\ECS\Entity.h" />
+    <ClInclude Include="src\Component\Text.h" />
     <ClInclude Include="src\AzurLib\vector2float.h" />
     <ClInclude Include="src\AzurLib\vector2int.h" />
-    <ClInclude Include="src\TextManager.h" />
+    <ClInclude Include="src\UISystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

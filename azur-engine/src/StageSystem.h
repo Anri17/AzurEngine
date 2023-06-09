@@ -3,19 +3,23 @@
 
 #include "ECS.h"
 
-class StageSystem
+#include "Components.h"
+
+class StageSystem : public ECS::System<StageSystem>
 {
 public:
-	static void Init();
-	static void Update();
+	StageSystem();
+
+	void Init() override;
+	void Update() override;
 private:
 	// Hold the data of the enemies and what not that are going to be spawned in the stage
 
 
 
-	static Text* world_text;
-	static std::vector<std::pair<int, std::string>> messages;
-	static int frame;
+	Text* world_text;
+	std::vector<std::pair<int, std::string>> messages;
+	int frame;
 };
 
 #endif // _STAGE_SYSTEM_H

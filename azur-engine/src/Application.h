@@ -5,6 +5,8 @@
 
 #include "ECS.h"
 
+#include "Systems.h"
+
 struct Application
 {
 	static SDL_Window* window;
@@ -15,14 +17,14 @@ struct Application
 	static int GetWindowTrueX(float x);
 	static int GetWindowTrueY(float y);
 
-	static const int base_window_width = 640;
-	static const int base_window_height = 480;
+	inline static const int base_window_width = 640;
+	inline static const int base_window_height = 480;
 
-	static int current_window_width;
-	static int current_window_height;
-	static float current_window_ratio;
+	inline static int current_window_width = 800;
+	inline static int current_window_height = 600;
+	inline static float current_window_ratio = 0.75f; // 4:3
 
-	static std::vector<ECS::SystemBase*> systems;
+	inline static std::vector<ECS::ISystem*> systems;
 };
 
 
