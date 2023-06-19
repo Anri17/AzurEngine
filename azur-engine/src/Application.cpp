@@ -209,6 +209,17 @@ int Application::Start()
 			}
 		}
 
+		// I want to have a scene object with the assets. It also has an update and render function.
+		// The question is, do I want to store the instantiated entities in the Scene, or in the systems?
+		// If I add them in the systems, then I will not be able to reuse them in other scenes if I need to
+		//
+		//
+		// If I have a system with the components that it needs, then I don't really need to import a component to a scene
+		// What tis means is that I just have the dependency for the scenes, which as a dependency for the components
+		// This makes the dependency part easier.
+		// 
+		//
+
 
 		Application::Update(current_frame, mouse, application_is_running, *playerComponent, playerEntity);
 		Application::Render();
