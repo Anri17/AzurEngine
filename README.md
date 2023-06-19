@@ -1,2 +1,9 @@
-# azur-engine
-The Game Engine for the Azur Project titles.
+# Azur Engine
+
+A Game Engine for personal game development.
+
+Currently in heavy development.
+
+# Setup
+
+TODO
