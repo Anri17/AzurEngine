@@ -2,6 +2,7 @@
 #define _MOUSE_H
 
 #include <SDL.h>
+#include "Core.h"
 
 class Mouse
 {

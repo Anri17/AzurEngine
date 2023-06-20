@@ -1,8 +1,8 @@
 #ifndef _STAGE_SYSTEM_H
 #define _STAGE_SYSTEM_H
 
-#include ".\..\ECS.h"
-#include ".\..\Components.h"
+#include "./../ECS.h"
+#include "./../Components.h"
 
 class StageSystem : public ECS::System<StageSystem>
 {

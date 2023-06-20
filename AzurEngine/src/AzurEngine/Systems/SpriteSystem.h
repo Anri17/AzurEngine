@@ -1,9 +1,9 @@
 #ifndef _SPRITE_SYSTEM_H
 #define _SPRITE_SYSTEM_H
 
-#include ".\..\ECS.h"
+#include "./../ECS.h"
 
-#include ".\..\SpriteData.h"
+#include "./../SpriteData.h"
 
 class SpriteSystem : public ECS::System<SpriteSystem>
 {

@@ -15,198 +15,204 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Main.cpp">
+    <ClCompile Include="src\AzurEngine\Mouse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mouse.cpp">
+    <ClCompile Include="src\AzurEngine\InputHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\InputHandler.cpp">
+    <ClCompile Include="src\AzurEngine\Components\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\Player.cpp">
+    <ClCompile Include="src\AzurEngine\Components\PlayField.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\PlayField.cpp">
+    <ClCompile Include="src\AzurEngine\Components\Text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\Text.cpp">
+    <ClCompile Include="src\AzurEngine\Components\Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\Bullet.cpp">
+    <ClCompile Include="src\AzurEngine\Components\Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\Sprite.cpp">
+    <ClCompile Include="src\AzurEngine\Components\Position.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\Position.cpp">
+    <ClCompile Include="src\AzurEngine\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application.cpp">
+    <ClCompile Include="src\AzurEngine\Components\BoxCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\BoxCollider.cpp">
+    <ClCompile Include="src\AzurEngine\Components\BulletSpawner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\BulletSpawner.cpp">
+    <ClCompile Include="src\AzurEngine\Components\CircleCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\CircleCollider.cpp">
+    <ClCompile Include="src\AzurEngine\Components\Collider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\Collider.cpp">
+    <ClCompile Include="src\AzurEngine\AzurLib\AzurMath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AzurLib\AzurMath.cpp">
+    <ClCompile Include="src\AzurEngine\Components\Stage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\Stage.cpp">
+    <ClCompile Include="src\AzurEngine\BulletTemplate.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\BulletTemplate.h">
+    <ClCompile Include="src\AzurEngine\AzurDebug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AzurDebug.cpp">
+    <ClCompile Include="src\AzurEngine\ECS\Component.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ECS\Component.h">
+    <ClCompile Include="src\AzurEngine\ECS\Tag.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ECS\Tag.h">
+    <ClCompile Include="src\AzurEngine\ECS\Manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ECS\Manager.cpp">
+    <ClCompile Include="src\AzurEngine\AssetManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AssetManager.cpp">
+    <ClCompile Include="src\AzurEngine\Components.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components.h">
+    <ClCompile Include="src\AzurEngine\Systems.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems.h">
+    <ClCompile Include="src\AzurEngine\ECS\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ECS\Entity.cpp">
+    <ClCompile Include="src\AzurEngine\Systems\BulletSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\BulletSystem.cpp">
+    <ClCompile Include="src\AzurEngine\Systems\CollisionSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\CollisionSystem.cpp">
+    <ClCompile Include="src\AzurEngine\Systems\SpriteSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\SpriteSystem.cpp">
+    <ClCompile Include="src\AzurEngine\Systems\StageSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\StageSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Systems\UISystem.cpp">
+    <ClCompile Include="src\AzurEngine\Systems\UISystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ECS.h">
+    <ClInclude Include="src\AzurEngine\ECS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mouse.h">
+    <ClInclude Include="src\AzurEngine\Mouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\InputHandler.h">
+    <ClInclude Include="src\AzurEngine\InputHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\Player.h">
+    <ClInclude Include="src\AzurEngine\Components\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\PlayField.h">
+    <ClInclude Include="src\AzurEngine\Components\PlayField.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\Text.h">
+    <ClInclude Include="src\AzurEngine\Components\Text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\AzurDebug.h">
+    <ClInclude Include="src\AzurEngine\AzurDebug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\Bullet.h">
+    <ClInclude Include="src\AzurEngine\Components\Bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\Sprite.h">
+    <ClInclude Include="src\AzurEngine\Components\Sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\Position.h">
+    <ClInclude Include="src\AzurEngine\Components\Position.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Application.h">
+    <ClInclude Include="src\AzurEngine\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\BoxCollider.h">
+    <ClInclude Include="src\AzurEngine\Components\BoxCollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\AzurLib\vector2float.h">
+    <ClInclude Include="src\AzurEngine\AzurLib\vector2float.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\BulletSpawner.h">
+    <ClInclude Include="src\AzurEngine\Components\BulletSpawner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\AzurLib\vector2int.h">
+    <ClInclude Include="src\AzurEngine\AzurLib\vector2int.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\CircleCollider.h">
+    <ClInclude Include="src\AzurEngine\Components\CircleCollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\Collider.h">
+    <ClInclude Include="src\AzurEngine\Components\Collider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\AzurLib\AzurMath.h">
+    <ClInclude Include="src\AzurEngine\AzurLib\AzurMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\Stage.h">
+    <ClInclude Include="src\AzurEngine\Components\Stage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\AzurLib\AzurMemoryLeakFinder.h">
+    <ClInclude Include="src\AzurEngine\AzurLib\AzurMemoryLeakFinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SpriteData.h">
+    <ClInclude Include="src\AzurEngine\SpriteData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\BulletPool.h">
+    <ClInclude Include="src\AzurEngine\BulletPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\BulletType.h">
+    <ClInclude Include="src\AzurEngine\Components\BulletType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECS\Entity.h">
+    <ClInclude Include="src\AzurEngine\ECS\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\AzurLib.h">
+    <ClInclude Include="src\AzurEngine\AzurLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECS\Manager.h">
+    <ClInclude Include="src\AzurEngine\ECS\Manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\TextAlignment.h">
+    <ClInclude Include="src\AzurEngine\Components\TextAlignment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECS\System.h">
+    <ClInclude Include="src\AzurEngine\ECS\System.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\AssetManager.h">
+    <ClInclude Include="src\AzurEngine\AssetManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\UISystem.h">
+    <ClInclude Include="src\AzurEngine\Systems\UISystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\BulletSystem.h">
+    <ClInclude Include="src\AzurEngine\Systems\BulletSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\CollisionSystem.h">
+    <ClInclude Include="src\AzurEngine\Systems\CollisionSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\SpriteSystem.h">
+    <ClInclude Include="src\AzurEngine\Systems\SpriteSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\StageSystem.h">
+    <ClInclude Include="src\AzurEngine\Systems\StageSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AzurEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AzurEngine\Core.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AzurEngine\EntryPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

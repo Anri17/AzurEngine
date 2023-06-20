@@ -35,8 +35,8 @@ namespace InputHandler
 		KEY_RIGHT,
 	};
 
-	bool GetKeyTap(InputKey key);
-	bool GetKeyDown(InputKey key);
+	extern bool GetKeyTap(InputKey key);
+	extern bool GetKeyDown(InputKey key);
 
 	// These are updated by the chosen API or Library's Event System (SDL KeyUp/KeyDown Events)
 	extern bool isDown_W, firstTap_W;
@@ -49,7 +49,7 @@ namespace InputHandler
 	extern bool isDown_LSHIFT, firstTap_LSHIFT;
 	extern bool isDown_LCTRL,  firstTap_LCTRL;
 	extern bool isDown_RETURN, firstTap_RETURN;
-
+		   
 	extern bool isDown_1, firstTap_1;
 	extern bool isDown_2, firstTap_2;
 	extern bool isDown_3, firstTap_3;

@@ -1,11 +1,11 @@
 #include "CollisionSystem.h"
 
-#include ".\..\AzurDebug.h"
-#include ".\..\Application.h"
+#include "./../AzurDebug.h"
+#include "./../Application.h"
 
 CollisionSystem::CollisionSystem()
 {
-	Application::systems.push_back(this);
+	AzurEngine::Application::systems.push_back(this);
 	entities = ECS::Manager::GetEntitiesVector();
 }
 
@@ -235,10 +235,10 @@ void CollisionSystem::Render(SDL_Renderer* renderer)
 				Position* box_position = e->GetComponent<Position>();
 
 				// drawing points
-				vector2int p0{ Application::GetWindowTrueX(box_collider->get_true_left(box_position)), Application::GetWindowTrueY(box_collider->get_true_top(box_position)) };
-				vector2int p1{ Application::GetWindowTrueX(box_collider->get_true_right(box_position)), Application::GetWindowTrueY(box_collider->get_true_top(box_position)) };
-				vector2int p2{ Application::GetWindowTrueX(box_collider->get_true_left(box_position)), Application::GetWindowTrueY(box_collider->get_true_bottom(box_position)) };
-				vector2int p3{ Application::GetWindowTrueX(box_collider->get_true_right(box_position)), Application::GetWindowTrueY(box_collider->get_true_bottom(box_position)) };
+				vector2int p0{ AzurEngine::Application::GetWindowTrueX(box_collider->get_true_left(box_position)), AzurEngine::Application::GetWindowTrueY(box_collider->get_true_top(box_position)) };
+				vector2int p1{ AzurEngine::Application::GetWindowTrueX(box_collider->get_true_right(box_position)), AzurEngine::Application::GetWindowTrueY(box_collider->get_true_top(box_position)) };
+				vector2int p2{ AzurEngine::Application::GetWindowTrueX(box_collider->get_true_left(box_position)), AzurEngine::Application::GetWindowTrueY(box_collider->get_true_bottom(box_position)) };
+				vector2int p3{ AzurEngine::Application::GetWindowTrueX(box_collider->get_true_right(box_position)), AzurEngine::Application::GetWindowTrueY(box_collider->get_true_bottom(box_position)) };
 
 				// This is a debug drawing of the collision box.
 				// Not need to show playfield collision. That would be red all the time and would make this whole code useless
@@ -303,14 +303,14 @@ void CollisionSystem::Render(SDL_Renderer* renderer)
 
 				while (x >= y)
 				{
-					SDL_RenderDrawPoint(renderer, Application::GetWindowTrueX(position->x + x), Application::GetWindowTrueY(position->y - y));
-					SDL_RenderDrawPoint(renderer, Application::GetWindowTrueX(position->x + x), Application::GetWindowTrueY(position->y + y));
-					SDL_RenderDrawPoint(renderer, Application::GetWindowTrueX(position->x - x), Application::GetWindowTrueY(position->y - y));
-					SDL_RenderDrawPoint(renderer, Application::GetWindowTrueX(position->x - x), Application::GetWindowTrueY(position->y + y));
-					SDL_RenderDrawPoint(renderer, Application::GetWindowTrueX(position->x + y), Application::GetWindowTrueY(position->y - x));
-					SDL_RenderDrawPoint(renderer, Application::GetWindowTrueX(position->x + y), Application::GetWindowTrueY(position->y + x));
-					SDL_RenderDrawPoint(renderer, Application::GetWindowTrueX(position->x - y), Application::GetWindowTrueY(position->y - x));
-					SDL_RenderDrawPoint(renderer, Application::GetWindowTrueX(position->x - y), Application::GetWindowTrueY(position->y + x));
+					SDL_RenderDrawPoint(renderer, AzurEngine::Application::GetWindowTrueX(position->x + x), AzurEngine::Application::GetWindowTrueY(position->y - y));
+					SDL_RenderDrawPoint(renderer, AzurEngine::Application::GetWindowTrueX(position->x + x), AzurEngine::Application::GetWindowTrueY(position->y + y));
+					SDL_RenderDrawPoint(renderer, AzurEngine::Application::GetWindowTrueX(position->x - x), AzurEngine::Application::GetWindowTrueY(position->y - y));
+					SDL_RenderDrawPoint(renderer, AzurEngine::Application::GetWindowTrueX(position->x - x), AzurEngine::Application::GetWindowTrueY(position->y + y));
+					SDL_RenderDrawPoint(renderer, AzurEngine::Application::GetWindowTrueX(position->x + y), AzurEngine::Application::GetWindowTrueY(position->y - x));
+					SDL_RenderDrawPoint(renderer, AzurEngine::Application::GetWindowTrueX(position->x + y), AzurEngine::Application::GetWindowTrueY(position->y + x));
+					SDL_RenderDrawPoint(renderer, AzurEngine::Application::GetWindowTrueX(position->x - y), AzurEngine::Application::GetWindowTrueY(position->y - x));
+					SDL_RenderDrawPoint(renderer, AzurEngine::Application::GetWindowTrueX(position->x - y), AzurEngine::Application::GetWindowTrueY(position->y + x));
 					if (error <= 0)
 					{
 						++y;

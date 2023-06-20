@@ -1,7 +1,7 @@
 #ifndef _BULLET_SPAWNER_COMPONENT_H
 #define _BULLET_SPAWNER_COMPONENT_H
 
-#include ".\..\ECS.h"
+#include "./../ECS.h"
 
 #include "Position.h"
 

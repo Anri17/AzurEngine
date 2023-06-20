@@ -14,7 +14,7 @@ void Text::Init()
 	color = { 0, 0, 0, 0 };
 	size = 0;
 	font = nullptr;
-	renderer = Application::renderer;
+	renderer = AzurEngine::Application::renderer;
 	alignment = TextAlignment::LEFT;
 };
 

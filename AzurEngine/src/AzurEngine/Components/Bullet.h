@@ -2,9 +2,8 @@
 #define _BULLET_COMPONENT_H
 
 
-#include ".\..\AzurLib.h"
-
-#include ".\..\ECS.h"
+#include "./../AzurLib.h"
+#include "./../ECS.h"
 
 #include "Position.h"
 #include "Collider.h"

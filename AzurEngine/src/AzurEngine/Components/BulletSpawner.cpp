@@ -1,6 +1,6 @@
 #include "BulletSpawner.h"
 
-#include ".\..\AssetManager.h"
+#include "./../AssetManager.h"
 
 void BulletSpawner::Init()
 {

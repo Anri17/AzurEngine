@@ -3,9 +3,8 @@
 
 #include <vector>
 
-#include ".\..\ECS.h"
-
-#include ".\..\Components.h"
+#include "./../ECS.h"
+#include "./../Components.h"
 
 // I am not sure I want to have the UI functions and the Scene elements combined together like this.
 // I might have to separate this class further

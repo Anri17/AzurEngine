@@ -1,9 +1,8 @@
 #ifndef _BOX_COLLIDER_H
 #define _BOX_COLLIDER_H
 
-#include ".\..\AzurLib.h"
-
 #include "Collider.h"
+#include "./../AzurLib.h"
 
 class BoxCollider : public Collider
 {

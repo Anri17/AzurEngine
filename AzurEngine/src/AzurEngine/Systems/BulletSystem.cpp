@@ -1,10 +1,10 @@
 #include "BulletSystem.h"
 
-#include ".\..\Application.h"
+#include "./../Application.h"
 
 BulletSystem::BulletSystem()
 {
-	Application::systems.push_back(this);
+	AzurEngine::Application::systems.push_back(this);
 }
 
 void BulletSystem::Init()

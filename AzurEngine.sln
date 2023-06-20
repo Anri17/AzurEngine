@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AzurEngine", "AzurEngine\AzurEngine.vcxproj", "{99D57524-7E2A-4C37-8B93-026A5D9C36D9}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{FE32FAE9-B6EF-48E1-978A-AE24865A81CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{99D57524-7E2A-4C37-8B93-026A5D9C36D9}.Release|x64.Build.0 = Release|x64
 		{99D57524-7E2A-4C37-8B93-026A5D9C36D9}.Release|x86.ActiveCfg = Release|Win32
 		{99D57524-7E2A-4C37-8B93-026A5D9C36D9}.Release|x86.Build.0 = Release|Win32
+		{FE32FAE9-B6EF-48E1-978A-AE24865A81CD}.Debug|x64.ActiveCfg = Debug|x64
+		{FE32FAE9-B6EF-48E1-978A-AE24865A81CD}.Debug|x64.Build.0 = Debug|x64
+		{FE32FAE9-B6EF-48E1-978A-AE24865A81CD}.Debug|x86.ActiveCfg = Debug|Win32
+		{FE32FAE9-B6EF-48E1-978A-AE24865A81CD}.Debug|x86.Build.0 = Debug|Win32
+		{FE32FAE9-B6EF-48E1-978A-AE24865A81CD}.Release|x64.ActiveCfg = Release|x64
+		{FE32FAE9-B6EF-48E1-978A-AE24865A81CD}.Release|x64.Build.0 = Release|x64
+		{FE32FAE9-B6EF-48E1-978A-AE24865A81CD}.Release|x86.ActiveCfg = Release|Win32
+		{FE32FAE9-B6EF-48E1-978A-AE24865A81CD}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,15 +1,14 @@
 #include "StageSystem.h"
 
-#include ".\..\Application.h"
-
-#include ".\..\AssetManager.h"
+#include "./../Application.h"
+#include "./../AssetManager.h"
 
 StageSystem::StageSystem() : 
 	world_text(nullptr),
 	frame(0),
 	messages({})
 {
-	Application::systems.push_back(this);
+	AzurEngine::Application::systems.push_back(this);
 }
 
 void StageSystem::Init()
@@ -20,8 +19,8 @@ void StageSystem::Init()
 	int fontsize = 16;
 	SDL_Color message_color = { 255, 255, 255 };
 	world_text = AssetManager::CreateText("World Text", "", fontpath, fontsize, message_color)->GetComponent<Text>();
-	world_text->position->x = Application::base_window_width / 2.0f;
-	world_text->position->y = Application::base_window_height / 2.0f - 20;
+	world_text->position->x = AzurEngine::Application::base_window_width / 2.0f;
+	world_text->position->y = AzurEngine::Application::base_window_height / 2.0f - 20;
 	world_text->SetAlignment(TextAlignment::CENTER);
 
 	// The messages vector holds the messages that are going to be displayed in the game world.
