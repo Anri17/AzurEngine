@@ -18,7 +18,7 @@ public:
 	void Init() override;
 	~Collider() override;
 public:
-	ColliderType           type = ColliderType::BASE;
+	ColliderType           type;
 	bool                   isColliding;
 	std::vector<Collider*> collider_references;
 	std::vector<ECS::Tag>  collider_tags;
