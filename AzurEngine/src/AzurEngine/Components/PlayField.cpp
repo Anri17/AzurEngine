@@ -3,9 +3,9 @@
 #include ".\..\Application.h"
 
 float PlayField::Top = 40;
-float PlayField::Right = 440;
+float PlayField::Right = 500;
 float PlayField::Bottom = 460;
-float PlayField::Left = 200;
+float PlayField::Left = 140;
 
 void PlayField::Init()
 {

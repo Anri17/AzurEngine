@@ -73,20 +73,22 @@ void CollisionSystem::Update()
 
 
 			// Box with Box Collision
-			if (entity0->HasComponent<BoxCollider>() && entity1->HasComponent<BoxCollider>())
-			{
-				BoxCollider* box_collider0 = entity0->GetComponent<BoxCollider>();
-				Position* box_position0 = entity0->GetComponent<Position>();
-				BoxCollider* box_collider1 = entity1->GetComponent<BoxCollider>();
-				Position* box_position1 = entity1->GetComponent<Position>();
+			if (entity0->HasComponent<BoxCollider>() && entity1->HasComponent<BoxCollider>()) {
+				BoxCollider *box_a_collider, *box_b_collider;
+				Position    *box_a_position, *box_b_position;
+				bool        is_overlapping;
 
-				bool is_colliding = box_collider0->get_true_top(box_position0) < box_collider1->get_true_bottom(box_position1) &&
-									box_collider0->get_true_left(box_position0) < box_collider1->get_true_right(box_position1) &&
-									box_collider1->get_true_top(box_position1) < box_collider0->get_true_bottom(box_position0) &&
-									box_collider1->get_true_left(box_position1) < box_collider0->get_true_right(box_position0);
-				if (is_colliding)
-				{
-					set_collision_status(box_collider0, box_collider1);
+				box_a_collider = entity0->GetComponent<BoxCollider>();
+				box_b_collider = entity1->GetComponent<BoxCollider>();
+				box_a_position = entity0->GetComponent<Position>();
+				box_b_position = entity1->GetComponent<Position>();
+				is_overlapping = box_a_collider->get_true_top(box_a_position)  < box_b_collider->get_true_bottom(box_b_position) &&
+				                 box_a_collider->get_true_left(box_a_position) < box_b_collider->get_true_right(box_b_position)  &&
+				                 box_b_collider->get_true_top(box_b_position)  < box_a_collider->get_true_bottom(box_a_position) &&
+				                 box_b_collider->get_true_left(box_b_position) < box_a_collider->get_true_right(box_a_position);
+				
+				if (is_overlapping) {
+					set_collision_status(box_a_collider, box_b_collider);
 				}
 			}
 			else if (entity0->HasComponent<CircleCollider>() && entity1->HasComponent<CircleCollider>())
