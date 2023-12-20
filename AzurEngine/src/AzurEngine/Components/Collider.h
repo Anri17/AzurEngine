@@ -7,24 +7,21 @@
 
 #include "Position.h"
 
-enum class ColliderType
-{
+enum class ColliderType {
 	BASE,
 	BOX,
 	CIRCLE
 };
 
-class Collider : public Component
-{
+class Collider : public Component {
 public:
 	void Init() override;
-
 	~Collider() override;
 public:
-	ColliderType type = ColliderType::BASE;
-	bool isColliding;
+	ColliderType           type = ColliderType::BASE;
+	bool                   isColliding;
 	std::vector<Collider*> collider_references;
-	std::vector<ECS::Tag> collider_tags;
+	std::vector<ECS::Tag>  collider_tags;
 };
 
 #endif // _COLLIDER_COMPONENT_H

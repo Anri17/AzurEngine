@@ -1,13 +1,10 @@
 #include "Collider.h"
 
-void Collider::Init()
-{
-	isColliding = false;
+void Collider::Init() {
+	type =                ColliderType::BASE;
+	isColliding =         false;
 	collider_references = {};
-	collider_tags = {};
+	collider_tags =       {};
 }
 
-Collider::~Collider()
-{
-
-}
+Collider::~Collider() { }
