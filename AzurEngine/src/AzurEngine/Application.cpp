@@ -110,166 +110,22 @@ namespace AzurEngine
 			// Abstract SDL events into engine components and systems
 			// Reset First Tap Event
 			// First Tap variables of the InputHandler are only true on the first frame when the keys are pressed.
-			InputHandler::firstTap_A = false;
-			InputHandler::firstTap_B = false;
-			InputHandler::firstTap_C = false;
-			InputHandler::firstTap_D = false;
-			InputHandler::firstTap_E = false;
-			InputHandler::firstTap_F = false;
-			InputHandler::firstTap_G = false;
-			InputHandler::firstTap_H = false;
-			InputHandler::firstTap_I = false;
-			InputHandler::firstTap_J = false;
-			InputHandler::firstTap_K = false;
-			InputHandler::firstTap_L = false;
-			InputHandler::firstTap_M = false;
-			InputHandler::firstTap_N = false;
-			InputHandler::firstTap_O = false;
-			InputHandler::firstTap_P = false;
-			InputHandler::firstTap_Q = false;
-			InputHandler::firstTap_R = false;
-			InputHandler::firstTap_S = false;
-			InputHandler::firstTap_T = false;
-			InputHandler::firstTap_U = false;
-			InputHandler::firstTap_V = false;
-			InputHandler::firstTap_W = false;
-			InputHandler::firstTap_X = false;
-			InputHandler::firstTap_Y = false;
-			InputHandler::firstTap_Z = false;
-
-			InputHandler::firstTap_LSHIFT = false;
-			InputHandler::firstTap_LCTRL = false;
-			InputHandler::firstTap_ESCAPE = false;
-			InputHandler::firstTap_RETURN = false;
-
-			InputHandler::firstTap_1 = false;
-			InputHandler::firstTap_2 = false;
-			InputHandler::firstTap_3 = false;
-			InputHandler::firstTap_4 = false;
-			InputHandler::firstTap_5 = false;
-			InputHandler::firstTap_6 = false;
-			InputHandler::firstTap_7 = false;
-			InputHandler::firstTap_8 = false;
-			InputHandler::firstTap_9 = false;
-			InputHandler::firstTap_0 = false;
-
-			InputHandler::firstTap_UP = false;
-			InputHandler::firstTap_DOWN = false;
-			InputHandler::firstTap_LEFT = false;
-			InputHandler::firstTap_RIGHT = false;
+			InputHandler::UpdateResetFirstTaps();
 			// Process SDL Events
 			while (SDL_PollEvent(&e))
 			{
 				switch (e.type)
 				{
 					// Window Events
-				case SDL_QUIT: {
-					application_is_running = false;
-				} break;
-				case SDL_KEYDOWN: {
-					switch (e.key.keysym.sym)
-					{
-					case SDLK_a: if (!InputHandler::isDown_A) { InputHandler::isDown_A = InputHandler::firstTap_A = true; } break;
-					case SDLK_b: if (!InputHandler::isDown_B) { InputHandler::isDown_B = InputHandler::firstTap_B = true; } break;
-					case SDLK_c: if (!InputHandler::isDown_C) { InputHandler::isDown_C = InputHandler::firstTap_C = true; } break;
-					case SDLK_d: if (!InputHandler::isDown_D) { InputHandler::isDown_D = InputHandler::firstTap_D = true; } break;
-					case SDLK_e: if (!InputHandler::isDown_E) { InputHandler::isDown_E = InputHandler::firstTap_E = true; } break;
-					case SDLK_f: if (!InputHandler::isDown_F) { InputHandler::isDown_F = InputHandler::firstTap_F = true; } break;
-					case SDLK_g: if (!InputHandler::isDown_G) { InputHandler::isDown_G = InputHandler::firstTap_G = true; } break;
-					case SDLK_h: if (!InputHandler::isDown_H) { InputHandler::isDown_H = InputHandler::firstTap_H = true; } break;
-					case SDLK_i: if (!InputHandler::isDown_I) { InputHandler::isDown_I = InputHandler::firstTap_I = true; } break;
-					case SDLK_j: if (!InputHandler::isDown_J) { InputHandler::isDown_J = InputHandler::firstTap_J = true; } break;
-					case SDLK_k: if (!InputHandler::isDown_K) { InputHandler::isDown_K = InputHandler::firstTap_K = true; } break;
-					case SDLK_l: if (!InputHandler::isDown_L) { InputHandler::isDown_L = InputHandler::firstTap_L = true; } break;
-					case SDLK_m: if (!InputHandler::isDown_M) { InputHandler::isDown_M = InputHandler::firstTap_M = true; } break;
-					case SDLK_n: if (!InputHandler::isDown_N) { InputHandler::isDown_N = InputHandler::firstTap_N = true; } break;
-					case SDLK_o: if (!InputHandler::isDown_O) { InputHandler::isDown_O = InputHandler::firstTap_O = true; } break;
-					case SDLK_p: if (!InputHandler::isDown_P) { InputHandler::isDown_P = InputHandler::firstTap_P = true; } break;
-					case SDLK_q: if (!InputHandler::isDown_Q) { InputHandler::isDown_Q = InputHandler::firstTap_Q = true; } break;
-					case SDLK_r: if (!InputHandler::isDown_R) { InputHandler::isDown_R = InputHandler::firstTap_R = true; } break;
-					case SDLK_s: if (!InputHandler::isDown_S) { InputHandler::isDown_S = InputHandler::firstTap_S = true; } break;
-					case SDLK_t: if (!InputHandler::isDown_T) { InputHandler::isDown_T = InputHandler::firstTap_T = true; } break;
-					case SDLK_u: if (!InputHandler::isDown_U) { InputHandler::isDown_U = InputHandler::firstTap_U = true; } break;
-					case SDLK_v: if (!InputHandler::isDown_V) { InputHandler::isDown_V = InputHandler::firstTap_V = true; } break;
-					case SDLK_w: if (!InputHandler::isDown_W) { InputHandler::isDown_W = InputHandler::firstTap_W = true; } break;
-					case SDLK_x: if (!InputHandler::isDown_X) { InputHandler::isDown_X = InputHandler::firstTap_X = true; } break;
-					case SDLK_y: if (!InputHandler::isDown_Y) { InputHandler::isDown_Y = InputHandler::firstTap_Y = true; } break;
-					case SDLK_z: if (!InputHandler::isDown_Z) { InputHandler::isDown_Z = InputHandler::firstTap_Z = true; } break;
-
-					case SDLK_LSHIFT: if (!InputHandler::isDown_LSHIFT) { InputHandler::isDown_LSHIFT = InputHandler::firstTap_LSHIFT = true; } break;
-					case SDLK_LCTRL:  if (!InputHandler::isDown_LCTRL) { InputHandler::isDown_LCTRL = InputHandler::firstTap_LCTRL = true; } break;
-					case SDLK_ESCAPE: if (!InputHandler::isDown_ESCAPE) { InputHandler::isDown_ESCAPE = InputHandler::firstTap_ESCAPE = true; } break;
-					case SDLK_RETURN: if (!InputHandler::isDown_RETURN) { InputHandler::isDown_RETURN = InputHandler::firstTap_RETURN = true; } break;
-
-					case SDLK_1: if (!InputHandler::isDown_1) { InputHandler::isDown_1 = InputHandler::firstTap_1 = true; } break;
-					case SDLK_2: if (!InputHandler::isDown_2) { InputHandler::isDown_2 = InputHandler::firstTap_2 = true; } break;
-					case SDLK_3: if (!InputHandler::isDown_3) { InputHandler::isDown_3 = InputHandler::firstTap_3 = true; } break;
-					case SDLK_4: if (!InputHandler::isDown_4) { InputHandler::isDown_4 = InputHandler::firstTap_4 = true; } break;
-					case SDLK_5: if (!InputHandler::isDown_5) { InputHandler::isDown_5 = InputHandler::firstTap_5 = true; } break;
-					case SDLK_6: if (!InputHandler::isDown_6) { InputHandler::isDown_6 = InputHandler::firstTap_6 = true; } break;
-					case SDLK_7: if (!InputHandler::isDown_7) { InputHandler::isDown_7 = InputHandler::firstTap_7 = true; } break;
-					case SDLK_8: if (!InputHandler::isDown_8) { InputHandler::isDown_8 = InputHandler::firstTap_8 = true; } break;
-					case SDLK_9: if (!InputHandler::isDown_9) { InputHandler::isDown_9 = InputHandler::firstTap_9 = true; } break;
-					case SDLK_0: if (!InputHandler::isDown_0) { InputHandler::isDown_0 = InputHandler::firstTap_0 = true; } break;
-
-					case SDLK_UP:    if (!InputHandler::isDown_UP) { InputHandler::isDown_UP = InputHandler::firstTap_UP = true; } break;
-					case SDLK_DOWN:  if (!InputHandler::isDown_DOWN) { InputHandler::isDown_DOWN = InputHandler::firstTap_DOWN = true; } break;
-					case SDLK_LEFT:  if (!InputHandler::isDown_LEFT) { InputHandler::isDown_LEFT = InputHandler::firstTap_LEFT = true; } break;
-					case SDLK_RIGHT: if (!InputHandler::isDown_RIGHT) { InputHandler::isDown_RIGHT = InputHandler::firstTap_RIGHT = true; } break;
-					}
-				} break;
-				case SDL_KEYUP: {
-					switch (e.key.keysym.sym)
-					{
-					case SDLK_a: InputHandler::isDown_A = false; break;
-					case SDLK_b: InputHandler::isDown_B = false; break;
-					case SDLK_c: InputHandler::isDown_C = false; break;
-					case SDLK_d: InputHandler::isDown_D = false; break;
-					case SDLK_e: InputHandler::isDown_E = false; break;
-					case SDLK_f: InputHandler::isDown_F = false; break;
-					case SDLK_g: InputHandler::isDown_G = false; break;
-					case SDLK_h: InputHandler::isDown_H = false; break;
-					case SDLK_i: InputHandler::isDown_I = false; break;
-					case SDLK_j: InputHandler::isDown_J = false; break;
-					case SDLK_k: InputHandler::isDown_K = false; break;
-					case SDLK_l: InputHandler::isDown_L = false; break;
-					case SDLK_m: InputHandler::isDown_M = false; break;
-					case SDLK_n: InputHandler::isDown_N = false; break;
-					case SDLK_o: InputHandler::isDown_O = false; break;
-					case SDLK_p: InputHandler::isDown_P = false; break;
-					case SDLK_q: InputHandler::isDown_Q = false; break;
-					case SDLK_r: InputHandler::isDown_R = false; break;
-					case SDLK_s: InputHandler::isDown_S = false; break;
-					case SDLK_t: InputHandler::isDown_T = false; break;
-					case SDLK_u: InputHandler::isDown_U = false; break;
-					case SDLK_v: InputHandler::isDown_V = false; break;
-					case SDLK_w: InputHandler::isDown_W = false; break;
-					case SDLK_x: InputHandler::isDown_X = false; break;
-					case SDLK_y: InputHandler::isDown_Y = false; break;
-					case SDLK_z: InputHandler::isDown_Z = false; break;
-
-					case SDLK_LSHIFT: InputHandler::isDown_LSHIFT = false; break;
-					case SDLK_LCTRL:  InputHandler::isDown_LCTRL = false; break;
-					case SDLK_ESCAPE: InputHandler::isDown_ESCAPE = false; break;
-					case SDLK_RETURN: InputHandler::isDown_RETURN = false; break;
-
-					case SDLK_1: InputHandler::isDown_1 = false; break;
-					case SDLK_2: InputHandler::isDown_2 = false; break;
-					case SDLK_3: InputHandler::isDown_3 = false; break;
-					case SDLK_4: InputHandler::isDown_4 = false; break;
-					case SDLK_5: InputHandler::isDown_5 = false; break;
-					case SDLK_6: InputHandler::isDown_6 = false; break;
-					case SDLK_7: InputHandler::isDown_7 = false; break;
-					case SDLK_8: InputHandler::isDown_8 = false; break;
-					case SDLK_9: InputHandler::isDown_9 = false; break;
-					case SDLK_0: InputHandler::isDown_0 = false; break;
-
-					case SDLK_UP:    InputHandler::isDown_UP = false; break;
-					case SDLK_DOWN:  InputHandler::isDown_DOWN = false; break;
-					case SDLK_LEFT:  InputHandler::isDown_LEFT = false; break;
-					case SDLK_RIGHT: InputHandler::isDown_RIGHT = false; break;
-					}
-				} break;
+					case SDL_QUIT: {
+						application_is_running = false;
+					} break;
+					case SDL_KEYDOWN: {
+						InputHandler::UpdateSDLKeydownEvents(e.key.keysym.sym);
+					} break;
+					case SDL_KEYUP: {
+						InputHandler::UpdateSDLKeyupEvents(e.key.keysym.sym);
+					} break;
 				}
 			}
 
