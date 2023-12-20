@@ -6,9 +6,9 @@ int main(int argc, char* argv[])
 {
 	AzurEngine::app = AzurEngine::CreateApplication();
 
-	AzurEngine::app->Start();
+	int result = AzurEngine::app->Start();
 
 	delete AzurEngine::app;
 
-	return 0;
+	return result;
 }

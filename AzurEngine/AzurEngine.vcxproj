@@ -196,6 +196,7 @@
     <ClCompile Include="src\AzurEngine\Systems\SpriteSystem.cpp" />
     <ClCompile Include="src\AzurEngine\Systems\StageSystem.cpp" />
     <ClCompile Include="src\AzurEngine\Systems\UISystem.cpp" />
+    <ClCompile Include="src\global.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AzurEngine\Application.h" />
@@ -235,6 +236,8 @@
     <ClInclude Include="src\AzurEngine\Systems\SpriteSystem.h" />
     <ClInclude Include="src\AzurEngine\Systems\StageSystem.h" />
     <ClInclude Include="src\AzurEngine\Systems\UISystem.h" />
+    <ClInclude Include="src\AzurEngine\util.h" />
+    <ClInclude Include="src\global.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

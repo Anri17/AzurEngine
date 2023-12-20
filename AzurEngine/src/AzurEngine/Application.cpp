@@ -7,6 +7,8 @@
 #include <map>
 #include <cstring>
 
+#include "util.h"
+
 #include "AzurLib.h"
 #include "AzurDebug.h"
 
@@ -32,8 +34,36 @@
 #define FPS_TARGET 60
 #define INPUT_MANAGER_KEY_COUNT 1024
 
+
+
+
 namespace AzurEngine
 {
+
+	void application_init() {
+		// Initialise libraries, create the window and renderer, set initial program and system states.
+			// Initialise SDL, TTF, IMG
+		SDL_Init(SDL_INIT_EVERYTHING);
+		if (TTF_Init() == -1) {
+			std::string err = std::string("TTF_Init Error: ") + TTF_GetError();
+			ERROR_EXIT(err.c_str());
+		}
+		if (!IMG_Init(IMG_INIT_PNG)) {
+			std::string err = std::string("IMG_Init Error: ") + IMG_GetError();
+			ERROR_EXIT(err.c_str());
+		}
+		// Create Window, Renderer & Event
+		if (!(Application::window = SDL_CreateWindow("Azur Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Application::current_window_width, Application::current_window_height, SDL_WINDOW_OPENGL))) {
+			std::string err = std::string("Window Creation Error: ") + IMG_GetError();
+			ERROR_EXIT(err.c_str());
+		}
+		if (!(Application::renderer = SDL_CreateRenderer(Application::window, -1, 0))) {
+			std::string err = std::string("Renderer Creation Error: ") + IMG_GetError();
+			ERROR_EXIT(err.c_str());
+		}
+	}
+
+
 	Application* app;
 
 	// TODO: These systems can then be extracted such that they are modules of the engine. A tetris game might not need a bullet system, for example
@@ -47,18 +77,12 @@ namespace AzurEngine
 	// I.E.: Spawning of Shot with ShotManager
 	int Application::Start()
 	{
-		// Initialise libraries, create the window and renderer, set initial program and system states.
-		// Initialise SDL, TTF, IMG
-		SDL_Init(SDL_INIT_EVERYTHING);
-		if (TTF_Init() == -1)
-		{
-			DEBUG_CONSOLE_LOG("TTF_Init: " << TTF_GetError());
-			exit(-1);
-		}
-		IMG_Init(IMG_INIT_PNG);
-		// Create Window, Renderer & Event
-		Application::window = SDL_CreateWindow("Azur Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, current_window_width, current_window_height, SDL_WINDOW_OPENGL);
-		Application::renderer = SDL_CreateRenderer(Application::window, -1, 0);
+		application_init();
+
+
+
+
+
 		SDL_Event e; // used for input events
 		// The running state of the applications
 		bool application_is_running = true;
