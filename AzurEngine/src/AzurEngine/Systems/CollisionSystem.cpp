@@ -20,57 +20,67 @@ void CollisionSystem::Init()
 
 void CollisionSystem::Update()
 {
-	// Check every collision for overlap
-	// If they overlap, change their state.
+	// Variables: Reset Collider Data First
+	size_t   i, j;
+	size_t   collider_reference_total_count;
+	size_t   collider_tag_total_count;
+	size_t   entity_total_count;
+	Entity   *entity = nullptr;
+	Collider *collider = nullptr;
+
+	// Check every collision for overlap and change their state respectively
 
 	// Reset Collider Data First
-	for (size_t i = 0; i < entities->size(); ++i)
-	{
-		Entity* entity = entities->at(i);
-		if (!entity->active) continue;
-		if (!((entity->HasComponent<BoxCollider>() || entity->HasComponent<CircleCollider>())
-			&& entity->HasComponent<Position>()))
-		{
+	entity_total_count = entities->size();
+	for (i = 0; i < entity_total_count; ++i) {
+		entity = entities->at(i);
+		if (!entity->active ||
+			!(entity->HasComponent<BoxCollider>() ||
+			  entity->HasComponent<CircleCollider>()) ||
+			!entity->HasComponent<Position>()) {
 			continue;
 		}
-		Collider* collider = nullptr;
-		if (entity->HasComponent<BoxCollider>()) collider = entity->GetComponent<BoxCollider>();
-		if (entity->HasComponent<CircleCollider>()) collider = entity->GetComponent<CircleCollider>();
-
+		if (entity->HasComponent<BoxCollider>()) {
+			collider = entity->GetComponent<BoxCollider>();
+		}
+		if (entity->HasComponent<CircleCollider>()) {
+			collider = entity->GetComponent<CircleCollider>();
+		}
 		collider->isColliding = false;
-		size_t reference_total = collider->collider_references.size();
-		size_t tag_total = collider->collider_tags.size();
-		for (size_t j = 0; j < reference_total; ++j)
+		collider_reference_total_count = collider->collider_references.size();
+		collider_tag_total_count = collider->collider_tags.size();
+		for (j = 0; j < collider_reference_total_count; ++j) {
 			collider->collider_references.pop_back();
-		for (size_t j = 0; j < tag_total; ++j)
+		}
+		for (j = 0; j < collider_tag_total_count; ++j) {
 			collider->collider_tags.pop_back();
+		}
 	}
 
+	// variables
+	Entity *entity0;
+	Entity *entity1;
+
 	// Check for Collisions and set the respective data for each collider
-	for (size_t i = 0; i < entities->size(); ++i)
-	{
+	for (i = 0; i < entity_total_count; ++i) {
 		// Check if entity is collider or not or if it's not active. Get the position and proper collider.
-		Entity* entity0 = entities->at(i);
-		if (!entity0->active) continue;
-		if (!((entity0->HasComponent<BoxCollider>() || entity0->HasComponent<CircleCollider>())
-			&& entity0->HasComponent<Position>()))
-		{
+		entity0 = entities->at(i);
+		if (!entity0->active ||
+			(!entity0->HasComponent<BoxCollider>() &&
+			 !entity0->HasComponent<CircleCollider>()) ||
+			!entity0->HasComponent<Position>()) {
 			continue;
 		}
 
-
-
-		for (size_t j = i + 1; j < entities->size(); ++j)
-		{
+		for (j = i + 1; j < entities->size(); ++j) {
 			// Check if entity is collider or not or if it's not active. Get the position and proper collider.
-			Entity* entity1 = entities->at(j);
-			if (!entity1->active) continue;
-			if (!((entity1->HasComponent<BoxCollider>() || entity1->HasComponent<CircleCollider>())
-				&& entity1->HasComponent<Position>()))
-			{
+			entity1 = entities->at(j);
+			if (!entity1->active ||
+				(!entity1->HasComponent<BoxCollider>() &&
+				 !entity1->HasComponent<CircleCollider>()) ||
+				!entity1->HasComponent<Position>()) {
 				continue;
 			}
-
 
 			// Box with Box Collision
 			if (entity0->HasComponent<BoxCollider>() && entity1->HasComponent<BoxCollider>()) {
@@ -91,123 +101,132 @@ void CollisionSystem::Update()
 					set_collision_status(box_a_collider, box_b_collider);
 				}
 			}
-			else if (entity0->HasComponent<CircleCollider>() && entity1->HasComponent<CircleCollider>())
-			{
-				CircleCollider* circle_collider0 = entity0->GetComponent<CircleCollider>();
-				Position* circle_position0 = entity0->GetComponent<Position>();
-				CircleCollider* circle_collider1 = entity1->GetComponent<CircleCollider>();
-				Position* circle_position1 = entity1->GetComponent<Position>();
-				vector2float collider0_point = { circle_position0->x , circle_position0->y };
-				vector2float collider1_point = { circle_position1->x , circle_position1->y };
+			else if (entity0->HasComponent<CircleCollider>() &&
+					 entity1->HasComponent<CircleCollider>()) {
+				CircleCollider *circle_collider0;
+				Position       *circle_position0;
+				CircleCollider *circle_collider1;
+				Position       *circle_position1;
+				vector2float   collider0_point;
+				vector2float   collider1_point;
+				float          d0;
+				float          d1;
+				float          distance;
+				float          diameter;
+				bool           is_colliding;
 
-				float d0 = AzurMath::find_distance_between_points(collider0_point, collider1_point);
-				float d1 = AzurMath::find_distance_between_points(collider1_point, collider0_point);
-				float distance = d0 > d1 ? d1 : d0;
-				float diameter = circle_collider0->radius + circle_collider1->radius;
-				bool is_colliding = distance < diameter;
-				if (is_colliding)
-				{
+				circle_collider0 = entity0->GetComponent<CircleCollider>();
+				circle_position0 = entity0->GetComponent<Position>();
+				circle_collider1 = entity1->GetComponent<CircleCollider>();
+				circle_position1 = entity1->GetComponent<Position>();
+				collider0_point  = { circle_position0->x , circle_position0->y };
+				collider1_point  = { circle_position1->x , circle_position1->y };
+				
+				d0 = AzurMath::find_distance_between_points(collider0_point, collider1_point);
+				d1 = AzurMath::find_distance_between_points(collider1_point, collider0_point);
+				distance = d0 > d1 ? d1 : d0;
+				diameter = circle_collider0->radius + circle_collider1->radius;
+				is_colliding = distance < diameter;
+				if (is_colliding) {
 					set_collision_status(circle_collider0, circle_collider1);
 				}
 			}
-			else if (entity0->HasComponent<CircleCollider>() && entity1->HasComponent<BoxCollider>()||
-					 entity0->HasComponent<BoxCollider>()    && entity1->HasComponent<CircleCollider>())
-			{
-				vector2float collision_point = {};
-				CircleCollider* circle_collider;
-				Position* circle_position;
-				BoxCollider* box_collider;
-				Position* box_position;
-				if (entity0->HasComponent<CircleCollider>())
-				{
+			else if (entity0->HasComponent<CircleCollider>() && entity1->HasComponent<BoxCollider>() ||
+					 entity0->HasComponent<BoxCollider>()    && entity1->HasComponent<CircleCollider>()) {
+				vector2float   collision_point;
+				CircleCollider *circle_collider;
+				Position       *circle_position;
+				BoxCollider    *box_collider;
+				Position       *box_position;
+				float          box_true_top;
+				float          box_true_right;
+				float          box_true_bottom;
+				float          box_true_left;
+
+				float circle_pos_x;
+				float circle_pos_y;
+
+				if (entity0->HasComponent<CircleCollider>()) {
 					circle_position = entity0->GetComponent<Position>();
 					circle_collider = (CircleCollider*)entity0->GetComponent<CircleCollider>();
 				}
-				else
-				{
+				else {
 					circle_position = entity1->GetComponent<Position>();
 					circle_collider = (CircleCollider*)entity1->GetComponent<CircleCollider>();
 				}
-				if (entity1->HasComponent<BoxCollider>())
-				{
+				if (entity1->HasComponent<BoxCollider>()) {
 					box_position = entity1->GetComponent<Position>();
 					box_collider = (BoxCollider*)entity1->GetComponent<BoxCollider>();
 				}
-				else
-				{
+				else {
 					box_position = entity0->GetComponent<Position>();
 					box_collider = (BoxCollider*)entity0->GetComponent<BoxCollider>();
 				}
 
-				float box_true_top    = box_collider->get_true_top(box_position);
-				float box_true_right  = box_collider->get_true_right(box_position);
-				float box_true_bottom = box_collider->get_true_bottom(box_position);
-				float box_true_left   = box_collider->get_true_left(box_position);
+				box_true_top    = box_collider->get_true_top(box_position);
+				box_true_right  = box_collider->get_true_right(box_position);
+				box_true_bottom = box_collider->get_true_bottom(box_position);
+				box_true_left   = box_collider->get_true_left(box_position);
 
-				float circle_pos_x = circle_position->x;
-				float circle_pos_y = circle_position->y;
+				circle_pos_x = circle_position->x;
+				circle_pos_y = circle_position->y;
 
-				if (box_true_top <= circle_pos_y && box_true_bottom >= circle_pos_y &&
-					box_position->x >= circle_pos_x)
-				{
+				if (box_true_top <= circle_pos_y &&
+					box_true_bottom >= circle_pos_y &&
+					box_position->x >= circle_pos_x) {
 					collision_point.x = box_true_left;
 					collision_point.y = circle_pos_y;
-				}
-				else if (box_true_top <= circle_pos_y && box_true_bottom >= circle_pos_y &&
-					box_position->x <= circle_pos_x)
-				{
+				} else if (box_true_top    <= circle_pos_y &&
+						   box_true_bottom >= circle_pos_y &&
+						   box_position->x <= circle_pos_x) {
 					collision_point.x = box_true_right;
 					collision_point.y = circle_pos_y;
-				}
-				else if (box_true_left <= circle_pos_x && box_true_right >= circle_pos_x &&
-					box_position->y >= circle_pos_y)
-				{
+				} else if (box_true_left   <= circle_pos_x &&
+						   box_true_right  >= circle_pos_x &&
+					       box_position->y >= circle_pos_y) {
 					collision_point.x = circle_pos_x;
 					collision_point.y = box_true_top;
-				}
-				else if (box_true_left <= circle_pos_x && box_true_right >= circle_pos_x &&
-					box_position->y <= circle_pos_y)
-				{
+				} else if (box_true_left <= circle_pos_x &&
+						   box_true_right >= circle_pos_x &&
+						   box_position->y <= circle_pos_y) {
 					collision_point.x = circle_pos_x;
 					collision_point.y = box_true_bottom;
-				}
-				// top left
-				else if (box_true_bottom <= circle_pos_y && box_true_right <= circle_pos_x)
-				{
+				} else if (box_true_bottom <= circle_pos_y &&
+						 box_true_right <= circle_pos_x) { // top left
 					collision_point.x = box_true_right;
 					collision_point.y = box_true_bottom;
-				}
-				// top right
-				else if (box_true_bottom <= circle_pos_y && box_true_left >= circle_pos_x)
-				{
+				} else if (box_true_bottom <= circle_pos_y &&
+						   box_true_left >= circle_pos_x) { // top right
 					collision_point.x = box_true_left;
 					collision_point.y = box_true_bottom;
-				}
-				// bottom left
-				else if (box_true_top >= circle_pos_y && box_true_right <= circle_pos_x)
-				{
+				} else if (box_true_top >= circle_pos_y &&
+						   box_true_right <= circle_pos_x) { // bottom left
 					collision_point.x = box_true_right;
 					collision_point.y = box_true_top;
-				}
-				// bottom right
-				else if (box_true_top >= circle_pos_y && box_true_left >= circle_pos_x)
-				{
+				} else if (box_true_top >= circle_pos_y &&
+						   box_true_left >= circle_pos_x) { // bottom right
 					collision_point.x = box_true_left;
 					collision_point.y = box_true_top;
 				}
 
+				vector2float circle_pos_vector;
+				float        d0;
+				float        d1;
+				float        distance;
+				float        radius;
+				bool         is_colliding;
 
+				circle_pos_vector.x = circle_pos_x;
+				circle_pos_vector.y = circle_pos_y;
+				d0 = AzurMath::find_distance_between_points(circle_pos_vector, collision_point);
+				d1 = AzurMath::find_distance_between_points(collision_point, circle_pos_vector);
+				distance = d0 > d1 ? d1 : d0;
+				radius = circle_collider->radius;
 
-				vector2float circle_pos_vector = { circle_pos_x , circle_pos_y };
-				float d0 = AzurMath::find_distance_between_points(circle_pos_vector, collision_point);
-				float d1 = AzurMath::find_distance_between_points(collision_point, circle_pos_vector);
-				float distance = d0 > d1 ? d1 : d0;
-				float radius = circle_collider->radius;
-				bool is_colliding = distance < radius ||
-					circle_pos_x >= box_true_left && circle_pos_x <= box_true_right &&
-					circle_pos_y <= box_true_bottom && circle_pos_x >= box_true_top;
-				if (is_colliding)
-				{
+				is_colliding = distance < radius ||
+				               circle_pos_x >= box_true_left && circle_pos_x <= box_true_right &&
+				               circle_pos_y <= box_true_bottom && circle_pos_x >= box_true_top;
+				if (is_colliding) {
 					set_collision_status(circle_collider, box_collider);
 				}
 			}
