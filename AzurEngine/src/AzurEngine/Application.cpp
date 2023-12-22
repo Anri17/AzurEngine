@@ -92,7 +92,7 @@ namespace AzurEngine {
 		
 		Application::renderer = SDL_CreateRenderer(Application::window, -1, 0);
 		if (!Application::renderer) {
-			std::string err = std::string("Renderer Creation Error: ") + IMG_GetError();
+			err = std::string("Renderer Creation Error: ") + IMG_GetError();
 			ERROR_EXIT(err.c_str());
 		}
 	}
