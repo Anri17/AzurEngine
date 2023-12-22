@@ -74,28 +74,28 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)dependencies\SDL2\include;$(SolutionDir)dependencies\SDL2_image\include;$(SolutionDir)dependencies\SDL2_mixer\include;$(SolutionDir)dependencies\SDL2_ttf\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dependencies\SDL2\include;$(SolutionDir)dependencies\SDL2_image\include;$(SolutionDir)dependencies\SDL2_mixer\include;$(SolutionDir)dependencies\SDL2_ttf\include;$(SolutionDir)dependencies\glad\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dependencies\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)dependencies\SDL2\include;$(SolutionDir)dependencies\SDL2_image\include;$(SolutionDir)dependencies\SDL2_mixer\include;$(SolutionDir)dependencies\SDL2_ttf\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dependencies\SDL2\include;$(SolutionDir)dependencies\SDL2_image\include;$(SolutionDir)dependencies\SDL2_mixer\include;$(SolutionDir)dependencies\SDL2_ttf\include;$(SolutionDir)dependencies\glad\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dependencies\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)dependencies\SDL2\include;$(SolutionDir)dependencies\SDL2_image\include;$(SolutionDir)dependencies\SDL2_mixer\include;$(SolutionDir)dependencies\SDL2_ttf\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dependencies\SDL2\include;$(SolutionDir)dependencies\SDL2_image\include;$(SolutionDir)dependencies\SDL2_mixer\include;$(SolutionDir)dependencies\SDL2_ttf\include;$(SolutionDir)dependencies\glad\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dependencies\SDL2\lib\x64;$(SolutionDir)dependencies\SDL2_image\lib\x64;$(SolutionDir)dependencies\SDL2_mixer\lib\x64;$(SolutionDir)dependencies\SDL2_ttf\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)dependencies\SDL2\include;$(SolutionDir)dependencies\SDL2_image\include;$(SolutionDir)dependencies\SDL2_mixer\include;$(SolutionDir)dependencies\SDL2_ttf\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dependencies\SDL2\include;$(SolutionDir)dependencies\SDL2_image\include;$(SolutionDir)dependencies\SDL2_mixer\include;$(SolutionDir)dependencies\SDL2_ttf\include;$(SolutionDir)dependencies\glad\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dependencies\SDL2\lib\x64;$(SolutionDir)dependencies\SDL2_image\lib\x64;$(SolutionDir)dependencies\SDL2_mixer\lib\x64;$(SolutionDir)dependencies\SDL2_ttf\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -181,6 +181,7 @@
     <ClCompile Include="src\AzurEngine\ECS\Entity.cpp" />
     <ClCompile Include="src\AzurEngine\ECS\Manager.cpp" />
     <ClCompile Include="src\AzurEngine\ECS\Tag.h" />
+    <ClCompile Include="src\AzurEngine\glad.c" />
     <ClCompile Include="src\AzurEngine\InputHandler.cpp" />
     <ClCompile Include="src\AzurEngine\AzurLib\AzurMath.cpp" />
     <ClCompile Include="src\AzurEngine\Mouse.cpp" />

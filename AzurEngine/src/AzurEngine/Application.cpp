@@ -1,8 +1,10 @@
 #include "Application.h"
 
+#include <stdio.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
+#include <glad/glad.h>
 #include <vector>
 #include <map>
 #include <cstring>
@@ -37,27 +39,60 @@
 
 
 
-namespace AzurEngine
-{
+namespace AzurEngine {
 
+
+	// Initialise libraries, create the window and renderer, set initial program and system states.
+	// Initialise SDL, TTF, IMG
 	void application_init() {
-		// Initialise libraries, create the window and renderer, set initial program and system states.
-			// Initialise SDL, TTF, IMG
-		SDL_Init(SDL_INIT_EVERYTHING);
+		std::string err;
+
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+
+		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+			err = std::string("SDL_Init Error: ") + SDL_GetError();
+			ERROR_EXIT(err.c_str());
+		}
 		if (TTF_Init() == -1) {
-			std::string err = std::string("TTF_Init Error: ") + TTF_GetError();
+			err = std::string("TTF_Init Error: ") + TTF_GetError();
 			ERROR_EXIT(err.c_str());
 		}
 		if (!IMG_Init(IMG_INIT_PNG)) {
-			std::string err = std::string("IMG_Init Error: ") + IMG_GetError();
+			err = std::string("IMG_Init Error: ") + IMG_GetError();
 			ERROR_EXIT(err.c_str());
 		}
+
 		// Create Window, Renderer & Event
-		if (!(Application::window = SDL_CreateWindow("Azur Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Application::current_window_width, Application::current_window_height, SDL_WINDOW_OPENGL))) {
-			std::string err = std::string("Window Creation Error: ") + IMG_GetError();
+		Application::window = SDL_CreateWindow(
+			"Azur Engine",
+			SDL_WINDOWPOS_CENTERED,
+			SDL_WINDOWPOS_CENTERED,
+			Application::current_window_width,
+			Application::current_window_height,
+			SDL_WINDOW_OPENGL);
+		if (!Application::window) {
+			err = std::string("Window Creation Error: ") + IMG_GetError();
 			ERROR_EXIT(err.c_str());
 		}
-		if (!(Application::renderer = SDL_CreateRenderer(Application::window, -1, 0))) {
+
+		// opengl
+		SDL_GL_CreateContext(Application::window);
+		if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
+			err = std::string("Failed to load GL: ") + IMG_GetError();
+			ERROR_EXIT(err.c_str());
+		}
+
+		// Display OpenGL Information
+		puts("OpenGL Loaded");
+	
+		printf("Vendor:   %s\n", glGetString(GL_VENDOR));
+		printf("Renderer: %s\n", glGetString(GL_RENDERER));
+		printf("Version:  %s\n", glGetString(GL_VERSION));
+		
+		Application::renderer = SDL_CreateRenderer(Application::window, -1, 0);
+		if (!Application::renderer) {
 			std::string err = std::string("Renderer Creation Error: ") + IMG_GetError();
 			ERROR_EXIT(err.c_str());
 		}
