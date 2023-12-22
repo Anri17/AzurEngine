@@ -62,11 +62,11 @@ void UISystem::Update()
 	current_frame_text->SetMessage(std::string("CurrentFrame: " + std::to_string(AzurEngine::Application::current_frame)));
 	mouse_x_text->SetMessage(std::string("MouseX: " + std::to_string(AzurEngine::Application::mouse.xPos)));
 	mouse_y_text->SetMessage(std::string("MouseY: " + std::to_string(AzurEngine::Application::mouse.yPos)));
-	if (AzurEngine::Application::playerEntity->active)
+	if (AzurEngine::Application::entity_player->active)
 	{
-		player_x_text->SetMessage(std::string("PlayerX: " + std::to_string(AzurEngine::Application::playerComponent->position->x)));
-		player_y_text->SetMessage(std::string("PlayerY: " + std::to_string(AzurEngine::Application::playerComponent->position->y)));
-		player_lives_text->SetMessage(std::string("Player Lives: " + std::to_string(AzurEngine::Application::playerComponent->lives)));
+		player_x_text->SetMessage(std::string("PlayerX: " + std::to_string(AzurEngine::Application::component_player->position->x)));
+		player_y_text->SetMessage(std::string("PlayerY: " + std::to_string(AzurEngine::Application::component_player->position->y)));
+		player_lives_text->SetMessage(std::string("Player Lives: " + std::to_string(AzurEngine::Application::component_player->lives)));
 	}
 	if (AzurDebug::debug_mode)
 	{

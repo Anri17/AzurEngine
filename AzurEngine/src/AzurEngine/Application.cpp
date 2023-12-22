@@ -33,7 +33,7 @@
 // TODO: What this means is that the values are specific to the need of the applicaiton, but they are needed none the less
 //       in every application
 #define WINDOW_ASPECT_RATION (3/4)
-#define FPS_TARGET 60
+#define FPS_TARGET 120
 #define INPUT_MANAGER_KEY_COUNT 1024
 
 
@@ -98,6 +98,38 @@ namespace AzurEngine {
 		}
 	}
 
+	void game_init() {
+
+
+		// Create the Systems
+		SpriteSystem::Instance = new SpriteSystem();
+		BulletSystem::Instance = new BulletSystem();
+		StageSystem::Instance = new StageSystem();
+		UISystem::Instance = new UISystem();
+		CollisionSystem::Instance = new CollisionSystem();
+
+		// TODO: Tie the game Entities and Systems to a Scene Class Instance.
+		// Initialize the Systems
+		for (ECS::ISystem *system : Application::systems) {
+			system->Init();
+		}
+
+		// Initialise entities
+		Application::entity_playfield = AssetManager::CreatePlayFieldEntity("PlayField");
+		Application::entity_player = AssetManager::CreatePlayerEntity("Player", ECS::Tag::PLAYER);
+		Application::entity_bulletspawner = AssetManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 180, ECS::Tag::ENEMY);
+		// Get components from entities
+		Application::component_player = Application::entity_player->GetComponent<Player>();
+
+		// Create a Stage Component. Most of the gameplayer logic goes here.
+		// TODO: In the future, I want to somehow save and load a stage data into a file and into the game
+		// TODO: This is so that I can later save the game, but also create a stage editor.
+		// START: RESUME DEVELOPMENT FROM HERE
+		Entity *stageEntity = new Entity();
+		stageEntity->name = "Stage";
+		ECS::Manager::AddEntity(stageEntity);
+
+	}
 
 	Application* app;
 
@@ -110,71 +142,28 @@ namespace AzurEngine {
 	// I.E.: Rendering of Text to Renderer
 	// I.E.: Movement of Bullets with BulletManager
 	// I.E.: Spawning of Shot with ShotManager
-	int Application::Start()
-	{
+	int Application::Start() {
+		SDL_Event e;
+		bool      application_is_running;
+		Uint32    loop_time_start;
+		Uint32    loop_time_end;
+		Uint32    loop_time_elapsed;
+
+		// Initializse Systems
 		application_init();
-
-
-
-
-
-		SDL_Event e; // used for input events
-		// The running state of the applications
-		bool application_is_running = true;
-
-		// Create the Systems
-		SpriteSystem::Instance = new SpriteSystem();
-		BulletSystem::Instance = new BulletSystem();
-		StageSystem::Instance = new StageSystem();
-		UISystem::Instance = new UISystem();
-		CollisionSystem::Instance = new CollisionSystem();
-
-		// TODO: Tie the game Entities and Systems to a Scene Class Instance.
-		// Initialize the Systems
-		for (ECS::ISystem* system : systems)
-		{
-			system->Init();
-		}
-
-
-		// 
-		// 
-		// Initialise Mouse
-		playFieldEntity = AssetManager::CreatePlayFieldEntity("PlayField");
-		playerEntity = AssetManager::CreatePlayerEntity("Player", ECS::Tag::PLAYER);
-		playerComponent = playerEntity->GetComponent<Player>();
-		BulletSpawnerEntity = AssetManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 180, ECS::Tag::ENEMY);
-
-
-
-
-
-		// Create a Stage Component. Most of the gameplayer logic goes here.
-		// TODO: In the future, I want to somehow save and load a stage data into a file and into the game
-		// TODO: This is so that I can later save the game, but also create a stage editor.
-		// START: RESUME DEVELOPMENT FROM HERE
-		Entity* stageEntity = new Entity();
-		stageEntity->name = "Stage";
-		ECS::Manager::AddEntity(stageEntity);
-		// Azur Debug
+		game_init();
 		AzurDebug::init();
 
-		// The Application Loop
-		// FPS Calculation Variables
-		current_frame = 0;
-		Uint32 previousTime = SDL_GetTicks();
-		Uint32 currentTime = SDL_GetTicks();
-		while (application_is_running)
-		{
-			// Abstract SDL events into engine components and systems
-			// Reset First Tap Event
-			// First Tap variables of the InputHandler are only true on the first frame when the keys are pressed.
+		// Start main loop
+		current_frame          = 0;
+		application_is_running = true;
+		while (application_is_running) {
+			loop_time_start = SDL_GetTicks(); // the time at the start of the loop
+
 			InputHandler::UpdateResetFirstTaps();
 			// Process SDL Events
-			while (SDL_PollEvent(&e))
-			{
-				switch (e.type)
-				{
+			while (SDL_PollEvent(&e)) {
+				switch (e.type) {
 					// Window Events
 					case SDL_QUIT: {
 						application_is_running = false;
@@ -200,18 +189,17 @@ namespace AzurEngine {
 			//
 
 
-			Application::Update(current_frame, mouse, application_is_running, *playerComponent, playerEntity);
+			Application::Update(current_frame, mouse, application_is_running, *component_player, entity_player);
 			Application::Render();
 
 
 			// Calculate FPS
-			currentTime = SDL_GetTicks();
-			if (currentTime - previousTime < 1000.0f / FPS_TARGET)
-			{
-				SDL_Delay((Uint32)(1000.0f / FPS_TARGET) - currentTime + previousTime);
+			loop_time_end = SDL_GetTicks(); // the time at the end of the loop
+			loop_time_elapsed = loop_time_end - loop_time_start;
+			if (loop_time_elapsed < 1000.0f / FPS_TARGET) {
+				SDL_Delay((Uint32)(1000.0f / FPS_TARGET) - loop_time_elapsed);
 			}
-			current_frame++;
-			previousTime = SDL_GetTicks();
+			++current_frame;
 		}
 
 

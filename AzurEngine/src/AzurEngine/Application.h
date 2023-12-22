@@ -37,10 +37,10 @@ namespace AzurEngine
 		// Game Assets
 		// This will need to be separated to another class for the Scene
 
-		inline static Entity* playFieldEntity;
-		inline static Entity* playerEntity;
-		inline static Player* playerComponent;
-		inline static Entity* BulletSpawnerEntity;
+		inline static Entity* entity_playfield;
+		inline static Entity* entity_player;
+		inline static Player* component_player;
+		inline static Entity* entity_bulletspawner;
 
 		inline static Uint64 current_frame;
 		inline static Mouse mouse;
