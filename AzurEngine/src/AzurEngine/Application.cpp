@@ -65,13 +65,12 @@ namespace AzurEngine {
 		}
 
 		// Create Window, Renderer & Event
-		Application::window = SDL_CreateWindow(
-			"Azur Engine",
-			SDL_WINDOWPOS_CENTERED,
-			SDL_WINDOWPOS_CENTERED,
-			Application::current_window_width,
-			Application::current_window_height,
-			SDL_WINDOW_OPENGL);
+		Application::window = SDL_CreateWindow("Azur Engine",
+		                                       SDL_WINDOWPOS_CENTERED,
+		                                       SDL_WINDOWPOS_CENTERED,
+		                                       Application::current_window_width,
+		                                       Application::current_window_height,
+		                                       SDL_WINDOW_OPENGL);
 		if (!Application::window) {
 			err = std::string("Window Creation Error: ") + IMG_GetError();
 			ERROR_EXIT(err.c_str());
@@ -99,13 +98,11 @@ namespace AzurEngine {
 	}
 
 	void game_init() {
-
-
 		// Create the Systems
-		SpriteSystem::Instance = new SpriteSystem();
-		BulletSystem::Instance = new BulletSystem();
-		StageSystem::Instance = new StageSystem();
-		UISystem::Instance = new UISystem();
+		SpriteSystem::Instance    = new SpriteSystem();
+		BulletSystem::Instance    = new BulletSystem();
+		StageSystem::Instance     = new StageSystem();
+		UISystem::Instance        = new UISystem();
 		CollisionSystem::Instance = new CollisionSystem();
 
 		// TODO: Tie the game Entities and Systems to a Scene Class Instance.
@@ -115,9 +112,13 @@ namespace AzurEngine {
 		}
 
 		// Initialise entities
-		Application::entity_playfield = AssetManager::CreatePlayFieldEntity("PlayField");
-		Application::entity_player = AssetManager::CreatePlayerEntity("Player", ECS::Tag::PLAYER);
-		Application::entity_bulletspawner = AssetManager::CreateBulletSpawnerEntity("Bullet Spawner", 320, 180, ECS::Tag::ENEMY);
+		Application::entity_playfield     = AssetManager::CreatePlayFieldEntity("PlayField");
+		Application::entity_player        = AssetManager::CreatePlayerEntity("Player",
+		                                                                     ECS::Tag::PLAYER);
+		Application::entity_bulletspawner = AssetManager::CreateBulletSpawnerEntity("Bullet Spawner",
+		                                                                            320,
+		                                                                            180,
+		                                                                            ECS::Tag::ENEMY);
 		// Get components from entities
 		Application::component_player = Application::entity_player->GetComponent<Player>();
 
@@ -128,7 +129,6 @@ namespace AzurEngine {
 		Entity *stageEntity = new Entity();
 		stageEntity->name = "Stage";
 		ECS::Manager::AddEntity(stageEntity);
-
 	}
 
 	Application* app;
