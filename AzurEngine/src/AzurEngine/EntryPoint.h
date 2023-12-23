@@ -2,8 +2,7 @@
 
 #include "Application.h"
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
 	AzurEngine::app = AzurEngine::CreateApplication();
 
 	int result = AzurEngine::app->Start();

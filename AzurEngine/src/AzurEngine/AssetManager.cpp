@@ -1,7 +1,12 @@
 #include "AssetManager.h"
 
-Entity* AssetManager::CreateBulletEntityA(std::string name, float spawn_x, float spawn_y, ECS::Tag tag, float speed, float angle, BulletType bulletType)
-{
+Entity* AssetManager::CreateBulletEntityA(std::string name,
+										  float       spawn_x,
+										  float       spawn_y,
+										  ECS::Tag    tag,
+										  float       speed,
+										  float       angle,
+										  BulletType  bulletType) {
 	// TODO: The bullet Type is given but used, for now.
 	// 
 	// TODO: There is going to be a list of bullet types. This means that I need to check every type and then get the right eindex of bullet to then spawn it.
@@ -28,16 +33,23 @@ Entity* AssetManager::CreateBulletEntityA(std::string name, float spawn_x, float
 	return entity;
 }
 
-Entity* AssetManager::CreateBulletSpawnerEntity(std::string name, float spawn_x, float spawn_y, ECS::Tag tag)
-{
-	// Initialise Bullet with ECS
-	Entity* entity = new Entity();
+Entity* AssetManager::CreateBulletSpawnerEntity(std::string name,
+												float       spawn_x,
+												float       spawn_y,
+												ECS::Tag    tag) {
+	Entity        *entity;
+	Position      *position;
+	BulletSpawner *bulletSpawner;
+
+	entity        = new Entity();
+	position      = entity->AddComponent<Position>();
+	bulletSpawner = entity->AddComponent<BulletSpawner>();
+	
 	entity->name = name;
-	entity->tag = tag;
-	Position* position = entity->AddComponent<Position>();
-	position->x = spawn_x;
-	position->y = spawn_y;
-	BulletSpawner* bulletSpawner = entity->AddComponent<BulletSpawner>();
+	entity->tag  = tag;
+	position->x  = spawn_x;
+	position->y  = spawn_y;
+	
 	ECS::Manager::AddEntity(entity);
 
 	return entity;

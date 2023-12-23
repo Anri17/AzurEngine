@@ -41,7 +41,6 @@
 
 namespace AzurEngine {
 
-
 	// Initialise libraries, create the window and renderer, set initial program and system states.
 	// Initialise SDL, TTF, IMG
 	void application_init() {
@@ -58,6 +57,11 @@ namespace AzurEngine {
 		if (!IMG_Init(IMG_INIT_PNG)) {
 			ERROR_EXIT("IMG_Init Error: %s", IMG_GetError());
 		}
+
+		Application::screen_resolution     = RES_800x600;
+		Application::current_window_width  = 800;
+		Application::current_window_height = 600;
+		Application::current_window_ratio  = 0.75f; // 4:3
 
 		// Create Window, Renderer & Event
 		Application::window = SDL_CreateWindow("Azur Engine",
@@ -215,70 +219,66 @@ namespace AzurEngine {
 		return 0;
 	}
 
+	void application_changeresolution(SCREEN_RESOLUTION screen_resolution) {
+		int              window_pos_x;
+		int              window_pos_y;
+		SDL_DisplayMode display_mode;
+
+		// Change Resolution
+		Application::screen_resolution = screen_resolution;
+		switch (screen_resolution) {
+		case RES_640x480: {
+			Application::current_window_width  = 640;
+			Application::current_window_height = 480;
+		} break;
+		case RES_800x600: {
+			Application::current_window_width  = 800;
+			Application::current_window_height = 600;
+		} break;
+		case RES_1024x768: {
+			Application::current_window_width  = 1024;
+			Application::current_window_height = 768;
+		} break;
+		default: {
+			ERROR_EXIT("Unknown Resolution...\n");
+		}
+		}
+		SDL_SetWindowSize(Application::window, Application::current_window_width, Application::current_window_height);
+
+		// Reset Windows Position
+		SDL_GetCurrentDisplayMode(0, &display_mode);
+		window_pos_x = (display_mode.w / 2) - (Application::current_window_width / 2);
+		window_pos_y = (display_mode.h / 2) - (Application::current_window_height / 2);
+		SDL_SetWindowPosition(Application::window, window_pos_x, window_pos_y);
+	}
 
 	// TODO: Simplify the parameters here.
-	void Application::Update(Uint64& current_frame, Mouse& mouse, bool& application_is_running, Player& playerComponent, Entity* playerEntity)
-	{
-		// Update Game and Application States
-			// Update Systems
-		for (ECS::ISystem* system : systems)
-		{
+	void Application::Update(Uint64 &current_frame,
+							 Mouse  &mouse,
+							 bool   &application_is_running,
+							 Player &playerComponent,
+							 Entity *playerEntity) {
+		// Update Systems
+		for (ECS::ISystem* system : systems) {
 			system->Update();
 		}
-		// Application Level Update
 		mouse.Update();
-		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) application_is_running = false;
-		// Game Level Update
-		// TODO: Change the update from entities to systems
-		ECS::Manager::Update();
+		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) {
+			application_is_running = false;
+		}
 
+		ECS::Manager::Update();
+		
 		// Change Window Resolution
-		if (InputHandler::GetKeyTap(InputHandler::KEY_1))
-		{
-			// TODO: Extract this into a SetResolutionFunction(WIdht, Height);
-			int prev_window_width = Application::current_window_width;
-			int prev_window_height = Application::current_window_height;
-			Application::current_window_width = 640;
-			Application::current_window_height = 480;
-			int window_pos_x;
-			int window_pos_y;
-			SDL_GetWindowPosition(window, &window_pos_x, &window_pos_y);
-			window_pos_x = window_pos_x - ((Application::current_window_width - prev_window_width) / 2);
-			window_pos_y = window_pos_y - ((Application::current_window_height - prev_window_height) / 2);
-			SDL_SetWindowPosition(window, window_pos_x, window_pos_y);
-			SDL_SetWindowSize(Application::window, Application::current_window_width, Application::current_window_height);
+		if (InputHandler::GetKeyTap(InputHandler::KEY_1)) {
+			application_changeresolution(RES_640x480);
 		}
-		if (InputHandler::GetKeyTap(InputHandler::KEY_2))
-		{
-			// TODO: Extract this into a SetResolutionFunction(WIdht, Height);
-			int prev_window_width = Application::current_window_width;
-			int prev_window_height = Application::current_window_height;
-			Application::current_window_width = 800;
-			Application::current_window_height = 600;
-			int window_pos_x;
-			int window_pos_y;
-			SDL_GetWindowPosition(window, &window_pos_x, &window_pos_y);
-			window_pos_x = window_pos_x - ((Application::current_window_width - prev_window_width) / 2);
-			window_pos_y = window_pos_y - ((Application::current_window_height - prev_window_height) / 2);
-			SDL_SetWindowPosition(window, window_pos_x, window_pos_y);
-			SDL_SetWindowSize(Application::window, Application::current_window_width, Application::current_window_height);
+		if (InputHandler::GetKeyTap(InputHandler::KEY_2)) {
+			application_changeresolution(RES_800x600);
 		}
-		if (InputHandler::GetKeyTap(InputHandler::KEY_3))
-		{
-			// TODO: Extract this into a SetResolutionFunction(WIdht, Height);
-			int prev_window_width = Application::current_window_width;
-			int prev_window_height = Application::current_window_height;
-			Application::current_window_width = 1024;
-			Application::current_window_height = 768;
-			int window_pos_x;
-			int window_pos_y;
-			SDL_GetWindowPosition(window, &window_pos_x, &window_pos_y);
-			window_pos_x = window_pos_x - ((Application::current_window_width - prev_window_width) / 2);
-			window_pos_y = window_pos_y - ((Application::current_window_height - prev_window_height) / 2);
-			SDL_SetWindowPosition(window, window_pos_x, window_pos_y);
-			SDL_SetWindowSize(Application::window, Application::current_window_width, Application::current_window_height);
+		if (InputHandler::GetKeyTap(InputHandler::KEY_3)) {
+			application_changeresolution(RES_1024x768);
 		}
-		// Azur Debug
 		AzurDebug::update();
 	}
 

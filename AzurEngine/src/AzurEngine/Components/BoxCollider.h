@@ -4,8 +4,7 @@
 #include "Collider.h"
 #include "./../AzurLib.h"
 
-class BoxCollider : public Collider
-{
+class BoxCollider : public Collider {
 public:
 	void Init() override;
 

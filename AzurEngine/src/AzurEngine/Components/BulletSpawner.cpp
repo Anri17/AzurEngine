@@ -7,6 +7,7 @@ void BulletSpawner::Init()
 	position = entity->GetComponent<Position>();
 	frame = 0;
 	bullet_angle = 0.0f;
+	full_pattern_angle_offset = 0;
 }
 
 void BulletSpawner::Update()
