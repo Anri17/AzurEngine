@@ -122,31 +122,14 @@ namespace AzurEngine {
 		ECS::Manager::AddEntity(stageEntity);
 	}
 
-	Application* app;
-
-	// TODO: These systems can then be extracted such that they are modules of the engine. A tetris game might not need a bullet system, for example
-	// TODO: This also means that the engine could potentially allowfor the creation of 3d games. As the 3d Rendering and world would be in their own packages
-	// TODO: extract the logic from the components into their own separate system
-	// I.E.: Rendering of sprites and position to Renderer
-	// I.E.: Collider Calculations to ColliderManager
-	// 
-	// I.E.: Rendering of Text to Renderer
-	// I.E.: Movement of Bullets with BulletManager
-	// I.E.: Spawning of Shot with ShotManager
-	int Application::Start() {
+	void application_mainloop() {
 		SDL_Event e;
 		bool      application_is_running;
 		Uint32    loop_time_start;
 		Uint32    loop_time_end;
 		Uint32    loop_time_elapsed;
 
-		// Initializse Systems
-		application_init();
-		game_init();
-		AzurDebug::init();
-
-		// Start main loop
-		current_frame          = 0;
+		Application::current_frame = 0;
 		application_is_running = true;
 		while (application_is_running) {
 			loop_time_start = SDL_GetTicks(); // the time at the start of the loop
@@ -156,15 +139,15 @@ namespace AzurEngine {
 			while (SDL_PollEvent(&e)) {
 				switch (e.type) {
 					// Window Events
-					case SDL_QUIT: {
-						application_is_running = false;
-					} break;
-					case SDL_KEYDOWN: {
-						InputHandler::UpdateSDLKeydownEvents(e.key.keysym.sym);
-					} break;
-					case SDL_KEYUP: {
-						InputHandler::UpdateSDLKeyupEvents(e.key.keysym.sym);
-					} break;
+				case SDL_QUIT: {
+					application_is_running = false;
+				} break;
+				case SDL_KEYDOWN: {
+					InputHandler::UpdateSDLKeydownEvents(e.key.keysym.sym);
+				} break;
+				case SDL_KEYUP: {
+					InputHandler::UpdateSDLKeyupEvents(e.key.keysym.sym);
+				} break;
 				}
 			}
 
@@ -176,11 +159,10 @@ namespace AzurEngine {
 			// If I have a system with the components that it needs, then I don't really need to import a component to a scene
 			// What tis means is that I just have the dependency for the scenes, which as a dependency for the components
 			// This makes the dependency part easier.
-			// 
-			//
-
-
-			Application::Update(current_frame, mouse, application_is_running, *component_player, entity_player);
+			Application::Update(Application::current_frame,
+								Application::mouse, application_is_running,
+								*Application::component_player,
+								Application::entity_player);
 			Application::Render();
 
 
@@ -190,14 +172,13 @@ namespace AzurEngine {
 			if (loop_time_elapsed < 1000.0f / FPS_TARGET) {
 				SDL_Delay((Uint32)(1000.0f / FPS_TARGET) - loop_time_elapsed);
 			}
-			++current_frame;
+			++Application::current_frame;
 		}
+	}
 
-
-		// Memory Cleaning
+	void application_cleanup() {
 		// Clear Systems
-		for (ECS::ISystem* system : systems)
-		{
+		for (ECS::ISystem *system : Application::systems) {
 			delete system;
 		}
 		// Clear Entity Vector
@@ -210,9 +191,30 @@ namespace AzurEngine {
 		SDL_Quit();
 		TTF_Quit();
 		IMG_Quit();
+	}
+
+	Application* app;
+
+	// TODO: These systems can then be extracted such that they are modules of the engine. A tetris game might not need a bullet system, for example
+	// TODO: This also means that the engine could potentially allowfor the creation of 3d games. As the 3d Rendering and world would be in their own packages
+	// TODO: extract the logic from the components into their own separate system
+	// I.E.: Rendering of sprites and position to Renderer
+	// I.E.: Collider Calculations to ColliderManager
+	// 
+	// I.E.: Rendering of Text to Renderer
+	// I.E.: Movement of Bullets with BulletManager
+	// I.E.: Spawning of Shot with ShotManager
+	int Application::Start() {
+		// Initializse Systems
+		application_init();
+		game_init();
+		AzurDebug::init();
+		application_mainloop();
+		application_cleanup();
 
 		return 0;
 	}
+
 
 	// TODO: Simplify the parameters here.
 	void Application::Update(Uint64& current_frame, Mouse& mouse, bool& application_is_running, Player& playerComponent, Entity* playerEntity)
