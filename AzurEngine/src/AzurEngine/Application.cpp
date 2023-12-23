@@ -45,23 +45,18 @@ namespace AzurEngine {
 	// Initialise libraries, create the window and renderer, set initial program and system states.
 	// Initialise SDL, TTF, IMG
 	void application_init() {
-		std::string err;
-
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
 		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-			err = std::string("SDL_Init Error: ") + SDL_GetError();
-			ERROR_EXIT(err.c_str());
+			ERROR_EXIT("SDL_Init Error : %s", SDL_GetError());
 		}
 		if (TTF_Init() == -1) {
-			err = std::string("TTF_Init Error: ") + TTF_GetError();
-			ERROR_EXIT(err.c_str());
+			ERROR_EXIT("TTF_Init Error: %s",  TTF_GetError());
 		}
 		if (!IMG_Init(IMG_INIT_PNG)) {
-			err = std::string("IMG_Init Error: ") + IMG_GetError();
-			ERROR_EXIT(err.c_str());
+			ERROR_EXIT("IMG_Init Error: %s", IMG_GetError());
 		}
 
 		// Create Window, Renderer & Event
@@ -72,28 +67,24 @@ namespace AzurEngine {
 		                                       Application::current_window_height,
 		                                       SDL_WINDOW_OPENGL);
 		if (!Application::window) {
-			err = std::string("Window Creation Error: ") + IMG_GetError();
-			ERROR_EXIT(err.c_str());
+			ERROR_EXIT("Window Creation Error: %s", IMG_GetError());
 		}
 
 		// opengl
 		SDL_GL_CreateContext(Application::window);
 		if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
-			err = std::string("Failed to load GL: ") + IMG_GetError();
-			ERROR_EXIT(err.c_str());
+			ERROR_EXIT("Failed to load GL: %s", IMG_GetError());
 		}
 
 		// Display OpenGL Information
 		puts("OpenGL Loaded");
-	
 		printf("Vendor:   %s\n", glGetString(GL_VENDOR));
 		printf("Renderer: %s\n", glGetString(GL_RENDERER));
 		printf("Version:  %s\n", glGetString(GL_VERSION));
 		
 		Application::renderer = SDL_CreateRenderer(Application::window, -1, 0);
 		if (!Application::renderer) {
-			err = std::string("Renderer Creation Error: ") + IMG_GetError();
-			ERROR_EXIT(err.c_str());
+			ERROR_EXIT("Renderer Creation Error: %s", IMG_GetError());
 		}
 	}
 
