@@ -115,7 +115,7 @@ void Player::Update()
 		Collider* c = collider->collider_references[i];
 		if ((c->entity->tag == ECS::Tag::BULLET_ENEMY || c->entity->tag == ECS::Tag::ENEMY) && (!was_hit && !is_invincible))
 		{
-			ECS::Manager::FlagForDeletion(collider->collider_references[i]->entity);
+			ECS::ECSManager::entity_flag_for_deletion(collider->collider_references[i]->entity);
 			--lives;
 			was_hit = true;
 			sprite->texture = SpriteSystem::blank_texture->texture;
@@ -136,7 +136,7 @@ void Player::Update()
 			sprite->rect = SpriteSystem::player->rect;
 			was_hit = false;
 			revive_frame_count = 0;
-			ECS::Manager::FlagForDeletionAllTagged(ECS::Tag::BULLET_ENEMY);
+			ECS::ECSManager::entities_flag_for_deletion_by_tag(ECS::Tag::BULLET_ENEMY);
 			is_invincible = true;
 		}
 	}

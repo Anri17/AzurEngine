@@ -72,7 +72,7 @@
     <ClCompile Include="src\AzurEngine\ECS\Tag.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AzurEngine\ECS\Manager.cpp">
+    <ClCompile Include="src\AzurEngine\ECS\ECSManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\AzurEngine\AssetManager.cpp">
@@ -185,7 +185,7 @@
     <ClInclude Include="src\AzurEngine\AzurLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\AzurEngine\ECS\Manager.h">
+    <ClInclude Include="src\AzurEngine\ECS\ECSManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\AzurEngine\Components\TextAlignment.h">

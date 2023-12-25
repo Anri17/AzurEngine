@@ -9,7 +9,7 @@ const int UISystem::FONT_RESOLUTION_RATIO = 2;
 UISystem::UISystem()
 {
 	AzurEngine::Application::systems.push_back(this);
-	entities = ECS::Manager::GetEntitiesVector();
+	entities = ECS::ECSManager::get_entities_vector();
 }
 
 void UISystem::Init()

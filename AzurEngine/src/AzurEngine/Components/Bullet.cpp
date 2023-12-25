@@ -37,7 +37,7 @@ void Bullet::Update()
 		deletion_timer_frame++;
 		if (deletion_timer_frame % deletion_cooldown == 0)
 		{
-			ECS::Manager::FlagForDeletion(entity);
+			ECS::ECSManager::entity_flag_for_deletion(entity);
 		}
 	}
 }

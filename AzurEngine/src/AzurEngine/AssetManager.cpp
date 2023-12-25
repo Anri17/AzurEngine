@@ -28,7 +28,7 @@ Entity* AssetManager::CreateBulletEntityA(std::string name,
 	circleCollider->radius = 6;
 	bullet->collider = circleCollider;
 
-	ECS::Manager::AddEntity(entity);
+	ECS::ECSManager::entity_add(entity);
 
 	return entity;
 }
@@ -50,7 +50,7 @@ Entity* AssetManager::CreateBulletSpawnerEntity(std::string name,
 	position->x  = spawn_x;
 	position->y  = spawn_y;
 	
-	ECS::Manager::AddEntity(entity);
+	ECS::ECSManager::entity_add(entity);
 
 	return entity;
 }
@@ -70,7 +70,7 @@ Entity* AssetManager::CreatePlayerEntity(std::string name, ECS::Tag tag)
 	Player* player = entity->AddComponent<Player>();
 	player->collider = collider;
 
-	ECS::Manager::AddEntity(entity);
+	ECS::ECSManager::entity_add(entity);
 
 	return entity;
 }
@@ -88,7 +88,7 @@ Entity* AssetManager::CreatePlayFieldEntity(std::string name)
 	boxCollider->offset_bottom = PlayField::Bottom;
 	boxCollider->offset_left = PlayField::Left;
 
-	ECS::Manager::AddEntity(entity);
+	ECS::ECSManager::entity_add(entity);
 
 	return entity;
 }
@@ -106,7 +106,7 @@ Entity* AssetManager::CreateText(std::string name, std::string message, std::str
 	text->SetAlignment(TextAlignment::LEFT);
 	UISystem::BuildText(position, text);
 
-	ECS::Manager::AddEntity(entity);
+	ECS::ECSManager::entity_add(entity);
 
 	return entity;
 

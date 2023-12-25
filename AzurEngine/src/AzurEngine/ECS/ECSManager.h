@@ -9,25 +9,23 @@
 class CollisionSystem;
 
 
-namespace ECS
-{
+namespace ECS {
 	// TODO: Hold a reference to the relevant systems. This should not be in the ECS namespace and Folder anyway...
-	class Manager
-	{
+	class ECSManager {
 	public:
-		static Entity* AddEntity(Entity* entity);
+		static Entity* entity_add(Entity* entity);
 
-		static void Render(SDL_Renderer* renderer);
-		static void Update();
-		static void DeleteAllEntities();
+		static void render(SDL_Renderer* renderer);
+		static void update();
+		static void entity_delete_all();
 
-		static void FlagForDeletion(Entity* entity);
-		static void FlagForDeletionAllTagged(Tag tag);
+		static void entity_flag_for_deletion(Entity* entity);
+		static void entities_flag_for_deletion_by_tag(Tag tag);
 
 		// TODO: The entities will be moved to a scene object, together with the scenes. This is because entities are tied to a scene.
-		static std::vector<Entity*>* GetEntitiesVector() { return &entities;  }
+		static std::vector<Entity*>* get_entities_vector() { return &entities;  }
 	private:
-		static void DeleteFlaggedEntities();
+		static void entity_delete_flagged();
 
 		static std::vector<Entity*> entities;
 		static std::vector<Entity*> flagged_for_deletion;

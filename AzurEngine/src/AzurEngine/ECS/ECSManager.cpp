@@ -1,11 +1,11 @@
-#include "Manager.h"
+#include "ECSManager.h"
 
 namespace ECS
 {
-	std::vector<Entity*> Manager::entities;
-	std::vector<Entity*> Manager::flagged_for_deletion;
+	std::vector<Entity*> ECSManager::entities;
+	std::vector<Entity*> ECSManager::flagged_for_deletion;
 
-	Entity* Manager::AddEntity(Entity* entity)
+	Entity* ECSManager::entity_add(Entity* entity)
 	{
 		entities.emplace_back(entity);
 
@@ -13,7 +13,7 @@ namespace ECS
 	}
 
 	// TODO: The Rendering should be extracted to the systems of the game
-	void Manager::Render(SDL_Renderer* renderer)
+	void ECSManager::render(SDL_Renderer* renderer)
 	{
 		for (int i = 0; i < entities.size(); i++)
 		{
@@ -22,16 +22,16 @@ namespace ECS
 	}
 
 	// TODO: The Updating should be extracted to the systems of the game
-	void Manager::Update()
+	void ECSManager::update()
 	{
 		for (int i = 0; i < entities.size(); i++)
 		{
 			if (entities[i]->active) entities[i]->Update();
 		}
-		DeleteFlaggedEntities();
+		entity_delete_flagged();
 	}
 
-	void Manager::DeleteAllEntities()
+	void ECSManager::entity_delete_all()
 	{
 		for (Entity* e : entities)
 		{
@@ -40,14 +40,14 @@ namespace ECS
 		entities.clear();
 	}
 
-	void Manager::FlagForDeletion(Entity* entity)
+	void ECSManager::entity_flag_for_deletion(Entity* entity)
 	{
 		flagged_for_deletion.push_back(entity);
 	}
 
 
 
-	void Manager::FlagForDeletionAllTagged(Tag tag)
+	void ECSManager::entities_flag_for_deletion_by_tag(Tag tag)
 	{
 		for (size_t i = 0; i < entities.size(); ++i)
 		{
@@ -58,7 +58,7 @@ namespace ECS
 		}
 	}
 
-	void Manager::DeleteFlaggedEntities()
+	void ECSManager::entity_delete_flagged()
 	{
 		for (size_t i = 0; i < flagged_for_deletion.size(); ++i)
 		{

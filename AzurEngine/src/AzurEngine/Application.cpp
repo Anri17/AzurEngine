@@ -123,7 +123,7 @@ namespace AzurEngine {
 		// START: RESUME DEVELOPMENT FROM HERE
 		Entity *stageEntity = new Entity();
 		stageEntity->name = "Stage";
-		ECS::Manager::AddEntity(stageEntity);
+		ECS::ECSManager::entity_add(stageEntity);
 	}
 
 	void application_mainloop() {
@@ -185,7 +185,7 @@ namespace AzurEngine {
 			delete system;
 		}
 		// Clear Entity Vector
-		ECS::Manager::DeleteAllEntities();
+		ECS::ECSManager::entity_delete_all();
 		// Clear Sprites
 		SpriteSystem::DeleteSprites();
 		// Quit Functions
@@ -266,7 +266,7 @@ namespace AzurEngine {
 			application_is_running = false;
 		}
 
-		ECS::Manager::Update();
+		ECS::ECSManager::update();
 		
 		// Change Window Resolution
 		if (InputHandler::get_key_tap(InputHandler::KEY_1)) {
@@ -286,7 +286,7 @@ namespace AzurEngine {
 		SDL_RenderClear(Application::renderer);
 		SDL_SetRenderDrawColor(Application::renderer, 0, 0, 0, 1);
 		// Render ECS Components
-		ECS::Manager::Render(Application::renderer);
+		ECS::ECSManager::render(Application::renderer);
 		// Render Systems
 		for (auto system : systems)
 		{

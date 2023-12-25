@@ -6,7 +6,7 @@
 CollisionSystem::CollisionSystem()
 {
 	AzurEngine::Application::systems.push_back(this);
-	entities = ECS::Manager::GetEntitiesVector();
+	entities = ECS::ECSManager::get_entities_vector();
 }
 
 void CollisionSystem::Init()

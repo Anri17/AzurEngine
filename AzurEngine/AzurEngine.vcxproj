@@ -179,7 +179,7 @@
     <ClCompile Include="src\AzurEngine\Components\Collider.cpp" />
     <ClCompile Include="src\AzurEngine\ECS\Component.h" />
     <ClCompile Include="src\AzurEngine\ECS\Entity.cpp" />
-    <ClCompile Include="src\AzurEngine\ECS\Manager.cpp" />
+    <ClCompile Include="src\AzurEngine\ECS\ECSManager.cpp" />
     <ClCompile Include="src\AzurEngine\ECS\Tag.h" />
     <ClCompile Include="src\AzurEngine\glad.c" />
     <ClCompile Include="src\AzurEngine\InputHandler.cpp" />
@@ -215,7 +215,7 @@
     <ClInclude Include="src\AzurEngine\AzurDebug.h" />
     <ClInclude Include="src\AzurEngine\Components\TextAlignment.h" />
     <ClInclude Include="src\AzurEngine\Core.h" />
-    <ClInclude Include="src\AzurEngine\ECS\Manager.h" />
+    <ClInclude Include="src\AzurEngine\ECS\ECSManager.h" />
     <ClInclude Include="src\AzurEngine\ECS\System.h" />
     <ClInclude Include="src\AzurEngine\EntryPoint.h" />
     <ClInclude Include="src\AzurEngine\InputHandler.h" />

@@ -4,7 +4,7 @@
 #include "ECS\Entity.h"
 #include "ECS\Component.h"
 #include "ECS\System.h"
-#include "ECS\Manager.h"
+#include "ECS\ECSManager.h"
 #include "ECS\Tag.h"
 
 using namespace ECS;
