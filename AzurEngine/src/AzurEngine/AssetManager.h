@@ -6,8 +6,7 @@
 #include "Components.h"
 #include "Systems.h"
 
-class AssetManager
-{
+class AssetManager {
 public:
 	/* Entity Creation Methods */
 	static Entity* CreateBulletEntityA(std::string name, float spawn_x, float spawn_y, ECS::Tag tag, float speed, float angle, BulletType bulletType);

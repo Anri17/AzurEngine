@@ -36,9 +36,6 @@
 #define FPS_TARGET 120
 #define INPUT_MANAGER_KEY_COUNT 1024
 
-
-
-
 namespace AzurEngine {
 
 	// Initialise libraries, create the window and renderer, set initial program and system states.

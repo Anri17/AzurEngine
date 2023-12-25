@@ -6,27 +6,33 @@ Entity* AssetManager::CreateBulletEntityA(std::string name,
 										  ECS::Tag    tag,
 										  float       speed,
 										  float       angle,
-										  BulletType  bulletType) {
-	// TODO: The bullet Type is given but used, for now.
-	// 
+										  BulletType  bulletType) { // TODO: The bullet Type is given but not used, for now.	
 	// TODO: There is going to be a list of bullet types. This means that I need to check every type and then get the right eindex of bullet to then spawn it.
 	// TODO: Might need to move the bullet creation to the BulletTool class and then use this class to creata an object.
 	// Initialise Bullet with ECS
-	Entity* entity = new Entity();
-	entity->name = name;
-	entity->tag = tag;
-	Position* position = entity->AddComponent<Position>();
-	position->x = spawn_x;
-	position->y = spawn_y;
-	Bullet* bullet = entity->AddComponent<Bullet>();
-	bullet->speed = speed;
-	bullet->angle = angle;
-	Sprite* sprite = entity->AddComponent<Sprite>();
-	sprite->texture = SpriteSystem::bullet_a->texture;
-	sprite->rect = SpriteSystem::bullet_a->rect;
-	CircleCollider* circleCollider = entity->AddComponent<CircleCollider>();
+	Entity         *entity;
+	Position       *position;
+	Bullet         *bullet;
+	Sprite         *sprite;
+	CircleCollider *circleCollider;
+
+	entity         = new Entity();
+	position       = entity->AddComponent<Position>();
+	bullet         = entity->AddComponent<Bullet>();
+	sprite         = entity->AddComponent<Sprite>();
+	circleCollider = entity->AddComponent<CircleCollider>();
+
+
+	entity->name           = name;
+	entity->tag            = tag;
+	position->x            = spawn_x;
+	position->y            = spawn_y;
+	bullet->speed          = speed;
+	bullet->angle          = angle;
+	sprite->texture        = SpriteSystem::bullet_a->texture;
+	sprite->rect           = SpriteSystem::bullet_a->rect;
 	circleCollider->radius = 6;
-	bullet->collider = circleCollider;
+	bullet->collider       = circleCollider;
 
 	ECS::ECSManager::entity_add(entity);
 
@@ -55,8 +61,8 @@ Entity* AssetManager::CreateBulletSpawnerEntity(std::string name,
 	return entity;
 }
 
-Entity* AssetManager::CreatePlayerEntity(std::string name, ECS::Tag tag)
-{
+Entity* AssetManager::CreatePlayerEntity(std::string name,
+										 ECS::Tag    tag) {
 	Entity* entity = new Entity();
 	entity->name = name;
 	entity->tag = tag;
@@ -75,8 +81,7 @@ Entity* AssetManager::CreatePlayerEntity(std::string name, ECS::Tag tag)
 	return entity;
 }
 
-Entity* AssetManager::CreatePlayFieldEntity(std::string name)
-{
+Entity* AssetManager::CreatePlayFieldEntity(std::string name) {
 	Entity* entity = new Entity();
 	entity->name = name;
 	Position* position = entity->AddComponent<Position>();
@@ -93,8 +98,11 @@ Entity* AssetManager::CreatePlayFieldEntity(std::string name)
 	return entity;
 }
 
-Entity* AssetManager::CreateText(std::string name, std::string message, std::string fontpath, int fontsize, SDL_Color color)
-{
+Entity* AssetManager::CreateText(std::string name,
+								 std::string message,
+								 std::string fontpath,
+								 int         fontsize,
+								 SDL_Color   color) {
 	Entity* entity = new Entity();
 	entity->name = name;
 	entity->tag = ECS::Tag::UI_TEXT;

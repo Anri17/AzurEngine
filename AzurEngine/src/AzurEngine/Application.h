@@ -10,8 +10,7 @@
 #include "Systems.h"
 #include "Mouse.h"
 
-namespace AzurEngine
-{
+namespace AzurEngine {
 	typedef enum {
 		RES_640x480,
 		RES_800x600,
