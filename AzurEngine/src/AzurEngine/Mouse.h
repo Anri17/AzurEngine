@@ -4,17 +4,15 @@
 #include <SDL.h>
 #include "Core.h"
 
-class Mouse
-{
-public:
+struct Mouse {
 	Mouse();
 	virtual ~Mouse();
 
 	void Update();
 
 	Uint32 MouseState;
-	int xPos;
-	int yPos;
+	int    xPos;
+	int    yPos;
 };
 
 

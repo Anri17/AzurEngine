@@ -1,14 +1,9 @@
 #include "Mouse.h"
 
-Mouse::Mouse() : xPos(0), yPos(0), MouseState(0)
-{
-}
+Mouse::Mouse() : xPos(0), yPos(0), MouseState(0) {}
 
-Mouse::~Mouse()
-{
-}
+Mouse::~Mouse() { }
 
-void Mouse::Update()
-{
+void Mouse::Update() {
 	MouseState = SDL_GetMouseState(&xPos, &yPos);
 }
