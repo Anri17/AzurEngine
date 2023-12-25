@@ -18,7 +18,7 @@ namespace AzurDebug
 
 	void update()
 	{
-		if (InputHandler::GetKeyTap(InputHandler::KEY_D))
+		if (InputHandler::get_key_tap(InputHandler::KEY_D))
 		{
 			debug_mode = !debug_mode;
 		}

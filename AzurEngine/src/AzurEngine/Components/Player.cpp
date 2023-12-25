@@ -39,7 +39,7 @@ void Player::Update()
 
 	if (!was_hit)
 	{
-		if (InputHandler::GetKeyDown(InputHandler::KEY_LSHIFT))
+		if (InputHandler::get_key_down(InputHandler::KEY_LSHIFT))
 		{
 			speed = focusSpeed;
 		}
@@ -48,19 +48,19 @@ void Player::Update()
 			speed = normalSpeed;
 		}
 
-		if (InputHandler::GetKeyDown(InputHandler::KEY_UP))
+		if (InputHandler::get_key_down(InputHandler::KEY_UP))
 		{
 			yVelocity += -speed;
 		}
-		if (InputHandler::GetKeyDown(InputHandler::KEY_DOWN))
+		if (InputHandler::get_key_down(InputHandler::KEY_DOWN))
 		{
 			yVelocity += speed;
 		}
-		if (InputHandler::GetKeyDown(InputHandler::KEY_LEFT))
+		if (InputHandler::get_key_down(InputHandler::KEY_LEFT))
 		{
 			xVelocity += -speed;
 		}
-		if (InputHandler::GetKeyDown(InputHandler::KEY_RIGHT))
+		if (InputHandler::get_key_down(InputHandler::KEY_RIGHT))
 		{
 			xVelocity += speed;
 		}
@@ -84,7 +84,7 @@ void Player::Update()
 
 
 		// Fire Bullet
-		if (InputHandler::GetKeyDown(InputHandler::KEY_Z))
+		if (InputHandler::get_key_down(InputHandler::KEY_Z))
 		{
 			if ((fire_frame % 8) == 0)
 			{

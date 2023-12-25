@@ -134,23 +134,22 @@ namespace AzurEngine {
 		Uint32    loop_time_elapsed;
 
 		Application::current_frame = 0;
-		application_is_running = true;
+		application_is_running     = true;
 		while (application_is_running) {
 			loop_time_start = SDL_GetTicks(); // the time at the start of the loop
 
-			InputHandler::UpdateResetFirstTaps();
+			InputHandler::reset_first_taps();
 			// Process SDL Events
 			while (SDL_PollEvent(&e)) {
 				switch (e.type) {
-					// Window Events
 				case SDL_QUIT: {
 					application_is_running = false;
 				} break;
 				case SDL_KEYDOWN: {
-					InputHandler::UpdateSDLKeydownEvents(e.key.keysym.sym);
+					InputHandler::process_sdl_event_keydown(e.key.keysym.sym);
 				} break;
 				case SDL_KEYUP: {
-					InputHandler::UpdateSDLKeyupEvents(e.key.keysym.sym);
+					InputHandler::process_sdl_event_keyup(e.key.keysym.sym);
 				} break;
 				}
 			}
@@ -263,27 +262,26 @@ namespace AzurEngine {
 			system->Update();
 		}
 		mouse.Update();
-		if (InputHandler::GetKeyDown(InputHandler::KEY_ESCAPE)) {
+		if (InputHandler::get_key_down(InputHandler::KEY_ESCAPE)) {
 			application_is_running = false;
 		}
 
 		ECS::Manager::Update();
 		
 		// Change Window Resolution
-		if (InputHandler::GetKeyTap(InputHandler::KEY_1)) {
+		if (InputHandler::get_key_tap(InputHandler::KEY_1)) {
 			application_changeresolution(RES_640x480);
 		}
-		if (InputHandler::GetKeyTap(InputHandler::KEY_2)) {
+		if (InputHandler::get_key_tap(InputHandler::KEY_2)) {
 			application_changeresolution(RES_800x600);
 		}
-		if (InputHandler::GetKeyTap(InputHandler::KEY_3)) {
+		if (InputHandler::get_key_tap(InputHandler::KEY_3)) {
 			application_changeresolution(RES_1024x768);
 		}
 		AzurDebug::update();
 	}
 
-	void Application::Render()
-	{
+	void Application::Render() {
 		// Rendering
 		SDL_RenderClear(Application::renderer);
 		SDL_SetRenderDrawColor(Application::renderer, 0, 0, 0, 1);
@@ -300,8 +298,7 @@ namespace AzurEngine {
 		SDL_RenderPresent(Application::renderer);
 	}
 
-	Application* CreateApplication()
-	{
+	Application* CreateApplication() {
 		return nullptr;
 	}
 

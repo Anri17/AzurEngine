@@ -1,7 +1,6 @@
 #include "InputHandler.h"
 
-namespace InputHandler
-{
+namespace InputHandler {
 	bool isDown_A, firstTap_A;
 	bool isDown_B, firstTap_B;
 	bool isDown_C, firstTap_C;
@@ -50,7 +49,7 @@ namespace InputHandler
 	bool isDown_LEFT, firstTap_LEFT;
 	bool isDown_RIGHT, firstTap_RIGHT;
 
-	void UpdateResetFirstTaps() {
+	void reset_first_taps() {
 		firstTap_A = false;
 		firstTap_B = false;
 		firstTap_C = false;
@@ -100,9 +99,8 @@ namespace InputHandler
 		firstTap_RIGHT = false;
 	}
 
-	void UpdateSDLKeydownEvents(SDL_Keycode sdl_keycode) {
-		switch (sdl_keycode)
-		{
+	void process_sdl_event_keydown(SDL_Keycode sdl_keycode) {
+		switch (sdl_keycode) {
 		case SDLK_a: if (!InputHandler::isDown_A) { InputHandler::isDown_A = InputHandler::firstTap_A = true; } break;
 		case SDLK_b: if (!InputHandler::isDown_B) { InputHandler::isDown_B = InputHandler::firstTap_B = true; } break;
 		case SDLK_c: if (!InputHandler::isDown_C) { InputHandler::isDown_C = InputHandler::firstTap_C = true; } break;
@@ -153,9 +151,8 @@ namespace InputHandler
 		}
 	}
 
-	void UpdateSDLKeyupEvents(SDL_Keycode sdl_keycode) {
-		switch (sdl_keycode)
-		{
+	void process_sdl_event_keyup(SDL_Keycode sdl_keycode) {
+		switch (sdl_keycode) {
 		case SDLK_a: InputHandler::isDown_A = false; break;
 		case SDLK_b: InputHandler::isDown_B = false; break;
 		case SDLK_c: InputHandler::isDown_C = false; break;
@@ -206,10 +203,8 @@ namespace InputHandler
 		}
 	}
 
-	bool GetKeyTap(InputKey key)
-	{
-		switch (key)
-		{
+	bool get_key_tap(InputKey key) {
+		switch (key) {
 		case InputHandler::KEY_A: return firstTap_A;
 		case InputHandler::KEY_B: return firstTap_B;
 		case InputHandler::KEY_C: return firstTap_C;
@@ -258,14 +253,12 @@ namespace InputHandler
 		case InputHandler::KEY_LEFT:  return firstTap_LEFT;
 		case InputHandler::KEY_RIGHT: return firstTap_RIGHT;
 		}
-
+		 
 		return false;
 	}
 
-	bool GetKeyDown(InputKey key)
-	{
-		switch (key)
-		{
+	bool get_key_down(InputKey key) {
+		switch (key) {
 		case InputHandler::KEY_A: return isDown_A;
 		case InputHandler::KEY_B: return isDown_B;
 		case InputHandler::KEY_C: return isDown_C;
