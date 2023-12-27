@@ -108,6 +108,9 @@
     <ClCompile Include="src\AzurEngine\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\AzurEngine\Systems\PlayerSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AzurEngine\ECS.h">
@@ -225,6 +228,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\AzurEngine\util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AzurEngine\Systems\PlayerSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

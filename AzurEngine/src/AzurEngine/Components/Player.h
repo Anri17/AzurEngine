@@ -10,20 +10,19 @@
 class Sprite; // This is to prevent a weird syntac error where a semicolon was missing before an asterist
 //#include "SpriteComponent.h"
 
-class Player : public Component
-{
+class Player : public Component {
 public:
-	void Init() override;
+	void Init()   override;
 	void Update() override;
 
-	Position* position;
-	Collider* collider;
-	Sprite* sprite;
+	Position *position;
+	Collider *collider;
+	Sprite   *sprite;
 
-	int lives = 2;
+	int lives;
 
-	bool was_hit = false;
-	bool is_invincible = false;
+	bool is_dead;
+	bool is_invincible;
 
 	// Revive variables
 	int revive_cooldown = 90; // 1.5 second
@@ -33,11 +32,21 @@ public:
 	int invincibility_cooldown = 240; // 4 seconds
 	int invincibility_frame_count = 0;
 
-	int player_w = 32; // TODO: Get the sprite w through the SDL_Rect.
-	int player_h = 48; // TODO: Get the sprite h through the SDL_Rect.
-	float spawnX = 320.0f;
-	float spawnY = 400.0f;
+	float spawnX;
+	float spawnY;
+
+	int player_w; // TODO: Get the sprite w through the SDL_Rect.
+	int player_h; // TODO: Get the sprite h through the SDL_Rect.
 	int fire_frame;
+
+	float normalSpeed;
+	float focusSpeed;
+
+
+private:
+	float xVelocity;
+	float yVelocity;
+	float speed;
 };
 
 #endif // _PLAYER_H

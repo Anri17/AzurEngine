@@ -194,6 +194,7 @@
     <ClCompile Include="src\AzurEngine\Systems.h" />
     <ClCompile Include="src\AzurEngine\Systems\BulletSystem.cpp" />
     <ClCompile Include="src\AzurEngine\Systems\CollisionSystem.cpp" />
+    <ClCompile Include="src\AzurEngine\Systems\PlayerSystem.cpp" />
     <ClCompile Include="src\AzurEngine\Systems\SpriteSystem.cpp" />
     <ClCompile Include="src\AzurEngine\Systems\StageSystem.cpp" />
     <ClCompile Include="src\AzurEngine\Systems\UISystem.cpp" />
@@ -234,6 +235,7 @@
     <ClInclude Include="src\AzurEngine\AzurLib\vector2int.h" />
     <ClInclude Include="src\AzurEngine\Systems\BulletSystem.h" />
     <ClInclude Include="src\AzurEngine\Systems\CollisionSystem.h" />
+    <ClInclude Include="src\AzurEngine\Systems\PlayerSystem.h" />
     <ClInclude Include="src\AzurEngine\Systems\SpriteSystem.h" />
     <ClInclude Include="src\AzurEngine\Systems\StageSystem.h" />
     <ClInclude Include="src\AzurEngine\Systems\UISystem.h" />
