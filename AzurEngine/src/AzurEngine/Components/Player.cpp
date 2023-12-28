@@ -16,21 +16,24 @@
 #include ".\..\AssetManager.h"
 
 void Player::Init() {
-	player_w = 32;
-	player_h = 48;
-	lives = 2;
-	spawnX = 320.0f;
-	spawnY = 400.0f;
-	is_dead = false;
-	is_invincible = false;
-	normalSpeed = 3.0f;
-	focusSpeed = 1.5f;
+	player_w             = 32;
+	player_h             = 48;
+	lives                = 2;
+	spawnX               = 320.0f;
+	spawnY               = 400.0f;
+	is_dead              = false;
+	is_invincible        = false;
+	normalSpeed          = 3.0f;
+	focusSpeed           = 1.5f;
+	death_frame_duration = 90;
+	bullet_speed         = 32.0f;
+	bullet_angle         = 270.0f;
 
-	position = entity->GetComponent<Position>();
-	sprite = entity->GetComponent<Sprite>();
+	position    = entity->GetComponent<Position>();
+	sprite      = entity->GetComponent<Sprite>();
 	position->x = spawnX;
 	position->y = spawnY;
-	fire_frame = 0;
+	fire_frame  = 0;
 }
 
 void Player::Update() {
@@ -42,7 +45,6 @@ void Player::Update() {
 		if (InputHandler::get_key_down(InputHandler::KEY_LSHIFT)) {
 			speed = focusSpeed;
 		}
-
 		else {
 			speed = normalSpeed;
 		}
@@ -91,75 +93,78 @@ void Player::Update() {
 		// Fire Bullet
 		if (InputHandler::get_key_down(InputHandler::KEY_Z)) {
 			if ((fire_frame % 8) == 0) {
-				// float bulletSpeed = 4.0f;
-				float bulletSpeed = 32.0f;
-				float bulletAngle = 270.0f;
 				AssetManager::CreateBulletEntityA(
-					"Player Bullet",
-					this->position->x,
-					this->position->y,
-					ECS::Tag::BULLET_PLAYER,
-					bulletSpeed,
-					bulletAngle,
-					BulletType::PLAYER);
+				    "Player Bullet",
+				    this->position->x,
+				    this->position->y,
+				    ECS::Tag::BULLET_PLAYER,
+				    bullet_speed,
+				    bullet_angle,
+				    BulletType::PLAYER);
 			}
-			fire_frame++;
+			++fire_frame;
 		}
 		else {
 			fire_frame = 0;
 		}
 	}
 
-	size_t collider_count = collider->collider_references.size();
+	// Bullet Collision
+	collider_count = collider->collider_references.size();
 	for (size_t i = 0; i < collider_count; ++i) {
-		Collider* c = collider->collider_references[i];
+		Collider *c;
+		c = collider->collider_references[i];
 		if ((c->entity->tag == ECS::Tag::BULLET_ENEMY ||
 			 c->entity->tag == ECS::Tag::ENEMY) &&
 			(!is_dead &&
-			 !is_invincible)){
-			ECS::ECSManager::entity_flag_for_deletion(collider->collider_references[i]->entity);
+			 !is_invincible)){ // collision with enemy bullet -> death
 			--lives;
-			is_dead = true;
-			sprite->texture = SpriteSystem::blank_texture->texture;
-			sprite->rect = SpriteSystem::blank_texture->rect;
+			is_dead           = true;
+			death_frame_count = 0;
+			sprite->texture   = SpriteSystem::blank_texture->texture;
+			sprite->rect      = SpriteSystem::blank_texture->rect;
+			ECS::ECSManager::entity_flag_for_deletion(collider->collider_references[i]->entity);
 			break;
 		}
 	}
 
 	// Player is dead and is now going to revive
 	if (is_dead && lives >= 0) {
-		revive_frame_count++;
-		if (revive_frame_count % revive_cooldown == 0) {
-			position->x = spawnX;
-			position->y = spawnY;
+		++death_frame_count;
+		if (death_frame_count % death_frame_duration == 0) {
+			// set player texture and initial position
+			position->x     = spawnX;
+			position->y     = spawnY;
 			sprite->texture = SpriteSystem::player->texture;
-			sprite->rect = SpriteSystem::player->rect;
-			is_dead = false;
-			revive_frame_count = 0;
-			ECS::ECSManager::entities_flag_for_deletion_by_tag(ECS::Tag::BULLET_ENEMY);
+			sprite->rect    = SpriteSystem::player->rect;
+			
+			// set player state
+			is_dead       = false;
 			is_invincible = true;
+			
+			invincibility_frame_count = 0;
+			ECS::ECSManager::entities_flag_for_deletion_by_tag(ECS::Tag::BULLET_ENEMY);
 		}
 	}
 
 	// Player has revived and is now invincible for a few seconds
 	if (is_invincible) {
-		invincibility_frame_count++;
+		++invincibility_frame_count;
 		// Player flashes while invincible
 		if (invincibility_frame_count % 3 == 0) {
 			sprite->texture = SpriteSystem::blank_texture->texture;
-			sprite->rect = SpriteSystem::blank_texture->rect;
+			sprite->rect    = SpriteSystem::blank_texture->rect;
 		}
 		if (invincibility_frame_count % 6 == 0) {
-			sprite->texture= SpriteSystem::player->texture;
-			sprite->rect = SpriteSystem::player->rect;
+			sprite->texture = SpriteSystem::player->texture;
+			sprite->rect    = SpriteSystem::player->rect;
 		}
 
 		// Cool down is over, invincibility is over
-		if (invincibility_frame_count % invincibility_cooldown == 0) {
-			// TODO: 
-			is_invincible = false;
+		if (invincibility_frame_count % invincibility_frame_duration == 0) {
+			is_invincible   = false;
 			sprite->texture = SpriteSystem::player->texture;
-			sprite->rect = SpriteSystem::player->rect;
+			sprite->rect    = SpriteSystem::player->rect;
 		}
 	}
 }

@@ -21,32 +21,38 @@ public:
 
 	int lives;
 
+	// Player States
 	bool is_dead;
 	bool is_invincible;
 
-	// Revive variables
-	int revive_cooldown = 90; // 1.5 second
-	int revive_frame_count = 0;
-
-	// Invincibility Variables
-	int invincibility_cooldown = 240; // 4 seconds
+	// Death System Variables
+	int death_frame_duration; // in frames. 1.5 second, when locked at 60 fps
+	int death_frame_count;
+	int invincibility_frame_duration = 240; // 4 seconds
 	int invincibility_frame_count = 0;
 
 	float spawnX;
 	float spawnY;
 
+	// collision box
 	int player_w; // TODO: Get the sprite w through the SDL_Rect.
 	int player_h; // TODO: Get the sprite h through the SDL_Rect.
+	
+	// fire
+	float bullet_speed = 32.0f;
+	float bullet_angle = 270.0f;
 	int fire_frame;
 
+	// movement
 	float normalSpeed;
 	float focusSpeed;
 
 
 private:
-	float xVelocity;
-	float yVelocity;
-	float speed;
+	float  xVelocity;
+	float  yVelocity;
+	float  speed;
+	size_t collider_count;
 };
 
 #endif // _PLAYER_H
