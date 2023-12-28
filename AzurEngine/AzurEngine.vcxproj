@@ -187,7 +187,6 @@
     <ClCompile Include="src\AzurEngine\Mouse.cpp" />
     <ClCompile Include="src\AzurEngine\Components\Player.cpp" />
     <ClCompile Include="src\AzurEngine\Components\PlayField.cpp" />
-    <ClCompile Include="src\AzurEngine\Components\Position.cpp" />
     <ClCompile Include="src\AzurEngine\Components\Sprite.cpp" />
     <ClCompile Include="src\AzurEngine\Components\Stage.cpp" />
     <ClCompile Include="src\AzurEngine\Components\Text.cpp" />

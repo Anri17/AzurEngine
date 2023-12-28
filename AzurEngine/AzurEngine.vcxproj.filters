@@ -36,9 +36,6 @@
     <ClCompile Include="src\AzurEngine\Components\Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AzurEngine\Components\Position.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\AzurEngine\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

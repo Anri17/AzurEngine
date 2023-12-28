@@ -7,13 +7,9 @@
 
 #include ".\..\ECS.h"
 
-class Position : public ECS::Component
-{
-public:
+struct Position : public ECS::Component {
 	float x = 0.0f;
 	float y = 0.0f;
-
-	void Init() override;
 };
 
 #endif // _POSITION_COMPONENT_H

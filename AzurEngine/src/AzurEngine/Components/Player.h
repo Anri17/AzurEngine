@@ -10,6 +10,8 @@
 class Sprite; // This is to prevent a weird syntac error where a semicolon was missing before an asterist
 //#include "SpriteComponent.h"
 
+
+
 class Player : public Component {
 public:
 	void Init()   override;
@@ -41,14 +43,12 @@ public:
 	// fire
 	float bullet_speed = 32.0f;
 	float bullet_angle = 270.0f;
-	int fire_frame;
+	int   fire_frame;
 
 	// movement
 	float normalSpeed;
 	float focusSpeed;
 
-
-private:
 	float  xVelocity;
 	float  yVelocity;
 	float  speed;
