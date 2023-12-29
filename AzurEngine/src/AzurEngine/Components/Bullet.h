@@ -19,18 +19,25 @@ public:
 
 	//vector2float GetVelocity();
 
-	Position* position;
-	Collider* collider;
-	int width = 12;
-	int height = 12;
+	// Components
+	Position *position;
+	Collider *collider;
 
-	float speed = 1.0f;
-	float angle = 0.0f;
+	// collision box
+	int   width     = 12;
+	int   height    = 12;
+
+	// movement
+	float speed     = 1.0f;
+	float angle_deg = 0.0f;
+	float angle_rad;
 private:
 	vector2float velocity;
 
-	int deletion_timer_frame = 0;
-	int deletion_cooldown = 60; // 1 seconds
+	// When bullet is outside of the playfield
+	bool is_inside_playfield;
+	int  deletion_frame_count    = 0;
+	int  deletion_frame_duration = 60; // 60 frames, 1 seconds if 60fps
 };
 
 #endif // _BULLET_COMPONENT_H

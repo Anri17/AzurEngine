@@ -28,7 +28,7 @@ Entity* AssetManager::CreateBulletEntityA(std::string name,
 	position->x            = spawn_x;
 	position->y            = spawn_y;
 	bullet->speed          = speed;
-	bullet->angle          = angle;
+	bullet->angle_deg      = angle;
 	sprite->texture        = SpriteSystem::bullet_a->texture;
 	sprite->rect           = SpriteSystem::bullet_a->rect;
 	circleCollider->radius = 6;
