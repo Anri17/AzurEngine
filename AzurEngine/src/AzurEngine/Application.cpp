@@ -36,16 +36,24 @@
 #define FPS_TARGET 120
 #define INPUT_MANAGER_KEY_COUNT 1024
 
+
+Mix_Chunk *g_music_cold_fire = nullptr;
+
 namespace AzurEngine {
 
 	// Initialise libraries, create the window and renderer, set initial program and system states.
 	// Initialise SDL, TTF, IMG
 	void application_init() {
+		int audio_rate = 22050;
+		Uint16 audio_format = AUDIO_S16SYS;
+		int audio_channels = 2;
+		int audio_buffers = 4096;
+		
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
-		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
 			ERROR_EXIT("SDL_Init Error : %s", SDL_GetError());
 		}
 		if (TTF_Init() == -1) {
@@ -53,6 +61,9 @@ namespace AzurEngine {
 		}
 		if (!IMG_Init(IMG_INIT_PNG)) {
 			ERROR_EXIT("IMG_Init Error: %s", IMG_GetError());
+		}
+		if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) != 0) {
+			ERROR_EXIT("SDL_Mixer Error: %s", Mix_GetError());
 		}
 
 		Application::screen_resolution     = RES_800x600;
@@ -107,12 +118,29 @@ namespace AzurEngine {
 		Application::entity_playfield     = AssetManager::CreatePlayFieldEntity("PlayField");
 		Application::entity_player        = AssetManager::CreatePlayerEntity("Player",
 		                                                                     ECS::Tag::PLAYER);
-		Application::entity_bulletspawner = AssetManager::CreateBulletSpawnerEntity("Bullet Spawner",
-		                                                                            320,
-		                                                                            180,
-		                                                                            ECS::Tag::ENEMY);
+		Application::entity_bulletspawner =
+		    AssetManager::CreateBulletSpawnerEntity("Bullet Spawner",
+		                                            320,
+		                                            180,
+                                                    ECS::Tag::ENEMY);
 		// Get components from entities
 		Application::component_player = Application::entity_player->GetComponent<Player>();
+
+		// Load Music
+		char *currentdir = SDL_GetBasePath();
+		std::string music_dir_coldfire = currentdir + std::string("coldfire.wav");
+		g_music_cold_fire = Mix_LoadWAV(music_dir_coldfire.c_str());
+		if (!g_music_cold_fire) {
+			DEBUG_CONSOLE_LOG_F("Could Not Load \"coldfire.wav\": %s", Mix_GetError());
+		}
+		// play music
+		int channel;
+
+		channel = Mix_PlayChannel(-1, g_music_cold_fire, 0);
+		if (channel == -1) {
+			DEBUG_CONSOLE_LOG_F("Unable to play WAV File \"coldfire.wav\": %s", Mix_GetError());
+		}
+
 
 		// Create a Stage Component. Most of the gameplayer logic goes here.
 		// TODO: In the future, I want to somehow save and load a stage data into a file and into the game
@@ -216,28 +244,28 @@ namespace AzurEngine {
 	}
 
 	void application_changeresolution(SCREEN_RESOLUTION screen_resolution) {
-		int              window_pos_x;
-		int              window_pos_y;
+		int             window_pos_x;
+		int             window_pos_y;
 		SDL_DisplayMode display_mode;
 
 		// Change Resolution
 		Application::screen_resolution = screen_resolution;
 		switch (screen_resolution) {
-		case RES_640x480: {
-			Application::current_window_width  = 640;
-			Application::current_window_height = 480;
-		} break;
-		case RES_800x600: {
-			Application::current_window_width  = 800;
-			Application::current_window_height = 600;
-		} break;
-		case RES_1024x768: {
-			Application::current_window_width  = 1024;
-			Application::current_window_height = 768;
-		} break;
-		default: {
-			ERROR_EXIT("Unknown Resolution...\n");
-		}
+			case RES_640x480: {
+				Application::current_window_width  = 640;
+				Application::current_window_height = 480;
+			} break;
+			case RES_800x600: {
+				Application::current_window_width  = 800;
+				Application::current_window_height = 600;
+			} break;
+			case RES_1024x768: {
+				Application::current_window_width  = 1024;
+				Application::current_window_height = 768;
+			} break;
+			default: {
+				ERROR_EXIT("Unknown Resolution...\n");
+			}
 		}
 		SDL_SetWindowSize(Application::window, Application::current_window_width, Application::current_window_height);
 

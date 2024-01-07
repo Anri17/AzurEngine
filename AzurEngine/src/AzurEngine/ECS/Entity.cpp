@@ -26,7 +26,6 @@ namespace ECS
 		{
 			Component* c = components[i];
 			c->entity = nullptr;
-			//delete c;
 			components[i] = nullptr;
 		}
 	}

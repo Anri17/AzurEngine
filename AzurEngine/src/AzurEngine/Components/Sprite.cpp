@@ -2,13 +2,11 @@
 
 #include ".\..\Application.h"
 
-void Sprite::Init()
-{
+void Sprite::Init() {
 	this->position = entity->GetComponent<Position>();
 }
 
-void Sprite::Render(SDL_Renderer* renderer)
-{
+void Sprite::Render(SDL_Renderer* renderer) {
 	SDL_Rect dstrect;
 	dstrect.x = AzurEngine::Application::GetWindowTrueX(position->x + float(rect.x));
 	dstrect.y = AzurEngine::Application::GetWindowTrueY(position->y + float(rect.y));

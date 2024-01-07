@@ -41,9 +41,9 @@ namespace AzurEngine {
 		inline static float current_window_ratio;
 
 		inline static SCREEN_RESOLUTION screen_resolution;
-		// Game Assets
-		// This will need to be separated to another class for the Scene
 
+
+		// Game Assets
 		inline static Entity *entity_playfield;
 		inline static Entity *entity_player;
 		inline static Player *component_player;

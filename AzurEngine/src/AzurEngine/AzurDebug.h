@@ -12,5 +12,7 @@ namespace AzurDebug
 }
 
 #define DEBUG_CONSOLE_LOG(x) (std::cout << x << "\n")
+#define DEBUG_CONSOLE_LOG_F(...) fprintf(stdout, __VA_ARGS__)
+
 
 #endif // _AZUR_DEBUG_H
